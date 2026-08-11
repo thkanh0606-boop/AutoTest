@@ -321,8 +321,7 @@ class Sidebar(QWidget):
     # =========================================================
     # SECTION TITLE
     # =========================================================
-
-    def add_section_title(
+def add_section_title(
         self,
         layout,
         text
@@ -359,14 +358,14 @@ class Sidebar(QWidget):
     # MENU ITEM
     # =========================================================
 
-    def add_menu_item(
+def add_menu_item(
         self,
         layout,
         icon,
         text,
         page_name,
         badge=None
-    ):
+        ):
 
         button = QPushButton()
 
@@ -525,7 +524,7 @@ class Sidebar(QWidget):
     # PAGE CHANGE
     # =========================================================
 
-    def handle_page_change(
+def handle_page_change(
         self,
         page_name
     ):
@@ -542,7 +541,7 @@ class Sidebar(QWidget):
     # ACTIVE PAGE
     # =========================================================
 
-    def set_active_page(
+def set_active_page(
         self,
         page_name
     ):
@@ -575,7 +574,7 @@ class Sidebar(QWidget):
                         background-color: #1f56bd;
                     }
                 """)
-
+  
             else:
 
                 button.setStyleSheet("""
