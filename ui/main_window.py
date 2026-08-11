@@ -1,3 +1,8 @@
+import threading
+from runners.login_runner import run_login_test
+
+from core.config import Config
+
 from PySide6.QtWidgets import (
     QMainWindow,
     QWidget,
@@ -396,7 +401,7 @@ class MainWindow(QMainWindow):
             index
         )
 
-    # =========================================================
+   # =========================================================
     # CONFIG PAGE (FORM CHỈNH SỬA + ICON SVG MẮT)
     # =========================================================
 
@@ -508,6 +513,10 @@ class MainWindow(QMainWindow):
         card_layout.addLayout(form_layout)
         card_layout.addSpacing(24)
 
+        # --- LAYOUT CHỨA BỘ NÚT BẤM (HÀNH ĐỘNG) ---
+        btn_layout = QHBoxLayout()
+        btn_layout.setSpacing(12)
+
         # Nút Lưu Cấu Hình
         btn_save = QPushButton("Lưu cấu hình")
         btn_save.setFixedHeight(38)
@@ -528,14 +537,38 @@ class MainWindow(QMainWindow):
         """)
         btn_save.clicked.connect(self.save_config)
 
-        card_layout.addWidget(btn_save, alignment=Qt.AlignLeft)
+        # Nút Chạy Thử Đăng Nhập
+        btn_test_login = QPushButton("Chạy thử")
+        btn_test_login.setFixedHeight(38)
+        btn_test_login.setFixedWidth(180)
+        btn_test_login.setCursor(Qt.PointingHandCursor)
+        btn_test_login.setStyleSheet("""
+            QPushButton {
+                background-color: #16a34a;
+                color: #ffffff;
+                font-weight: 600;
+                font-size: 13px;
+                border-radius: 6px;
+                border: none;
+            }
+            QPushButton:hover {
+                background-color: #15803d;
+            }
+        """)
+        btn_test_login.clicked.connect(self.run_test_login)
+
+        btn_layout.addWidget(btn_save)
+        btn_layout.addWidget(btn_test_login)
+        btn_layout.addStretch()
+
+        card_layout.addLayout(btn_layout)
 
         layout.addWidget(card)
         layout.addStretch()
 
         return page
 
-  # =========================================================
+    # =========================================================
     # HÀM BẬT / ẨN MẮT XEM MẬT KHẨU
     # =========================================================
 
@@ -547,13 +580,35 @@ class MainWindow(QMainWindow):
             self.input_password.setEchoMode(QLineEdit.Password)
             self.btn_toggle_pass.setIcon(self.icon_eye_open)
 
-    # =========================================================
-    # HÀM LƯU CẤU HÌNH (BẮT BUỘC PhẢI THỤT LỀ CÙNG CẤP VỚI HÀM TRÊN)
+ # =========================================================
+    # HÀM LƯU CẤU HÌNH
     # =========================================================
 
     def save_config(self):
-        url = self.input_base_url.text()
-        email = self.input_email.text()
-        password = self.input_password.text()
+        Config.BASE_URL = self.input_base_url.text().strip()
+        Config.TEST_EMAIL = self.input_email.text().strip()
+        Config.TEST_PASSWORD = self.input_password.text().strip()
 
-        print(f"[CONFIG SAVED] BASE_URL: {url} | EMAIL: {email} | PASS: {password}")
+        print(f"[CONFIG SAVED] BASE_URL: {Config.BASE_URL} | EMAIL: {Config.TEST_EMAIL} | PASS: {Config.TEST_PASSWORD}")
+
+    # =========================================================
+    # HÀM CHẠY THỬ TEST ĐĂNG NHẬP
+    # =========================================================
+
+    def run_test_login(self):
+        url = self.input_base_url.text().strip()
+        email = self.input_email.text().strip()
+        password = self.input_password.text().strip()
+
+        # Đồng bộ vào Config
+        Config.BASE_URL = url
+        Config.TEST_EMAIL = email
+        Config.TEST_PASSWORD = password
+
+        print(f"[TEST RUNNER] Khởi chạy Selenium với URL: {url} | EMAIL: {email}...")
+
+        threading.Thread(
+            target=run_login_test,
+            kwargs={"url": url, "email": email, "password": password},
+            daemon=True
+        ).start()

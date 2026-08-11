@@ -12,8 +12,10 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def load(self):
-        self.open_url(Config.BASE_URL)
+
+    def load(self, url: str = None):
+        target_url = url if url else Config.BASE_URL
+        self.open_url(target_url)
 
     def execute_login(self, email: str, password: str):
         self.type_text(self.EMAIL_INPUT, email)

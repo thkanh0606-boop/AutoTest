@@ -9,6 +9,9 @@ def get_logger(name: str = "EngineLogger") -> logging.Logger:
     if not logger.handlers:
         logger.setLevel(logging.INFO)
         
+        # Đảm bảo thư mục logs tồn tại
+        os.makedirs(Config.LOG_DIR, exist_ok=True)
+        
         # File Handler
         log_file = os.path.join(Config.LOG_DIR, f"execution_{datetime.now().strftime('%Y%m%d')}.log")
         file_handler = logging.FileHandler(log_file, encoding="utf-8")
@@ -25,6 +28,9 @@ def get_logger(name: str = "EngineLogger") -> logging.Logger:
 
 def capture_screenshot(driver, test_name: str) -> str:
     """Chụp ảnh màn hình khi có lỗi và lưu vào thư mục image/"""
+    # Đảm bảo thư mục image tồn tại
+    os.makedirs(Config.IMAGE_DIR, exist_ok=True)
+    
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     file_name = f"{test_name}_{timestamp}.png"
     file_path = os.path.join(Config.IMAGE_DIR, file_name)

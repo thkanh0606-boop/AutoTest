@@ -1,4 +1,4 @@
-import os  # 1. Bổ sung import os ở đầu file
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -7,7 +7,7 @@ from core.config import Config
 
 class DriverFactory:
     @staticmethod
-    def create_driver(headless: bool = False) -> webdriver.Chrome:
+    def create_driver(headless: bool = False, keep_session: bool = True) -> webdriver.Chrome:
         options = Options()
         options.add_argument("--start-maximized")
         options.add_argument("--disable-notifications")
@@ -16,10 +16,10 @@ class DriverFactory:
         options.add_argument("--no-sandbox")
         options.add_argument("--ignore-certificate-errors")
         
-        # --- 2. BỔ SUNG CẤU HÌNH SESSION PROFILE TẠI ĐÂY ---
-        profile_path = os.path.join(Config.BASE_DIR, "chrome_profile")
-        options.add_argument(f"--user-data-dir={profile_path}")
-        # ---------------------------------------------------
+        # Cấu hình lưu Session Profile
+        if keep_session:
+            profile_path = os.path.join(Config.BASE_DIR, "chrome_profile")
+            options.add_argument(f"--user-data-dir={profile_path}")
         
         if headless:
             options.add_argument("--headless=new")
