@@ -1,0 +1,21 @@
+MODIFIED FROM SOURCE:
+- main.py
+- requirements.txt
+- ui/header.py
+- ui/main_window.py
+- ui/sidebar.py
+
+NEW FOR LINH:
+- data/page_elements.json
+- services/__init__.py
+- services/data_store.py
+- services/selenium_runner.py
+- ui/components.py
+- ui/linh_styles.py
+- ui/pages/__init__.py
+- ui/pages/element_management_page.py
+- ui/pages/test_builder_page.py
+- LINH_THU2_WIREFRAME.md
+- LINH_THU3_ELEMENT_MANAGEMENT.md
+- README_LINH.md
+- RUN_WINDOWS.bat

@@ -1,0 +1,47 @@
+{
+  "websites": [
+    {
+      "id": "courses_plt",
+      "name": "PLT Courses",
+      "base_url": "https://courses.plt.pro.vn",
+      "pages": [
+        {
+          "id": "login",
+          "name": "Đăng nhập",
+          "path": "/login",
+          "description": "Trang đăng nhập PLT Courses",
+          "elements": [
+            {
+              "id": "email",
+              "name": "Ô Email",
+              "locator_type": "CSS",
+              "locator_value": "input[type='email']",
+              "recommended_test": "Element tồn tại"
+            },
+            {
+              "id": "password",
+              "name": "Ô Mật khẩu",
+              "locator_type": "CSS",
+              "locator_value": "input[type='password']",
+              "recommended_test": "Element tồn tại"
+            },
+            {
+              "id": "login_button",
+              "name": "Nút Đăng nhập",
+              "locator_type": "CSS",
+              "locator_value": "button[type='submit']",
+              "recommended_test": "Text / Value"
+            },
+            {
+              "id": "forgot_password",
+              "name": "Quên mật khẩu",
+              "locator_type": "XPATH",
+              "locator_value": "//*[contains(normalize-space(.),'Quên mật khẩu')]",
+              "recommended_test": "Text / Value"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
