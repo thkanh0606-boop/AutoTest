@@ -1,11 +1,15 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+<<<<<<< HEAD
 from selenium.webdriver.common.keys import Keys
 from core.config import Config
+=======
+>>>>>>> 4a18db9 (Initial commit: Completed Selenium Pytest Automation Suite for PLT Courses)
 
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
+<<<<<<< HEAD
         self.wait = WebDriverWait(driver, Config.EXPLICIT_WAIT)
 
     def open_url(self, url: str):
@@ -43,3 +47,34 @@ class BasePage:
             return True
         except Exception:
             return False
+=======
+        self.wait = WebDriverWait(driver, 15)
+
+    def highlight_element(self, element, color="yellow", border="3px solid red"):
+        """Tạo hiệu ứng viền nổi bật cho phần tử khi test UI."""
+        try:
+            original_style = element.get_attribute("style")
+            new_style = f"background-color: {color}; border: {border}; {original_style}"
+            self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, new_style)
+        except Exception:
+            pass
+
+    def find_visible(self, locator):
+        """Tìm phần tử đang hiển thị trên màn hình."""
+        element = self.wait.until(EC.visibility_of_element_located(locator))
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+        self.highlight_element(element)
+        return element
+
+    def click(self, locator):
+        """Đợi phần tử clickable và click."""
+        element = self.wait.until(EC.element_to_be_clickable(locator))
+        self.highlight_element(element, color="green")
+        element.click()
+
+    def send_keys(self, locator, text):
+        """Nhập văn bản vào ô input."""
+        element = self.find_visible(locator)
+        element.clear()
+        element.send_keys(text)
+>>>>>>> 4a18db9 (Initial commit: Completed Selenium Pytest Automation Suite for PLT Courses)
