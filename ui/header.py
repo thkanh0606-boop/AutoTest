@@ -79,8 +79,8 @@ class Header(QWidget):
         self.website_combo = QComboBox()
 
         self.website_combo.addItems([
-            "StudyMate",
-            "CoffeeGame"
+            "PLT Fleet Console",
+            "Courses PLT"
         ])
 
         self.website_combo.setFixedWidth(135)
@@ -170,10 +170,8 @@ class Header(QWidget):
         self.page_combo = QComboBox()
 
         self.page_combo.addItems([
-            "Quản lý môn học",
-            "Danh sách sinh viên",
-            "Đăng nhập",
-            "Trang chủ"
+            "Trang tổng quan",
+            "Trang đăng nhập"
         ])
 
         self.page_combo.setFixedWidth(210)
@@ -245,7 +243,7 @@ class Header(QWidget):
         self.url_input = QLineEdit()
 
         self.url_input.setText(
-            "http://localhost/studymate/admin/subjects"
+            "https://courses.plt.pro.vn/dashboard"
         )
 
         self.url_input.setReadOnly(True)

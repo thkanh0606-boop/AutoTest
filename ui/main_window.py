@@ -22,6 +22,7 @@ from PySide6.QtSvg import QSvgRenderer
 # Import local modules
 from ui.sidebar import Sidebar
 from ui.header import Header
+from ui.test_builder_page import TestBuilderPage
 
 
 # --- MÃ SVG VECTOR ICON MẮT ---
@@ -202,7 +203,12 @@ class MainWindow(QMainWindow):
         for page_name, title in pages.items():
 
             # Nếu là trang config thì tạo giao diện Form cấu hình riêng
-            if page_name == "config":
+            if page_name in ("dropdown", "label", "table", "radio", "image", "title", "ui", "menu"):
+                page = TestBuilderPage(
+                    page_name,
+                    title
+                )
+            elif page_name == "config":
                 page = self.create_config_page(title)
             else:
                 page = self.create_placeholder_page(title)
@@ -399,6 +405,22 @@ class MainWindow(QMainWindow):
 
         self.content.setCurrentIndex(
             index
+        )
+
+    def open_module_from_quick_menu(
+        self,
+        page_name
+    ):
+
+        if page_name not in self.page_indexes:
+            return
+
+        self.sidebar.set_active_page(
+            page_name
+        )
+
+        self.change_page(
+            page_name
         )
 
    # =========================================================

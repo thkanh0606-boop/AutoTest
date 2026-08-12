@@ -321,7 +321,7 @@ class Sidebar(QWidget):
     # =========================================================
     # SECTION TITLE
     # =========================================================
-def add_section_title(
+    def add_section_title(
         self,
         layout,
         text
@@ -358,7 +358,7 @@ def add_section_title(
     # MENU ITEM
     # =========================================================
 
-def add_menu_item(
+    def add_menu_item(
         self,
         layout,
         icon,
@@ -524,7 +524,7 @@ def add_menu_item(
     # PAGE CHANGE
     # =========================================================
 
-def handle_page_change(
+    def handle_page_change(
         self,
         page_name
     ):
@@ -541,7 +541,7 @@ def handle_page_change(
     # ACTIVE PAGE
     # =========================================================
 
-def set_active_page(
+    def set_active_page(
         self,
         page_name
     ):
