@@ -1,0 +1,8 @@
+{
+  "rows": [
+    { "loai": "hang", "ten": "Mazda", "hang": "", "trang_thai": "Đang hoạt động" },
+    { "loai": "hang", "ten": "Honda", "hang": "", "trang_thai": "Đang hoạt động" },
+    { "loai": "mau", "ten": "CX-5", "hang": "Mazda", "trang_thai": "Đang hoạt động" },
+    { "loai": "mau", "ten": "City", "hang": "Honda", "trang_thai": "Đang hoạt động" }
+  ]
+}

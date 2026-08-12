@@ -230,14 +230,29 @@ class Sidebar(QWidget):
             "5"
         )
 
-        # --- THÊM MỤC CẤU HÌNH TẠI ĐÂY ---
+        # Linh - Thứ Ba: Element Management
+        self.add_menu_item(
+            layout,
+            "⌖",
+            "Element Management",
+            "elements"
+        )
+
+        # Linh - Thứ Tư & Thứ Năm: Danh mục xe
+        self.add_menu_item(
+            layout,
+            "▥",
+            "Danh mục xe",
+            "vehicle_catalog"
+        )
+
+        # Cấu hình - giữ từ nhánh main
         self.add_menu_item(
             layout,
             "⚙",
             "Cấu hình",
             "config"
         )
-        # ---------------------------------
 
         layout.addSpacing(
             22
@@ -250,6 +265,14 @@ class Sidebar(QWidget):
         self.add_section_title(
             layout,
             "KIỂM THỬ"
+        )
+
+        # Linh - Test UI / Result flow
+        self.add_menu_item(
+            layout,
+            "▶",
+            "Test Builder",
+            "test_builder"
         )
 
         self.add_menu_item(
@@ -332,7 +355,7 @@ class Sidebar(QWidget):
         )
 
         label.setFixedHeight(
-            30
+            26
         )
 
         label.setAlignment(
@@ -370,7 +393,7 @@ class Sidebar(QWidget):
         button = QPushButton()
 
         button.setFixedHeight(
-            42
+            38
         )
 
         button.setCursor(

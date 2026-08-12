@@ -1,10 +1,22 @@
 venv/
 .venv/
+
 __pycache__/
+**/__pycache__/
 *.pyc
+
 .idea/
 .vscode/
-chrome_profile/
+
+*.log
 logs/
+
+# Selenium profile local - giữ phiên đăng nhập Fleet Console
+data/selenium_profile_linh/
+chrome_profile/
+
+# Tài khoản test local - KHÔNG push lên GitHub
+.autotest.env
+
 image/
 *.sqlite3

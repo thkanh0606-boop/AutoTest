@@ -1,0 +1,151 @@
+{
+  "websites": [
+    {
+      "id": "courses_plt",
+      "name": "PLT Courses",
+      "base_url": "https://courses.plt.pro.vn",
+      "pages": [
+        {
+          "id": "login",
+          "name": "Đăng nhập",
+          "path": "/login",
+          "description": "Trang đăng nhập PLT Courses",
+          "elements": [
+            {
+              "id": "email",
+              "name": "Ô Email",
+              "locator_type": "CSS",
+              "locator_value": "input[type='email']",
+              "recommended_test": "Element tồn tại"
+            },
+            {
+              "id": "password",
+              "name": "Ô Mật khẩu",
+              "locator_type": "CSS",
+              "locator_value": "input[type='password']",
+              "recommended_test": "Element tồn tại"
+            },
+            {
+              "id": "login_button",
+              "name": "Nút Đăng nhập",
+              "locator_type": "CSS",
+              "locator_value": "button[type='submit']",
+              "recommended_test": "Text / Value"
+            },
+            {
+              "id": "forgot_password",
+              "name": "Quên mật khẩu",
+              "locator_type": "XPATH",
+              "locator_value": "//*[contains(normalize-space(.),'Quên mật khẩu')]",
+              "recommended_test": "Text / Value"
+            }
+          ]
+        },
+        {
+          "id": "vehicle_catalog",
+          "name": "Danh mục xe",
+          "path": "/cars/catalog",
+          "description": "Trang Danh mục xe PCM: quản lý Hãng xe và Mẫu xe (Linh - Module Owner, Thứ Tư & Thứ Năm).",
+          "elements": [
+            {
+              "id": "brand_table",
+              "name": "Bảng danh sách hãng xe",
+              "locator_type": "XPATH",
+              "locator_value": "//h4[normalize-space()='Danh sách hãng xe']/ancestor::section[1]//table",
+              "recommended_test": "Table",
+              "group": "brand"
+            },
+            {
+              "id": "brand_add_button",
+              "name": "Nút Thêm hãng xe",
+              "locator_type": "XPATH",
+              "locator_value": "//button[.//span[normalize-space()='Thêm hãng xe'] or normalize-space()='Thêm hãng xe']",
+              "recommended_test": "Element tồn tại",
+              "group": "brand"
+            },
+            {
+              "id": "brand_name_input",
+              "name": "Ô tên hãng xe (modal)",
+              "locator_type": "XPATH",
+              "locator_value": "(//*[@role='dialog'] | //div[contains(@class,'ant-modal')])[last()]//label[contains(normalize-space(.),'Tên hãng xe')]/following::input[1]",
+              "recommended_test": "Element tồn tại",
+              "group": "brand"
+            },
+            {
+              "id": "brand_save_button",
+              "name": "Nút Tạo hãng xe (modal)",
+              "locator_type": "XPATH",
+              "locator_value": "(//*[@role='dialog'] | //div[contains(@class,'ant-modal')])[last()]//button[.//span[normalize-space()='Tạo hãng xe'] or normalize-space()='Tạo hãng xe']",
+              "recommended_test": "Table",
+              "group": "brand"
+            },
+            {
+              "id": "model_table",
+              "name": "Bảng danh sách mẫu xe",
+              "locator_type": "XPATH",
+              "locator_value": "//h4[normalize-space()='Danh sách mẫu xe']/ancestor::section[1]//table",
+              "recommended_test": "Table",
+              "group": "model"
+            },
+            {
+              "id": "model_add_button",
+              "name": "Nút Thêm mẫu xe",
+              "locator_type": "XPATH",
+              "locator_value": "//button[.//span[normalize-space()='Thêm mẫu xe'] or normalize-space()='Thêm mẫu xe']",
+              "recommended_test": "Element tồn tại",
+              "group": "model"
+            },
+            {
+              "id": "model_name_input",
+              "name": "Ô tên mẫu xe (modal)",
+              "locator_type": "XPATH",
+              "locator_value": "(//*[@role='dialog'] | //div[contains(@class,'ant-modal')])[last()]//label[contains(normalize-space(.),'Tên mẫu xe')]/following::input[1]",
+              "recommended_test": "Element tồn tại",
+              "group": "model"
+            },
+            {
+              "id": "model_brand_select",
+              "name": "Dropdown chọn hãng xe (modal thêm mẫu)",
+              "locator_type": "XPATH",
+              "locator_value": "(//*[@role='dialog'] | //div[contains(@class,'ant-modal')])[last()]//*[@role='combobox'][1]",
+              "recommended_test": "Dropdown List",
+              "group": "model"
+            },
+            {
+              "id": "model_save_button",
+              "name": "Nút Tạo mẫu xe (modal)",
+              "locator_type": "XPATH",
+              "locator_value": "(//*[@role='dialog'] | //div[contains(@class,'ant-modal')])[last()]//button[.//span[normalize-space()='Tạo mẫu xe'] or normalize-space()='Tạo mẫu xe']",
+              "recommended_test": "Element tồn tại",
+              "group": "model"
+            },
+            {
+              "id": "model_filter_dropdown",
+              "name": "Dropdown lọc mẫu xe theo hãng",
+              "locator_type": "XPATH",
+              "locator_value": "//h4[normalize-space()='Danh sách mẫu xe']/ancestor::section[1]//*[@role='combobox'][1]",
+              "recommended_test": "Dropdown List",
+              "group": "model"
+            },
+            {
+              "id": "brand_nut_chinh_sua_hang_xe",
+              "name": "Nút Chỉnh sửa hãng xe",
+              "locator_type": "XPATH",
+              "locator_value": "//button[.//span[normalize-space()='Chỉnh sửa']]",
+              "recommended_test": "Element tồn tại",
+              "group": "brand"
+            },
+            {
+              "id": "model_dropdown_loc_hang_xe",
+              "name": "Dropdown lọc hãng xe",
+              "locator_type": "XPATH",
+              "locator_value": "//h4[normalize-space()='Danh sách mẫu xe']\n/ancestor::section[1]\n//*[@role='combobox'][1]",
+              "recommended_test": "Element tồn tại",
+              "group": "model"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
