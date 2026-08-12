@@ -23,6 +23,7 @@ class DriverFactory:
         
         if headless:
             options.add_argument("--headless=new")
+            options.add_argument("--window-size=1440,1200")
 
         service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=options)
