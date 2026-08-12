@@ -206,7 +206,7 @@ class Sidebar(QWidget):
             32
         )
 
-        # =====================================================
+    # =====================================================
         # QUẢN LÝ
         # =====================================================
 
@@ -238,12 +238,20 @@ class Sidebar(QWidget):
             "elements"
         )
 
-        # Linh - Thứ Tư & Thứ Năm: Module Owner - Danh mục xe
+        # Linh - Thứ Tư & Thứ Năm: Danh mục xe
         self.add_menu_item(
             layout,
             "▥",
             "Danh mục xe",
             "vehicle_catalog"
+        )
+
+        # Cấu hình - giữ từ nhánh main
+        self.add_menu_item(
+            layout,
+            "⚙",
+            "Cấu hình",
+            "config"
         )
 
         layout.addSpacing(
@@ -336,7 +344,6 @@ class Sidebar(QWidget):
     # =========================================================
     # SECTION TITLE
     # =========================================================
-
     def add_section_title(
         self,
         layout,
@@ -381,7 +388,7 @@ class Sidebar(QWidget):
         text,
         page_name,
         badge=None
-    ):
+        ):
 
         button = QPushButton()
 
@@ -590,7 +597,7 @@ class Sidebar(QWidget):
                         background-color: #1f56bd;
                     }
                 """)
-
+  
             else:
 
                 button.setStyleSheet("""
