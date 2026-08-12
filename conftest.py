@@ -1,5 +1,5 @@
 import pytest
-<<<<<<< HEAD
+
 from core.driver_factory import DriverFactory
 
 @pytest.fixture(scope="function")
@@ -9,7 +9,7 @@ def driver():
     yield _driver
     _driver.quit()
     
-=======
+
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -67,4 +67,3 @@ def pytest_runtest_makereport(item, call):
             
             driver.save_screenshot(file_path)
             print(f"\n[SCREENSHOT] Đã lưu ảnh lỗi tại: {file_path}")
->>>>>>> 4a18db9 (Initial commit: Completed Selenium Pytest Automation Suite for PLT Courses)
