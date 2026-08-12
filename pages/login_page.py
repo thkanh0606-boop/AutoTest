@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from core.config import Config
@@ -27,3 +28,31 @@ class LoginPage(BasePage):
             return self.get_text(self.ERROR_MSG)
         except Exception:
             return ""
+=======
+import time
+from selenium.webdriver.support import expected_conditions as EC
+from pages.base_page import BasePage
+from locators.pcm_locators import PCMLocators
+
+class LoginPage(BasePage):
+    def login(self, username, password, delay=1.0):
+        # Nhập Username / Email
+        email_el = self.wait.until(EC.element_to_be_clickable(PCMLocators.LOGIN_EMAIL_INPUT))
+        self.highlight_element(email_el)
+        email_el.clear()
+        email_el.send_keys(username)
+        time.sleep(delay)
+
+        # Nhập Password
+        pwd_el = self.wait.until(EC.element_to_be_clickable(PCMLocators.LOGIN_PASSWORD_INPUT))
+        self.highlight_element(pwd_el)
+        pwd_el.clear()
+        pwd_el.send_keys(password)
+        time.sleep(delay)
+
+        # Click Submit
+        btn_el = self.wait.until(EC.element_to_be_clickable(PCMLocators.LOGIN_SUBMIT_BTN))
+        self.highlight_element(btn_el, color="green")
+        btn_el.click()
+        time.sleep(delay)
+>>>>>>> 4a18db9 (Initial commit: Completed Selenium Pytest Automation Suite for PLT Courses)
