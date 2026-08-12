@@ -11,11 +11,19 @@ from PySide6.QtWidgets import (
 
 from PySide6.QtCore import Qt
 
+from services.sqlite_service import SQLiteService
+
 
 class Header(QWidget):
 
     def __init__(self):
         super().__init__()
+
+        self.service = SQLiteService()
+
+        # Lưu website/page hiện tại
+        self.websites = []
+        self.pages = []
 
         # =====================================================
         # HEADER
@@ -56,13 +64,7 @@ class Header(QWidget):
 
         website_layout = QVBoxLayout()
 
-        website_layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0
-        )
-
+        website_layout.setContentsMargins(0, 0, 0, 0)
         website_layout.setSpacing(3)
 
         website_label = QLabel("WEBSITE")
@@ -77,11 +79,6 @@ class Header(QWidget):
         """)
 
         self.website_combo = QComboBox()
-
-        self.website_combo.addItems([
-            "StudyMate",
-            "CoffeeGame"
-        ])
 
         self.website_combo.setFixedWidth(135)
         self.website_combo.setFixedHeight(34)
@@ -147,13 +144,7 @@ class Header(QWidget):
 
         page_layout = QVBoxLayout()
 
-        page_layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0
-        )
-
+        page_layout.setContentsMargins(0, 0, 0, 0)
         page_layout.setSpacing(3)
 
         page_label = QLabel("TRANG ĐANG KIỂM THỬ")
@@ -168,13 +159,6 @@ class Header(QWidget):
         """)
 
         self.page_combo = QComboBox()
-
-        self.page_combo.addItems([
-            "Quản lý môn học",
-            "Danh sách sinh viên",
-            "Đăng nhập",
-            "Trang chủ"
-        ])
 
         self.page_combo.setFixedWidth(210)
         self.page_combo.setFixedHeight(34)
@@ -222,13 +206,7 @@ class Header(QWidget):
 
         url_layout = QVBoxLayout()
 
-        url_layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0
-        )
-
+        url_layout.setContentsMargins(0, 0, 0, 0)
         url_layout.setSpacing(3)
 
         url_label = QLabel("URL")
@@ -243,10 +221,6 @@ class Header(QWidget):
         """)
 
         self.url_input = QLineEdit()
-
-        self.url_input.setText(
-            "http://localhost/studymate/admin/subjects"
-        )
 
         self.url_input.setReadOnly(True)
 
@@ -272,11 +246,7 @@ class Header(QWidget):
         url_layout.addWidget(url_label)
         url_layout.addWidget(self.url_input)
 
-        # URL chiếm phần không gian còn lại
-        main_layout.addLayout(
-            url_layout,
-            1
-        )
+        main_layout.addLayout(url_layout, 1)
 
         # =====================================================
         # CONNECTION STATUS
@@ -284,13 +254,7 @@ class Header(QWidget):
 
         status_layout = QVBoxLayout()
 
-        status_layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0
-        )
-
+        status_layout.setContentsMargins(0, 0, 0, 0)
         status_layout.setSpacing(3)
 
         status_label = QLabel("TRẠNG THÁI")
@@ -328,3 +292,132 @@ class Header(QWidget):
         status_layout.addWidget(self.status_button)
 
         main_layout.addLayout(status_layout)
+
+        # =====================================================
+        # LOAD DATABASE
+        # =====================================================
+
+        self.load_websites()
+
+        # Khi đổi Website → load Page
+        self.website_combo.currentIndexChanged.connect(
+            self.on_website_changed
+        )
+
+        # Khi đổi Page → update URL
+        self.page_combo.currentIndexChanged.connect(
+            self.on_page_changed
+        )
+
+    # =========================================================
+    # LOAD WEBSITES
+    # =========================================================
+
+    def load_websites(self):
+
+        self.website_combo.blockSignals(True)
+
+        self.website_combo.clear()
+
+        self.websites = self.service.get_websites()
+
+        for website in self.websites:
+            self.website_combo.addItem(
+                website["name"],
+                website["id"]
+            )
+
+        self.website_combo.blockSignals(False)
+
+        if self.websites:
+            self.load_pages(
+                self.websites[0]["id"]
+            )
+
+    # =========================================================
+    # LOAD PAGES
+    # =========================================================
+
+    def load_pages(self, website_id):
+
+        self.page_combo.blockSignals(True)
+
+        self.page_combo.clear()
+
+        self.pages = self.service.get_pages(
+            website_id
+        )
+
+        for page in self.pages:
+            self.page_combo.addItem(
+                page["name"],
+                page["id"]
+            )
+
+        self.page_combo.blockSignals(False)
+
+        if self.pages:
+            self.page_combo.setCurrentIndex(0)
+            self.update_url()
+
+        else:
+            self.url_input.clear()
+
+    # =========================================================
+    # WEBSITE CHANGED
+    # =========================================================
+
+    def on_website_changed(self, index):
+
+        if index < 0:
+            return
+
+        website_id = self.website_combo.itemData(index)
+
+        if website_id is not None:
+            self.load_pages(website_id)
+
+    # =========================================================
+    # PAGE CHANGED
+    # =========================================================
+
+    def on_page_changed(self, index):
+
+        if index < 0:
+            return
+
+        self.update_url()
+
+    # =========================================================
+    # UPDATE URL
+    # =========================================================
+
+    def update_url(self):
+
+        website_index = self.website_combo.currentIndex()
+        page_index = self.page_combo.currentIndex()
+
+        if website_index < 0 or page_index < 0:
+            self.url_input.clear()
+            return
+
+        website = self.websites[website_index]
+        page = self.pages[page_index]
+
+        base_url = website["url"].rstrip("/")
+        path = page["path"]
+
+        if path == "/":
+            full_url = base_url
+        else:
+            full_url = base_url + "/" + path.lstrip("/")
+
+        self.url_input.setText(full_url)
+
+    # =========================================================
+    # PUBLIC REFRESH METHOD
+    # =========================================================
+
+    def refresh_data(self):
+
+        self.load_websites()

@@ -8,8 +8,7 @@ from PySide6.QtWidgets import (
     QFrame
 )
 
-from PySide6.QtCore import Qt
-
+from ui.website_page_management import WebsitePageManagement
 from ui.sidebar import Sidebar
 from ui.header import Header
 
@@ -56,7 +55,6 @@ class MainWindow(QMainWindow):
 
         # =====================================================
         # RIGHT SIDE
-        #
         # Header + Content
         # =====================================================
 
@@ -167,9 +165,23 @@ class MainWindow(QMainWindow):
 
         for page_name, title in pages.items():
 
-            page = self.create_placeholder_page(
-                title
-            )
+            # =================================================
+            # WEBSITE / PAGE MANAGEMENT
+            # =================================================
+
+            if page_name == "pages":
+
+                page = WebsitePageManagement()
+
+            else:
+
+                page = self.create_placeholder_page(
+                    title
+                )
+
+            # =================================================
+            # ADD TO STACK
+            # =================================================
 
             index = self.content.addWidget(
                 page
