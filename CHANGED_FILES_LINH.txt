@@ -5,6 +5,15 @@ MODIFIED FROM SOURCE:
 - ui/main_window.py
 - ui/sidebar.py
 
+MODIFIED - THỨ TƯ & THỨ NĂM (Danh mục xe):
+- data/page_elements.json (thêm Page "vehicle_catalog" + 10 element brand/model)
+- requirements.txt (thêm pandas, openpyxl cho import)
+- services/data_store.py (thêm ensure_page, elements_by_group)
+- services/selenium_runner.py (thêm locator_by, extract_table_rows, try_choose_option,
+  cleanup_row dùng chung + CrudRequest/CrudWorker cho CRUD + dropdown phụ thuộc)
+- ui/main_window.py (đăng ký trang vehicle_catalog)
+- ui/sidebar.py (thêm menu "Danh mục xe")
+
 NEW FOR LINH:
 - data/page_elements.json
 - services/__init__.py
@@ -19,3 +28,15 @@ NEW FOR LINH:
 - LINH_THU3_ELEMENT_MANAGEMENT.md
 - README_LINH.md
 - RUN_WINDOWS.bat
+
+NEW - THỨ TƯ & THỨ NĂM (Danh mục xe):
+- ui/pages/vehicle_catalog_page.py (trang Danh mục xe: 2 bảng Hãng/Mẫu, import, CRUD)
+- services/catalog_import.py (import Excel/CSV/JSON -> dữ liệu Hãng/Mẫu)
+- data/sample_import/danh_muc_xe_mau.csv
+- data/sample_import/danh_muc_xe_mau.json
+- LINH_THU4_THU5_DANH_MUC_XE.md
+services/selenium_runner.py - thêm luồng chờ đăng nhập trước khi mở Danh mục xe + profile Selenium local
+ui/header.py - thêm select_context để Header đồng bộ đúng Danh mục xe
+ui/main_window.py - khi mở Danh mục xe tự chuyển Header sang vehicle_catalog
+ui/pages/vehicle_catalog_page.py - áp dụng login flow cho Check Locator/CRUD + hướng dẫn UI
+LINH_THU4_THU5_LOGIN_FLOW.md - tài liệu luồng đăng nhập

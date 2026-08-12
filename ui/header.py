@@ -190,6 +190,29 @@ class Header(QWidget):
             url,
         )
 
+    def select_context(self, website_id, page_id):
+        """Chọn Website/Page bằng id và phát context_changed.
+
+        Dùng khi người dùng mở một module chuyên biệt (vd. Danh mục xe) để Header
+        luôn phản ánh đúng trang đang được kiểm thử thay vì còn giữ trang Đăng nhập.
+        """
+        if self.store:
+            self.store.reload()
+
+        website_index = self.website_combo.findData(website_id)
+        if website_index < 0:
+            self.reload_from_store()
+            website_index = self.website_combo.findData(website_id)
+        if website_index >= 0:
+            self.website_combo.setCurrentIndex(website_index)
+
+        # setCurrentIndex website đã gọi _load_pages; tìm Page sau khi danh sách được nạp.
+        page_index = self.page_combo.findData(page_id)
+        if page_index >= 0:
+            self.page_combo.setCurrentIndex(page_index)
+        else:
+            self._emit_context()
+
     def current_context(self):
         return (
             self.website_combo.currentData() or "",

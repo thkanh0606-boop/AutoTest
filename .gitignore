@@ -5,3 +5,9 @@ __pycache__/
 .vscode/
 .venv/
 *.log
+
+# Selenium profile local - giữ phiên đăng nhập Fleet Console, không push cookie/Auth lên Git
+data/selenium_profile_linh/
+
+# Tài khoản test local - KHÔNG push lên GitHub
+.autotest.env

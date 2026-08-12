@@ -91,3 +91,28 @@ class DataStore:
         page["elements"] = new_elements
         self.save()
         return True
+
+    def ensure_page(self, website_id, page_stub):
+        """Đảm bảo một Page tồn tại (idempotent), dùng cho module tự chủ như Danh mục xe.
+
+        Nếu Page đã có (theo id) thì giữ nguyên dữ liệu hiện tại, không ghi đè element
+        đã được người dùng chỉnh sửa. Trả về id của Page.
+        """
+        website = self.find_website(website_id)
+        if not website:
+            raise ValueError(f"Không tìm thấy Website '{website_id}'")
+
+        existing = self.find_page(website_id, page_stub.get("id"))
+        if existing:
+            return existing.get("id")
+
+        website.setdefault("pages", []).append(deepcopy(page_stub))
+        self.save()
+        return page_stub.get("id")
+
+    def elements_by_group(self, website_id, page_id, group):
+        """Trả về danh sách element thuộc một nhóm (vd: 'brand' / 'model')."""
+        page = self.find_page(website_id, page_id)
+        if not page:
+            return []
+        return [e for e in page.get("elements", []) if e.get("group") == group]

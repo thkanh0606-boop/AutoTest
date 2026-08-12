@@ -21,6 +21,21 @@ Hoặc Windows nhấp đúp `RUN_WINDOWS.bat`.
 6. Đổi Expected thành `Đăng ký` -> Run -> FAIL.
 7. Với `Ô Email` + `Element tồn tại`, Expected được khóa thành `Tồn tại`.
 
+## Demo Danh mục xe (Thứ Tư & Thứ Năm)
+
+1. Vào menu `Danh mục xe` (độc lập, không cần chọn Website/Page ở Header).
+2. Hai bảng `Hãng xe` / `Mẫu xe` đã có sẵn locator mẫu — bấm `Kiểm tra locator`
+   trên một dòng để gọi Selenium xác nhận trên PCM thật (chỉnh Locator value nếu
+   PCM đổi DOM, không cần sửa code).
+3. Bấm `Chọn file để Import`, chọn `data/sample_import/danh_muc_xe_mau.csv` (hoặc
+   `.json`) để nạp dữ liệu test Hãng/Mẫu vào bảng preview.
+4. Xuống mục `Kiểm tra CRUD & Dropdown phụ thuộc`: chọn nhóm `Hãng xe` hoặc
+   `Mẫu xe`, chọn Tên từ dữ liệu vừa import (Mẫu xe tự gợi ý Hãng liên kết) rồi
+   bấm `Chạy kiểm tra CRUD`.
+5. Kết quả Expected–Actual hiển thị ở bảng bên dưới: mở form, nhập tên, (Mẫu xe)
+   chọn hãng, xuất hiện trong bảng, và dropdown phụ thuộc đã có giá trị mới; dữ
+   liệu test được tự dọn (best-effort) sau khi chạy.
+
 ## Push branch riêng
 
 ```bash

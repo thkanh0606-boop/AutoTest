@@ -12,6 +12,7 @@ from services.data_store import DataStore
 from ui.header import Header
 from ui.pages.element_management_page import ElementManagementPage
 from ui.pages.test_builder_page import TestBuilderPage
+from ui.pages.vehicle_catalog_page import VehicleCatalogPage
 from ui.sidebar import Sidebar
 
 
@@ -71,6 +72,7 @@ class MainWindow(QMainWindow):
             "dashboard": "Tổng quan",
             "pages": "Quản lý trang",
             "elements": "Element Management",
+            "vehicle_catalog": "Danh mục xe",
             "test_builder": "Test Builder",
             "dropdown": "Kiểm tra Dropdown List",
             "label": "Kiểm tra Label / Text",
@@ -85,12 +87,15 @@ class MainWindow(QMainWindow):
         self.page_indexes = {}
         self.element_page = ElementManagementPage(self.store)
         self.test_builder_page = TestBuilderPage(self.store)
+        self.vehicle_catalog_page = VehicleCatalogPage(self.store)
 
         for page_name, title in pages.items():
             if page_name == "elements":
                 page = self.element_page
             elif page_name == "test_builder":
                 page = self.test_builder_page
+            elif page_name == "vehicle_catalog":
+                page = self.vehicle_catalog_page
             else:
                 page = self.create_placeholder_page(title)
 
@@ -155,6 +160,10 @@ class MainWindow(QMainWindow):
         self.content.setCurrentIndex(self.page_indexes[page_name])
         if page_name == "test_builder":
             self.test_builder_page.refresh_elements()
+        elif page_name == "vehicle_catalog":
+            # Danh mục xe là trang sau đăng nhập; Header phải hiển thị đúng context.
+            self.header.select_context("courses_plt", "vehicle_catalog")
+            self.vehicle_catalog_page.refresh_all()
 
     def change_page(self, page_name):
         self.open_page(page_name)
