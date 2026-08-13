@@ -14,6 +14,16 @@ def driver(request):
     request.node.driver = _driver
     yield _driver
     _driver.quit()
+    
+
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from pages.login_page import LoginPage
+import os
+from datetime import datetime
+
 
 
 @pytest.fixture(scope="function")
@@ -37,4 +47,7 @@ def pytest_runtest_makereport(item, call):
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             file_path = os.path.join(screenshot_dir, f"FAIL_{item.name}_{timestamp}.png")
             driver.save_screenshot(file_path)
+
+            print(f"\n[SCREENSHOT] Đã lưu ảnh lỗi tại: {file_path}")
+
             print(f"\n[SCREENSHOT] Saved failure screenshot: {file_path}")

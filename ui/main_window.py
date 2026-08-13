@@ -22,6 +22,7 @@ from ui.sidebar import Sidebar
 from ui.header import Header
 from ui.test_builder_page import TestBuilderPage
 from ui.vehicle_catalog_page import VehicleCatalogPage
+from ui.test_suite_page import TestSuitePage
 
 
 # --- MÃ SVG VECTOR ICON MẮT ---
@@ -188,6 +189,7 @@ class MainWindow(QMainWindow):
             "pages": "Quản lý trang",
             "config": "Cấu hình hệ thống",
             "vehicle_catalog": "Danh mục xe",
+            "test_suite": "Chạy Test Suite",
             "dropdown": "Kiểm tra Dropdown List",
             "label": "Kiểm tra Label / Text",
             "table": "Kiểm tra Table",
@@ -212,6 +214,8 @@ class MainWindow(QMainWindow):
                 page = self.create_config_page(title)
             elif page_name == "vehicle_catalog":
                 page = VehicleCatalogPage()
+            elif page_name == "test_suite":
+                page = TestSuitePage()
             else:
                 page = self.create_placeholder_page(title)
 
