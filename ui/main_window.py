@@ -1,6 +1,4 @@
 import threading
-from runners.login_runner import run_login_test
-
 from core.config import Config
 
 from PySide6.QtWidgets import (
@@ -23,6 +21,7 @@ from PySide6.QtSvg import QSvgRenderer
 from ui.sidebar import Sidebar
 from ui.header import Header
 from ui.test_builder_page import TestBuilderPage
+from ui.vehicle_catalog_page import VehicleCatalogPage
 
 
 # --- MÃ SVG VECTOR ICON MẮT ---
@@ -188,6 +187,7 @@ class MainWindow(QMainWindow):
             "dashboard": "Tổng quan",
             "pages": "Quản lý trang",
             "config": "Cấu hình hệ thống",
+            "vehicle_catalog": "Danh mục xe",
             "dropdown": "Kiểm tra Dropdown List",
             "label": "Kiểm tra Label / Text",
             "table": "Kiểm tra Table",
@@ -210,6 +210,8 @@ class MainWindow(QMainWindow):
                 )
             elif page_name == "config":
                 page = self.create_config_page(title)
+            elif page_name == "vehicle_catalog":
+                page = VehicleCatalogPage()
             else:
                 page = self.create_placeholder_page(title)
 
@@ -406,6 +408,14 @@ class MainWindow(QMainWindow):
         self.content.setCurrentIndex(
             index
         )
+
+        # Linh - đồng bộ Header khi mở riêng module Danh mục xe.
+        if page_name == "vehicle_catalog":
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("Danh mục xe") < 0:
+                self.header.page_combo.addItem("Danh mục xe")
+            self.header.page_combo.setCurrentText("Danh mục xe")
+            self.header.url_input.setText("https://courses.plt.pro.vn/cars/catalog")
 
     def open_module_from_quick_menu(
         self,
@@ -628,6 +638,8 @@ class MainWindow(QMainWindow):
         Config.TEST_PASSWORD = password
 
         print(f"[TEST RUNNER] Khởi chạy Selenium với URL: {url} | EMAIL: {email}...")
+
+        from runners.login_runner import run_login_test
 
         threading.Thread(
             target=run_login_test,
