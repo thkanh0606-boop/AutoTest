@@ -262,6 +262,13 @@ class Sidebar(QWidget):
 
         self.add_menu_item(
             layout,
+            "▶",
+            "Test Suite",
+            "test_suite"
+        )
+
+        self.add_menu_item(
+            layout,
             "⌄",
             "Dropdown List",
             "dropdown"

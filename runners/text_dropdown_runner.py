@@ -280,6 +280,8 @@ def run_label_text_test(
     case_sensitive: bool = True,
     headless: bool = False,
     persist: bool = True,
+    step_delay: float = 0,
+    close_delay: float = 0,
 ):
     driver = None
     repository = TestResultRepository()
@@ -298,13 +300,31 @@ def run_label_text_test(
         driver = DriverFactory.create_driver(headless=headless, keep_session=True)
         driver.get(url)
         _ensure_logged_in(driver, url)
+        if step_delay > 0:
+            time.sleep(step_delay)
 
         if worker:
             worker.log_signal.emit(f"[{module.upper()}] Kiểm tra element: {element_name}")
             worker.progress_signal.emit(60)
 
         element = driver.find_element(_by(locator_type), locator_value)
+        if step_delay > 0:
+            # Bring the current target into view and highlight it so a person
+            # watching the Test Suite can follow what Selenium is checking.
+            try:
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});"
+                    "arguments[0].style.outline='3px solid #ef4444';"
+                    "arguments[0].style.outlineOffset='4px';",
+                    element,
+                )
+            except Exception:
+                # Visual assistance must never change the test result.
+                pass
+            time.sleep(step_delay)
         actual = _read_actual(driver, element, module, action_type=action_type, target_path=target_path)
+        if step_delay > 0:
+            time.sleep(step_delay)
 
         if action_type in ("click_url_contains", "deep_link_url_contains"):
             status = _compare_navigation_expected(expected, actual, trim=trim, case_sensitive=case_sensitive)
@@ -340,6 +360,8 @@ def run_label_text_test(
 
     finally:
         if driver:
+            if close_delay > 0:
+                time.sleep(close_delay)
             driver.quit()
 
     effective_case_id = case_id or f"{module}:{page_key}:{element_key}"

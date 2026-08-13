@@ -1,6 +1,8 @@
 import os
+import json
 import sqlite3
 import uuid
+from contextlib import contextmanager
 from datetime import datetime
 from typing import Dict, Iterable, List, Optional
 
@@ -14,8 +16,17 @@ class TestResultRepository:
         self.db_path = db_path or os.path.join(Config.BASE_DIR, "autotest.sqlite3")
         self.init_db()
 
+    @contextmanager
     def connect(self):
-        return sqlite3.connect(self.db_path)
+        connection = sqlite3.connect(self.db_path)
+        try:
+            yield connection
+            connection.commit()
+        except Exception:
+            connection.rollback()
+            raise
+        finally:
+            connection.close()
 
     def init_db(self):
         with self.connect() as connection:
@@ -79,6 +90,93 @@ class TestResultRepository:
                 """
             )
             self._apply_migrations(connection)
+            self._init_suite_tables(connection)
+
+    def _init_suite_tables(self, connection: sqlite3.Connection):
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS suite_definitions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                suite_key TEXT NOT NULL UNIQUE,
+                name TEXT NOT NULL,
+                source_path TEXT NOT NULL DEFAULT '',
+                case_count INTEGER NOT NULL DEFAULT 0,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS suite_cases (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                suite_id INTEGER NOT NULL,
+                case_order INTEGER NOT NULL,
+                case_id TEXT NOT NULL,
+                title TEXT NOT NULL,
+                module TEXT NOT NULL,
+                page_key TEXT NOT NULL,
+                expected TEXT NOT NULL,
+                source_sheet TEXT NOT NULL DEFAULT '',
+                payload_json TEXT NOT NULL,
+                FOREIGN KEY(suite_id) REFERENCES suite_definitions(id) ON DELETE CASCADE
+            )
+            """
+        )
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS suite_runs (
+                run_id TEXT PRIMARY KEY,
+                suite_id INTEGER,
+                suite_name TEXT NOT NULL,
+                run_mode TEXT NOT NULL,
+                status TEXT NOT NULL,
+                total INTEGER NOT NULL DEFAULT 0,
+                passed INTEGER NOT NULL DEFAULT 0,
+                failed INTEGER NOT NULL DEFAULT 0,
+                error INTEGER NOT NULL DEFAULT 0,
+                skipped INTEGER NOT NULL DEFAULT 0,
+                started_at TEXT NOT NULL,
+                finished_at TEXT,
+                duration_ms INTEGER NOT NULL DEFAULT 0,
+                message TEXT NOT NULL DEFAULT '',
+                FOREIGN KEY(suite_id) REFERENCES suite_definitions(id)
+            )
+            """
+        )
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS suite_results (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                run_id TEXT NOT NULL,
+                result_index INTEGER NOT NULL,
+                case_id TEXT NOT NULL,
+                title TEXT NOT NULL,
+                module TEXT NOT NULL,
+                page_key TEXT NOT NULL,
+                expected TEXT NOT NULL,
+                actual TEXT NOT NULL,
+                status TEXT NOT NULL,
+                message TEXT NOT NULL,
+                error_message TEXT NOT NULL DEFAULT '',
+                screenshot_path TEXT NOT NULL DEFAULT '',
+                log_text TEXT NOT NULL DEFAULT '',
+                started_at TEXT NOT NULL,
+                finished_at TEXT NOT NULL,
+                duration_ms INTEGER NOT NULL DEFAULT 0,
+                FOREIGN KEY(run_id) REFERENCES suite_runs(run_id) ON DELETE CASCADE
+            )
+            """
+        )
+        connection.execute(
+            "CREATE INDEX IF NOT EXISTS idx_suite_cases_suite_id ON suite_cases(suite_id, case_order)"
+        )
+        connection.execute(
+            "CREATE INDEX IF NOT EXISTS idx_suite_runs_started ON suite_runs(started_at DESC)"
+        )
+        connection.execute(
+            "CREATE INDEX IF NOT EXISTS idx_suite_results_run ON suite_results(run_id, result_index)"
+        )
 
     def _column_names(self, connection: sqlite3.Connection, table_name: str) -> set:
         rows = connection.execute(f"PRAGMA table_info({table_name})").fetchall()
@@ -312,6 +410,280 @@ class TestResultRepository:
                 FROM test_results
                 WHERE run_id = ?
                 ORDER BY id ASC
+                """,
+                (run_id,),
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    # ------------------------------------------------------------------
+    # Test Suite definitions, grouped runs and reports
+    # ------------------------------------------------------------------
+    def save_suite_definition(
+        self,
+        name: str,
+        cases: List[dict],
+        source_path: str = "",
+        suite_key: str = "",
+    ) -> int:
+        stable_source = os.path.abspath(source_path) if source_path else name
+        stable_key = suite_key or uuid.uuid5(uuid.NAMESPACE_URL, stable_source).hex
+        now = datetime.now().isoformat(timespec="seconds")
+        with self.connect() as connection:
+            connection.execute(
+                """
+                INSERT INTO suite_definitions
+                    (suite_key, name, source_path, case_count, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(suite_key) DO UPDATE SET
+                    name = excluded.name,
+                    source_path = excluded.source_path,
+                    case_count = excluded.case_count,
+                    updated_at = excluded.updated_at
+                """,
+                (stable_key, name, source_path, len(cases), now, now),
+            )
+            suite_id = int(
+                connection.execute(
+                    "SELECT id FROM suite_definitions WHERE suite_key = ?", (stable_key,)
+                ).fetchone()[0]
+            )
+            connection.execute("DELETE FROM suite_cases WHERE suite_id = ?", (suite_id,))
+            for index, case in enumerate(cases):
+                module = case.get("module") or case.get("area") or case.get("page_key") or "General"
+                connection.execute(
+                    """
+                    INSERT INTO suite_cases
+                        (suite_id, case_order, case_id, title, module, page_key,
+                         expected, source_sheet, payload_json)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        suite_id,
+                        index,
+                        str(case.get("tc_id") or case.get("case_id") or f"CASE-{index + 1:03d}"),
+                        str(case.get("title", "")),
+                        str(module),
+                        str(case.get("page_key", "")),
+                        str(case.get("expected", "")),
+                        str(case.get("source_sheet", "")),
+                        json.dumps(case, ensure_ascii=False),
+                    ),
+                )
+        return suite_id
+
+    def list_suite_definitions(self) -> List[dict]:
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(
+                """
+                SELECT id, suite_key, name, source_path, case_count, created_at, updated_at
+                FROM suite_definitions
+                ORDER BY name COLLATE NOCASE
+                """
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def suite_definition(self, suite_id: int) -> Optional[dict]:
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            row = connection.execute(
+                "SELECT * FROM suite_definitions WHERE id = ?", (suite_id,)
+            ).fetchone()
+        return dict(row) if row else None
+
+    def suite_cases(self, suite_id: int) -> List[dict]:
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(
+                """
+                SELECT payload_json FROM suite_cases
+                WHERE suite_id = ? ORDER BY case_order
+                """,
+                (suite_id,),
+            ).fetchall()
+        return [json.loads(row["payload_json"]) for row in rows]
+
+    def remove_suite_definition_by_source(self, source_path: str) -> bool:
+        """Remove a source-backed suite from the picker while preserving run history."""
+        absolute_source = os.path.normcase(os.path.normpath(os.path.abspath(source_path)))
+        with self.connect() as connection:
+            rows = connection.execute(
+                "SELECT id, source_path FROM suite_definitions WHERE source_path <> ''"
+            ).fetchall()
+            suite_ids = [
+                int(row[0])
+                for row in rows
+                if os.path.normcase(os.path.normpath(os.path.abspath(row[1]))) == absolute_source
+            ]
+            if not suite_ids:
+                return False
+            for suite_id in suite_ids:
+                connection.execute(
+                    "UPDATE suite_runs SET suite_id = NULL WHERE suite_id = ?", (suite_id,)
+                )
+                connection.execute("DELETE FROM suite_cases WHERE suite_id = ?", (suite_id,))
+                connection.execute("DELETE FROM suite_definitions WHERE id = ?", (suite_id,))
+        return True
+
+    def start_suite_run(self, suite_id: int, suite_name: str, run_mode: str, total: int) -> str:
+        run_id = f"suite-{uuid.uuid4().hex[:16]}"
+        now = datetime.now().isoformat(timespec="seconds")
+        with self.connect() as connection:
+            connection.execute(
+                """
+                INSERT INTO suite_runs
+                    (run_id, suite_id, suite_name, run_mode, status, total, started_at)
+                VALUES (?, ?, ?, ?, 'RUNNING', ?, ?)
+                """,
+                (run_id, suite_id, suite_name, run_mode, total, now),
+            )
+        return run_id
+
+    def save_suite_result(self, run_id: str, result_index: int, payload: dict) -> int:
+        started_at = payload.get("started_at") or datetime.now().isoformat(timespec="seconds")
+        finished_at = payload.get("finished_at") or datetime.now().isoformat(timespec="seconds")
+        with self.connect() as connection:
+            cursor = connection.execute(
+                """
+                INSERT INTO suite_results
+                    (run_id, result_index, case_id, title, module, page_key,
+                     expected, actual, status, message, error_message,
+                     screenshot_path, log_text, started_at, finished_at, duration_ms)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    run_id,
+                    result_index,
+                    payload.get("case_id", ""),
+                    payload.get("title", ""),
+                    payload.get("module", "General"),
+                    payload.get("page_key", ""),
+                    payload.get("expected", ""),
+                    payload.get("actual", ""),
+                    payload.get("status", "ERROR"),
+                    payload.get("message", ""),
+                    payload.get("error_message", ""),
+                    payload.get("screenshot_path", ""),
+                    payload.get("log_text", ""),
+                    started_at,
+                    finished_at,
+                    int(payload.get("duration_ms", 0)),
+                ),
+            )
+        return int(cursor.lastrowid)
+
+    def finish_suite_run(self, run_id: str, status: str = "", message: str = "") -> dict:
+        now = datetime.now().isoformat(timespec="seconds")
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            counts = {
+                row["status"]: row["count"]
+                for row in connection.execute(
+                    "SELECT status, COUNT(*) AS count FROM suite_results WHERE run_id = ? GROUP BY status",
+                    (run_id,),
+                ).fetchall()
+            }
+            run = connection.execute(
+                "SELECT started_at FROM suite_runs WHERE run_id = ?", (run_id,)
+            ).fetchone()
+            started = datetime.fromisoformat(run["started_at"]) if run else datetime.now()
+            duration_ms = max(0, int((datetime.now() - started).total_seconds() * 1000))
+            passed = counts.get("PASSED", 0)
+            failed = counts.get("FAILED", 0)
+            error = counts.get("ERROR", 0)
+            skipped = counts.get("SKIPPED", 0)
+            effective_status = status or (
+                "FAILED" if failed or error else "PASSED_WITH_SKIPS" if skipped else "PASSED"
+            )
+            connection.execute(
+                """
+                UPDATE suite_runs SET status = ?, passed = ?, failed = ?, error = ?,
+                    skipped = ?, finished_at = ?, duration_ms = ?, message = ?
+                WHERE run_id = ?
+                """,
+                (effective_status, passed, failed, error, skipped, now, duration_ms, message, run_id),
+            )
+            summary = connection.execute(
+                "SELECT * FROM suite_runs WHERE run_id = ?", (run_id,)
+            ).fetchone()
+        return dict(summary) if summary else {}
+
+    def list_suite_runs(
+        self,
+        suite_name: str = "",
+        status: str = "",
+        module: str = "",
+        limit: int = 200,
+    ) -> List[dict]:
+        conditions = []
+        parameters: List[object] = []
+        if suite_name:
+            conditions.append("r.suite_name = ?")
+            parameters.append(suite_name)
+        if status:
+            conditions.append("r.status = ?")
+            parameters.append(status)
+        if module:
+            conditions.append(
+                "EXISTS (SELECT 1 FROM suite_results x WHERE x.run_id = r.run_id AND x.module = ?)"
+            )
+            parameters.append(module)
+        where = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+        parameters.append(limit)
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(
+                f"""
+                SELECT r.* FROM suite_runs r
+                {where}
+                ORDER BY r.started_at DESC LIMIT ?
+                """,
+                parameters,
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def suite_run(self, run_id: str) -> Optional[dict]:
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            row = connection.execute(
+                "SELECT * FROM suite_runs WHERE run_id = ?", (run_id,)
+            ).fetchone()
+        return dict(row) if row else None
+
+    def suite_run_results(self, run_id: str, status: str = "", module: str = "") -> List[dict]:
+        conditions = ["run_id = ?"]
+        parameters: List[object] = [run_id]
+        if status:
+            conditions.append("status = ?")
+            parameters.append(status)
+        if module:
+            conditions.append("module = ?")
+            parameters.append(module)
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(
+                f"""
+                SELECT * FROM suite_results
+                WHERE {' AND '.join(conditions)}
+                ORDER BY result_index
+                """,
+                parameters,
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def suite_run_module_summary(self, run_id: str) -> List[dict]:
+        with self.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(
+                """
+                SELECT module, COUNT(*) AS total,
+                    SUM(CASE WHEN status = 'PASSED' THEN 1 ELSE 0 END) AS passed,
+                    SUM(CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END) AS failed,
+                    SUM(CASE WHEN status = 'ERROR' THEN 1 ELSE 0 END) AS error,
+                    SUM(CASE WHEN status = 'SKIPPED' THEN 1 ELSE 0 END) AS skipped,
+                    SUM(duration_ms) AS duration_ms
+                FROM suite_results WHERE run_id = ?
+                GROUP BY module ORDER BY module COLLATE NOCASE
                 """,
                 (run_id,),
             ).fetchall()
