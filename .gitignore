@@ -1,6 +1,26 @@
 venv/
+.venv/
+ENV/
+
 __pycache__/
-*.pyc
-.idea/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
 .vscode/
+<<<<<<< HEAD
 autotest.db
+=======
+.idea/
+
+# File local chứa tài khoản test - KHÔNG push GitHub
+.autotest.env
+
+# Chrome profile/session local
+chrome_profile/
+data/selenium_profile_linh/
+
+logs/
+image/
+*.sqlite3
+>>>>>>> origin/main
