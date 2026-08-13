@@ -1,5 +1,6 @@
 import csv
 import os
+import re
 import zipfile
 from pathlib import Path
 from xml.etree import ElementTree
@@ -13,10 +14,23 @@ SPREADSHEET_NS = {
 def _rows_to_text(rows):
     lines = []
     for row in rows:
-        values = [str(value).strip() for value in row if str(value).strip()]
-        if values:
-            lines.append(" ".join(values))
+        values = [str(value).strip() for value in row]
+        while values and not values[-1]:
+            values.pop()
+        if any(values):
+            lines.append("\t".join(values))
     return "\n".join(lines)
+
+
+def _column_index(cell_ref: str) -> int:
+    match = re.match(r"([A-Z]+)", cell_ref or "")
+    if not match:
+        return 0
+
+    index = 0
+    for char in match.group(1):
+        index = index * 26 + (ord(char) - ord("A") + 1)
+    return index - 1
 
 
 def _load_csv(path: str):
@@ -83,7 +97,12 @@ def _load_xlsx(path: str):
         sheet = ElementTree.fromstring(archive.read(sheet_names[0]))
         rows = []
         for row_node in sheet.findall(".//main:row", SPREADSHEET_NS):
-            row = [_cell_value(cell, shared_strings) for cell in row_node.findall("main:c", SPREADSHEET_NS)]
+            row = []
+            for cell in row_node.findall("main:c", SPREADSHEET_NS):
+                column_index = _column_index(cell.attrib.get("r", ""))
+                while len(row) <= column_index:
+                    row.append("")
+                row[column_index] = _cell_value(cell, shared_strings)
             rows.append(row)
         return _rows_to_text(rows)
 
