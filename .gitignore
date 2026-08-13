@@ -1,33 +1,22 @@
-<<<<<<< HEAD
-venv/
-.venv/
-__pycache__/
-*.pyc
-.idea/
-.vscode/
-chrome_profile/
-logs/
-image/
-*.sqlite3
-=======
-# Môi trường ảo Python
 venv/
 .venv/
 ENV/
 
-# Python cache & compiled code
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 
-# Báo cáo & Screenshot sinh ra khi chạy test
-reports/*.html
-reports/screenshots/
-*.png
-*.log
-
-# Cấu hình IDE
 .vscode/
 .idea/
->>>>>>> 4a18db9 (Initial commit: Completed Selenium Pytest Automation Suite for PLT Courses)
+
+# File local chứa tài khoản test - KHÔNG push GitHub
+.autotest.env
+
+# Chrome profile/session local
+chrome_profile/
+data/selenium_profile_linh/
+
+logs/
+image/
+*.sqlite3
