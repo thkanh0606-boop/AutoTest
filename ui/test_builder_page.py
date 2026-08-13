@@ -363,6 +363,7 @@ class TestBuilderPage(QWidget):
 
         page = self.page_by_index[self.page_combo.currentIndex()]
         element = self.element_by_index[self.element_combo.currentIndex()]
+        expected_text = self.expected_input.toPlainText()
 
         self.run_button.setEnabled(False)
         self.progress.setValue(0)
@@ -379,7 +380,12 @@ class TestBuilderPage(QWidget):
             element_name=element.name,
             locator_type=self.locator_type_combo.currentText(),
             locator_value=self.locator_input.text().strip(),
-            expected=self.expected_input.toPlainText(),
+            expected=expected_text,
+            case_id=element.case_id,
+            steps=element.steps,
+            expected_result=expected_text,
+            action_type=element.action_type,
+            target_path=element.target_path,
             trim=self.trim_checkbox.isChecked(),
             case_sensitive=self.case_checkbox.isChecked(),
             headless=False,
@@ -392,7 +398,7 @@ class TestBuilderPage(QWidget):
         self.worker.start()
 
     def _handle_result(self, payload):
-        self.actual_value.setText(payload.get("actual", ""))
+        self.actual_value.setText((payload.get("actual", "") or "").replace("\t", "\n"))
         status = payload.get("status", "FAILED")
         pairs = payload.get("pairs") or []
         if pairs:
