@@ -169,7 +169,6 @@ class TestSuitePage(QWidget):
         self.tabs.addTab(self._build_suite_tab(), "Test Suite")
         self.tabs.addTab(self._build_history_tab(), "Lịch sử chạy")
         self.tabs.addTab(self._build_report_tab(), "Báo cáo")
-        self.tabs.addTab(self._build_guide_tab(), "User Guide")
         root.addWidget(self.tabs, 1)
 
     def _card(self) -> tuple[QFrame, QVBoxLayout]:
