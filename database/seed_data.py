@@ -19,14 +19,15 @@ def seed_pcm_data():
     db.add(pcm_web)
     db.commit()
 
-    # 2. Khởi tạo Pages
+    # 2. Khởi tạo Pages (Đã bổ sung Quản lý người dùng)
     pages_data = [
         {"name": "Đăng nhập", "url_path": "/login"},
         {"name": "Bảng điều khiển", "url_path": "/dashboard"},
         {"name": "Quản lý đặt xe", "url_path": "/bookings"},
         {"name": "Quản lý xe", "url_path": "/cars"},
         {"name": "Danh mục xe", "url_path": "/catalog"},
-        {"name": "Quản lý tài chính", "url_path": "/finance"}
+        {"name": "Quản lý tài chính", "url_path": "/finance"},
+        {"name": "Quản lý người dùng", "url_path": "/users"}
     ]
     for p in pages_data:
         db.add(Page(website_id=pcm_web.id, name=p["name"], url_path=p["url_path"]))
