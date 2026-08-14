@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import time
 import csv
 from io import StringIO
 
@@ -65,6 +66,78 @@ def _compare_line_pairs(expected: str, actual: str, trim: bool = True, case_sens
         )
 
     status = "PASSED" if pairs and all(pair["status"] == "PASS" for pair in pairs) else "FAILED"
+    return status, pairs
+
+
+def _compare_unordered_lines(expected: str, actual: str, trim: bool = True, case_sensitive: bool = True):
+    """So sánh 2 danh sách không phụ thuộc thứ tự.
+
+    Dùng cho Dropdown Hãng của Danh mục xe vì mục tiêu là kiểm tra tính đồng bộ
+    với danh sách Hãng đang hoạt động, không phải thứ tự hiển thị.
+    """
+    expected_lines = _split_compare_lines(expected)
+    actual_lines = _split_compare_lines(actual)
+
+    normalized_actual = [
+        _normalize_text(value, trim=trim, case_sensitive=case_sensitive)
+        for value in actual_lines
+    ]
+    used_actual_indexes = set()
+    pairs = []
+
+    for expected_line in expected_lines:
+        expected_compare = _normalize_text(
+            expected_line,
+            trim=trim,
+            case_sensitive=case_sensitive,
+        )
+
+        matched_index = None
+        for index, actual_compare in enumerate(normalized_actual):
+            if index in used_actual_indexes:
+                continue
+            if expected_compare and expected_compare == actual_compare:
+                matched_index = index
+                break
+
+        if matched_index is None:
+            pairs.append(
+                {
+                    "index": len(pairs) + 1,
+                    "expected": expected_line,
+                    "actual": "(thiếu trong dropdown)",
+                    "status": "FAIL",
+                }
+            )
+        else:
+            used_actual_indexes.add(matched_index)
+            pairs.append(
+                {
+                    "index": len(pairs) + 1,
+                    "expected": expected_line,
+                    "actual": actual_lines[matched_index],
+                    "status": "PASS",
+                }
+            )
+
+    # Option xuất hiện trong dropdown nhưng không thuộc danh sách Hãng active.
+    for index, actual_line in enumerate(actual_lines):
+        if index in used_actual_indexes:
+            continue
+        pairs.append(
+            {
+                "index": len(pairs) + 1,
+                "expected": "(không mong đợi)",
+                "actual": actual_line,
+                "status": "FAIL",
+            }
+        )
+
+    status = (
+        "PASSED"
+        if pairs and all(pair["status"] == "PASS" for pair in pairs)
+        else "FAILED"
+    )
     return status, pairs
 
 
@@ -212,6 +285,64 @@ def _ensure_logged_in(driver, target_url: str):
     driver.get(target_url)
 
 
+
+def _active_brand_names_from_catalog(driver):
+    """Lấy tên các Hãng đang hoạt động trực tiếp từ bảng Danh mục xe.
+
+    Ưu tiên bảng HTML/Ant Design nằm ngay sau tiêu đề "Danh sách hãng xe".
+    Tên Hãng lấy từ dòng đầu tiên của cột đầu tiên.
+    """
+    heading_xpath = (
+        "(//*[self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6]"
+        "[normalize-space()='Danh sách hãng xe'])[1]"
+    )
+
+    # Cách 1: bảng chuẩn/Ant Design.
+    rows = driver.find_elements(
+        By.XPATH,
+        heading_xpath + "/following::table[1]//tbody/tr",
+    )
+
+    # Cách 2: role=row nếu UI library không render thẻ table truyền thống.
+    if not rows:
+        rows = driver.find_elements(
+            By.XPATH,
+            heading_xpath + "/following::*[@role='row'][position()>1]",
+        )
+
+    active_names = []
+    for row in rows:
+        row_text = (row.text or "").strip()
+        if not row_text:
+            continue
+
+        # Chỉ lấy Hãng active; Hãng ngừng hoạt động tuyệt đối không được dùng.
+        if "Đang hoạt động" not in row_text:
+            continue
+        if "Ngừng hoạt động" in row_text:
+            continue
+
+        cells = row.find_elements(By.CSS_SELECTOR, "td, [role='cell']")
+        first_cell_text = cells[0].text if cells else row_text
+        lines = [line.strip() for line in (first_cell_text or "").splitlines() if line.strip()]
+        if not lines:
+            continue
+
+        brand_name = lines[0]
+        if brand_name and brand_name not in active_names:
+            active_names.append(brand_name)
+
+    return active_names
+
+
+def _is_catalog_brand_dropdown(module: str, page_key: str, element_key: str) -> bool:
+    return (
+        module == "dropdown"
+        and page_key == "plt_vehicle_catalog"
+        and element_key == "catalog_brand_filter"
+    )
+
+
 def _read_actual(driver, element, module: str, action_type: str = "text_equals", target_path: str = "") -> str:
     if action_type == "click_url_contains":
         WebDriverWait(driver, Config.EXPLICIT_WAIT).until(lambda _driver: element.is_displayed() and element.is_enabled())
@@ -322,11 +453,47 @@ def run_label_text_test(
                 # Visual assistance must never change the test result.
                 pass
             time.sleep(step_delay)
-        actual = _read_actual(driver, element, module, action_type=action_type, target_path=target_path)
+        auto_catalog_dropdown = _is_catalog_brand_dropdown(
+            module,
+            page_key,
+            element_key,
+        )
+
+        # Với Dropdown lọc Hãng của Danh mục xe:
+        # Expected được lấy tự động từ các Hãng đang hoạt động trên bảng Hãng xe.
+        if auto_catalog_dropdown:
+            active_brands = _active_brand_names_from_catalog(driver)
+            if not active_brands:
+                raise RuntimeError(
+                    "Không đọc được danh sách Hãng đang hoạt động từ bảng Hãng xe."
+                )
+
+            expected = "\n".join(active_brands)
+            expected_result = expected
+
+            if worker:
+                worker.log_signal.emit(
+                    f"[DROPDOWN] Tự lấy {len(active_brands)} Hãng đang hoạt động làm Expected."
+                )
+
+        actual = _read_actual(
+            driver,
+            element,
+            module,
+            action_type=action_type,
+            target_path=target_path,
+        )
         if step_delay > 0:
             time.sleep(step_delay)
 
-        if action_type in ("click_url_contains", "deep_link_url_contains"):
+        if auto_catalog_dropdown:
+            status, pairs = _compare_unordered_lines(
+                expected,
+                actual,
+                trim=trim,
+                case_sensitive=case_sensitive,
+            )
+        elif action_type in ("click_url_contains", "deep_link_url_contains"):
             status = _compare_navigation_expected(expected, actual, trim=trim, case_sensitive=case_sensitive)
         elif action_type == "contains_all":
             status, pairs = _compare_contains_all(expected, actual, trim=trim, case_sensitive=case_sensitive)
@@ -342,7 +509,12 @@ def run_label_text_test(
             status = "PASSED" if actual_compare == expected_compare else "FAILED"
 
         if status == "PASSED":
-            message = "Expected khớp Actual"
+            if auto_catalog_dropdown:
+                message = "Dropdown đồng bộ với các Hãng đang hoạt động"
+            else:
+                message = "Expected khớp Actual"
+        elif auto_catalog_dropdown:
+            message = "Dropdown chưa đồng bộ với danh sách Hãng đang hoạt động"
         elif not (expected or "").strip():
             message = "Expected Result đang trống"
         else:
@@ -387,6 +559,7 @@ def run_label_text_test(
         "screenshot_path": screenshot_path,
         "pairs": pairs,
         "database": repository.db_path,
+        "auto_expected": _is_catalog_brand_dropdown(module, page_key, element_key),
     }
 
     if persist:

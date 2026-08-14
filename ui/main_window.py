@@ -144,6 +144,16 @@ class MainWindow(QMainWindow):
 
         self.create_pages()
 
+        # Header chỉ đổi dữ liệu của các Test Builder dùng chung.
+        # Không chuyển content sang Danh mục xe riêng và không đụng Test Suite.
+        self.header.page_changed.connect(
+            self.sync_shared_test_page
+        )
+        self.sync_shared_test_page(
+            self.header.current_page_key(),
+            self.header.url_input.text(),
+        )
+
         # =====================================================
         # SIDEBAR ROUTING
         # =====================================================
@@ -201,6 +211,7 @@ class MainWindow(QMainWindow):
         }
 
         self.page_indexes = {}
+        self.test_builder_pages = {}
 
         for page_name, title in pages.items():
 
@@ -210,6 +221,7 @@ class MainWindow(QMainWindow):
                     page_name,
                     title
                 )
+                self.test_builder_pages[page_name] = page
             elif page_name == "config":
                 page = self.create_config_page(title)
             elif page_name == "vehicle_catalog":
@@ -396,6 +408,15 @@ class MainWindow(QMainWindow):
     # =========================================================
     # ROUTING
     # =========================================================
+
+    def sync_shared_test_page(
+        self,
+        page_key,
+        _url
+    ):
+        """Một giao diện Test Builder dùng cho Dashboard / Login / Danh mục xe."""
+        for builder in self.test_builder_pages.values():
+            builder.set_page_by_key(page_key)
 
     def change_page(
         self,

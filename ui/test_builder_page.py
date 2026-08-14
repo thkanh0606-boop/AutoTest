@@ -297,6 +297,17 @@ class TestBuilderPage(QWidget):
             self.page_combo.addItem(page.name)
         self._on_page_changed(0)
 
+    def set_page_by_key(self, page_key: str):
+        """Giữ nguyên UI hiện tại, chỉ nạp dữ liệu của trang Header đang chọn."""
+        for index, page in enumerate(self.page_by_index):
+            if page.key == page_key:
+                if self.page_combo.currentIndex() == index:
+                    self._on_page_changed(index)
+                else:
+                    self.page_combo.setCurrentIndex(index)
+                return True
+        return False
+
     def _on_page_changed(self, index):
         if index < 0 or index >= len(self.page_by_index):
             return
@@ -397,26 +408,107 @@ class TestBuilderPage(QWidget):
         self.worker.finished_signal.connect(self._handle_finished)
         self.worker.start()
 
+    @staticmethod
+    def _friendly_selenium_text(value):
+        """Rút gọn lỗi Selenium để tester đọc được, không đổ stacktrace lên UI."""
+        text = str(value or "").strip()
+        if not text:
+            return ""
+
+        lower = text.lower()
+
+        if "no such element" in lower or "unable to locate element" in lower:
+            return "Không tìm thấy element với locator đã lưu."
+
+        if "timeout" in lower or "timed out" in lower:
+            return "Hết thời gian chờ element."
+
+        if "element click intercepted" in lower:
+            return "Element đang bị che hoặc chưa thể click."
+
+        if "element not interactable" in lower:
+            return "Element tồn tại nhưng hiện chưa thể thao tác."
+
+        if "stale element reference" in lower:
+            return "Element đã thay đổi sau khi trang cập nhật."
+
+        if "invalid selector" in lower:
+            return "Locator không hợp lệ."
+
+        if "session not created" in lower:
+            return "Không khởi tạo được phiên Chrome Selenium."
+
+        # Loại phần Stacktrace / ChromeDriver nội bộ.
+        for token in ("Stacktrace:", "chromedriver!", "KERNEL32!", "ntdll!"):
+            if token in text:
+                text = text.split(token, 1)[0].strip()
+
+        # UI chỉ giữ tối đa 2 dòng đầu.
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        if len(lines) > 2:
+            lines = lines[:2]
+
+        short = "\n".join(lines).strip()
+        return short or "Selenium gặp lỗi khi lấy dữ liệu."
+
     def _handle_result(self, payload):
-        self.actual_value.setText((payload.get("actual", "") or "").replace("\t", "\n"))
-        status = payload.get("status", "FAILED")
+        raw_actual = str(payload.get("actual", "") or "")
+        raw_message = str(payload.get("message", "") or "")
+
+        # Chi tiết kỹ thuật vẫn giữ ở Terminal để debug khi cần.
+        if (
+            "Stacktrace:" in raw_actual
+            or "chromedriver!" in raw_actual
+            or "Stacktrace:" in raw_message
+            or "chromedriver!" in raw_message
+        ):
+            print("\n[SELENIUM DETAIL]")
+            if raw_actual:
+                print(raw_actual)
+            if raw_message and raw_message != raw_actual:
+                print(raw_message)
+
+        short_actual = self._friendly_selenium_text(raw_actual)
+        short_message = self._friendly_selenium_text(raw_message)
+
+        status = str(payload.get("status", "FAILED") or "FAILED").upper()
+        passed = status in ("PASSED", "PASS")
+        display_status = "PASS" if passed else "FAIL"
+
         pairs = payload.get("pairs") or []
+
         if pairs:
-            pair_lines = [
-                f"{pair['index']}. {pair['expected']} - {pair['actual']} -> {pair['status']}"
-                for pair in pairs
-            ]
+            pair_lines = []
+            for pair in pairs:
+                pair_expected = str(pair.get("expected", "") or "")
+                pair_actual = self._friendly_selenium_text(pair.get("actual", ""))
+                pair_status_raw = str(pair.get("status", "FAILED") or "FAILED").upper()
+                pair_status = "PASS" if pair_status_raw in ("PASSED", "PASS") else "FAIL"
+                pair_lines.append(
+                    f"{pair.get('index', '')}. {pair_expected} - {pair_actual} -> {pair_status}"
+                )
             compare_text = "\n".join(pair_lines)
-            compare_text += f"\nResult: {status} - {payload.get('message', '')}"
         else:
+            expected = str(payload.get("expected", "") or "")
+            if not short_actual:
+                short_actual = "Không lấy được Actual Result."
+
             compare_text = (
-                f"Expected: {payload.get('expected', '')}\n"
-                f"Actual: {payload.get('actual', '')}\n"
-                f"Result: {status} - {payload.get('message', '')}"
+                f"Expected: {expected}\n"
+                f"Actual: {short_actual}\n"
+                f"Result: {display_status}"
             )
+
+            if not passed and short_message and short_message != short_actual:
+                compare_text += f" - {short_message}"
+
+        self.actual_value.setText(short_actual or "Không có Actual Result.")
         self.compare_value.setText(compare_text)
-        color = "#16845b" if status == "PASSED" else "#b42318"
-        self.compare_value.setStyleSheet(f"color: {color}; font-size: 12px; font-weight: 700;")
+
+        color = "#16845b" if passed else "#b42318"
+        self.compare_value.setStyleSheet(
+            f"color: {color}; font-size: 12px; font-weight: 700;"
+        )
 
     def _handle_finished(self, _finished):
         self.run_button.setEnabled(True)
