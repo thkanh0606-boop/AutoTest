@@ -238,13 +238,6 @@ class Sidebar(QWidget):
             "config"
         )
 
-        # Linh - Module Owner: Danh mục xe
-        self.add_menu_item(
-            layout,
-            "▥",
-            "Danh mục xe",
-            "vehicle_catalog"
-        )
         # ---------------------------------
 
         layout.addSpacing(
