@@ -23,6 +23,7 @@ from ui.header import Header
 from ui.test_builder_page import TestBuilderPage
 from ui.vehicle_catalog_page import VehicleCatalogPage
 from ui.test_suite_page import TestSuitePage
+from ui.page_management_page import PageManagementPage
 
 
 # --- MÃ SVG VECTOR ICON MẮT ---
@@ -41,7 +42,7 @@ def create_svg_icon(svg_code: str, width: int = 20, height: int = 20) -> QIcon:
     """Hàm dựng hình icon SVG sắc nét thành QIcon"""
     renderer = QSvgRenderer(QByteArray(svg_code.encode('utf-8')))
     pixmap = QPixmap(width, height)
-    pixmap.fill(Qt.GlobalColor.transparent)  # Chuẩn Enum trong PySide6 / Qt6
+    pixmap.fill(Qt.GlobalColor.transparent)
     painter = QPainter(pixmap)
     renderer.render(painter)
     painter.end()
@@ -49,7 +50,7 @@ def create_svg_icon(svg_code: str, width: int = 20, height: int = 20) -> QIcon:
 
 
 class MainWindow(QMainWindow):
-    ...
+
     def __init__(self):
         super().__init__()
 
@@ -68,14 +69,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(central_widget)
 
         main_layout = QHBoxLayout(central_widget)
-
-        main_layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0
-        )
-
+        main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
 
         # =====================================================
@@ -83,30 +77,15 @@ class MainWindow(QMainWindow):
         # =====================================================
 
         self.sidebar = Sidebar()
-
-        main_layout.addWidget(
-            self.sidebar
-        )
+        main_layout.addWidget(self.sidebar)
 
         # =====================================================
-        # RIGHT SIDE
-        #
-        # Header + Content
+        # RIGHT SIDE (Header + Content)
         # =====================================================
 
         right_widget = QWidget()
-
-        right_layout = QVBoxLayout(
-            right_widget
-        )
-
-        right_layout.setContentsMargins(
-            0,
-            0,
-            0,
-            0
-        )
-
+        right_layout = QVBoxLayout(right_widget)
+        right_layout.setContentsMargins(0, 0, 0, 0)
         right_layout.setSpacing(0)
 
         # =====================================================
@@ -114,29 +93,20 @@ class MainWindow(QMainWindow):
         # =====================================================
 
         self.header = Header()
-
-        right_layout.addWidget(
-            self.header
-        )
+        right_layout.addWidget(self.header)
 
         # =====================================================
         # CONTENT
         # =====================================================
 
         self.content = QStackedWidget()
-
-        right_layout.addWidget(
-            self.content
-        )
+        right_layout.addWidget(self.content)
 
         # =====================================================
         # ADD RIGHT SIDE
         # =====================================================
 
-        main_layout.addWidget(
-            right_widget,
-            1
-        )
+        main_layout.addWidget(right_widget, 1)
 
         # =====================================================
         # CREATE PAGES
@@ -158,21 +128,14 @@ class MainWindow(QMainWindow):
         # SIDEBAR ROUTING
         # =====================================================
 
-        self.sidebar.page_changed.connect(
-            self.change_page
-        )
+        self.sidebar.page_changed.connect(self.change_page)
 
         # =====================================================
         # DEFAULT PAGE
         # =====================================================
 
-        self.sidebar.set_active_page(
-            "dashboard"
-        )
-
-        self.content.setCurrentIndex(
-            self.page_indexes["dashboard"]
-        )
+        self.sidebar.set_active_page("dashboard")
+        self.content.setCurrentIndex(self.page_indexes["dashboard"])
 
         # =====================================================
         # GLOBAL STYLE
@@ -182,7 +145,6 @@ class MainWindow(QMainWindow):
             QMainWindow {
                 background-color: #f8fafc;
             }
-
             QWidget {
                 font-family: "Segoe UI";
             }
@@ -193,7 +155,6 @@ class MainWindow(QMainWindow):
     # =========================================================
 
     def create_pages(self):
-
         pages = {
             "dashboard": "Tổng quan",
             "pages": "Quản lý trang",
@@ -211,19 +172,24 @@ class MainWindow(QMainWindow):
         }
 
         self.page_indexes = {}
-        self.test_builder_pages = {}
+        self.builder_pages = {}  # Lưu tham chiếu duy nhất đến các trang TestBuilder
 
         for page_name, title in pages.items():
-
-            # Nếu là trang config thì tạo giao diện Form cấu hình riêng
             if page_name in ("dropdown", "label", "table", "radio", "image", "title", "ui", "menu"):
-                page = TestBuilderPage(
-                    page_name,
-                    title
-                )
-                self.test_builder_pages[page_name] = page
+                page = TestBuilderPage(page_name, title)
+                self.builder_pages[page_name] = page
             elif page_name == "config":
                 page = self.create_config_page(title)
+            elif page_name == "pages":
+                # TÍCH HỢP MÀN HÌNH QUẢN LÝ TRANG & KẾT NỐI SIGNALS
+                page = PageManagementPage(header_widget=self.header)
+                self.page_management = page
+                
+                # Signal 1: Kết nối mở Test Builder
+                page.open_test_builder_signal.connect(self.on_open_test_builder_from_management)
+                
+                # Signal 2: Kết nối điều hướng chi tiết đầy đủ 3 tham số
+                page.navigate_to_module_signal.connect(self.handle_navigate_to_builder)
             elif page_name == "vehicle_catalog":
                 page = VehicleCatalogPage()
             elif page_name == "test_suite":
@@ -234,104 +200,59 @@ class MainWindow(QMainWindow):
             index = self.content.addWidget(page)
             self.page_indexes[page_name] = index
 
+    # Đảm bảo có dòng def này và toàn bộ nội dung dưới hàm được lùi vào 1 TAB (4 dấu cách)
+    def handle_navigate_to_builder(self, module_key, page_name, element_key_or_name):
+        """Xử lý Signal chuyển giao diện, đồng bộ Sidebar và chọn đúng Element sang Test Builder"""
+        builder_page = self.builder_pages.get(module_key)
+
+        if builder_page:
+            # 1. Đồng bộ menu Sidebar và đổi màn hình QStackedWidget trước
+            self.open_module_from_quick_menu(module_key)
+
+            # 2. Gọi nạp dữ liệu tham số vào màn hình Builder vừa active
+            builder_page.select_page_and_element(page_name, element_key_or_name)
+
+    def on_open_test_builder_from_management(self, module_key, page_url, element_data):
+        """Tự động điền dữ liệu Element sang Test Builder và chuyển màn hình"""
+        if module_key in self.builder_pages:
+            builder = self.builder_pages[module_key]
+            
+            # 1. Điền URL & thông tin Element
+            builder.url_input.setText(page_url)
+            builder.locator_type_combo.setCurrentText(element_data['locator_type'])
+            builder.locator_input.setText(element_data['locator_value'])
+            
+            # 2. Chuyển Sidebar sang đúng Module Test Builder đó
+            self.open_module_from_quick_menu(module_key)
+
     # =========================================================
     # PLACEHOLDER PAGE
     # =========================================================
 
     def create_placeholder_page(self, title):
-
         page = QWidget()
-
-        page.setStyleSheet("""
-            QWidget {
-                background-color: #f8fafc;
-            }
-        """)
+        page.setStyleSheet("QWidget { background-color: #f8fafc; }")
 
         layout = QVBoxLayout(page)
-
-        layout.setContentsMargins(
-            38,
-            30,
-            38,
-            30
-        )
-
+        layout.setContentsMargins(38, 30, 38, 30)
         layout.setSpacing(0)
 
-        # =====================================================
-        # BREADCRUMB
-        # =====================================================
-
-        breadcrumb = QLabel(
-            f"AutoTest   /   {title}"
-        )
-
-        breadcrumb.setStyleSheet("""
-            QLabel {
-                color: #8091a5;
-                font-size: 12px;
-                background: transparent;
-            }
-        """)
-
-        layout.addWidget(
-            breadcrumb
-        )
-
+        breadcrumb = QLabel(f"AutoTest   /   {title}")
+        breadcrumb.setStyleSheet("QLabel { color: #8091a5; font-size: 12px; background: transparent; }")
+        layout.addWidget(breadcrumb)
         layout.addSpacing(22)
 
-        # =====================================================
-        # TITLE
-        # =====================================================
-
-        title_label = QLabel(
-            title
-        )
-
-        title_label.setStyleSheet("""
-            QLabel {
-                color: #101828;
-                font-size: 28px;
-                font-weight: 700;
-                background: transparent;
-            }
-        """)
-
-        layout.addWidget(
-            title_label
-        )
-
+        title_label = QLabel(title)
+        title_label.setStyleSheet("QLabel { color: #101828; font-size: 28px; font-weight: 700; background: transparent; }")
+        layout.addWidget(title_label)
         layout.addSpacing(5)
 
-        # =====================================================
-        # DESCRIPTION
-        # =====================================================
-
-        description = QLabel(
-            "Đây là màn hình giao diện của AutoTest."
-        )
-
-        description.setStyleSheet("""
-            QLabel {
-                color: #64748b;
-                font-size: 14px;
-                background: transparent;
-            }
-        """)
-
-        layout.addWidget(
-            description
-        )
-
+        description = QLabel("Đây là màn hình giao diện của AutoTest.")
+        description.setStyleSheet("QLabel { color: #64748b; font-size: 14px; background: transparent; }")
+        layout.addWidget(description)
         layout.addSpacing(28)
 
-        # =====================================================
-        # PLACEHOLDER CARD
-        # =====================================================
-
         card = QFrame()
-
         card.setStyleSheet("""
             QFrame {
                 background-color: #ffffff;
@@ -340,67 +261,19 @@ class MainWindow(QMainWindow):
             }
         """)
 
-        card_layout = QVBoxLayout(
-            card
-        )
-
-        card_layout.setContentsMargins(
-            16,
-            12,
-            16,
-            12
-        )
-
+        card_layout = QVBoxLayout(card)
+        card_layout.setContentsMargins(16, 12, 16, 12)
         card_layout.setSpacing(6)
 
-        # -----------------------------------------------------
-        # CARD TITLE
-        # -----------------------------------------------------
+        card_title = QLabel("Nội dung màn hình")
+        card_title.setStyleSheet("QLabel { color: #111827; font-size: 18px; font-weight: 700; background: transparent; border: none; }")
+        card_layout.addWidget(card_title)
 
-        card_title = QLabel(
-            "Nội dung màn hình"
-        )
+        card_text = QLabel("Chức năng của module này sẽ được phát triển ở bước tiếp theo.")
+        card_text.setStyleSheet("QLabel { color: #64748b; font-size: 14px; background: transparent; border: none; }")
+        card_layout.addWidget(card_text)
 
-        card_title.setStyleSheet("""
-            QLabel {
-                color: #111827;
-                font-size: 18px;
-                font-weight: 700;
-                background: transparent;
-                border: none;
-            }
-        """)
-
-        card_layout.addWidget(
-            card_title
-        )
-
-        # -----------------------------------------------------
-        # CARD TEXT
-        # -----------------------------------------------------
-
-        card_text = QLabel(
-            "Chức năng của module này sẽ được "
-            "phát triển ở bước tiếp theo."
-        )
-
-        card_text.setStyleSheet("""
-            QLabel {
-                color: #64748b;
-                font-size: 14px;
-                background: transparent;
-                border: none;
-            }
-        """)
-
-        card_layout.addWidget(
-            card_text
-        )
-
-        layout.addWidget(
-            card
-        )
-
+        layout.addWidget(card)
         layout.addStretch()
 
         return page
@@ -409,32 +282,14 @@ class MainWindow(QMainWindow):
     # ROUTING
     # =========================================================
 
-    def sync_shared_test_page(
-        self,
-        page_key,
-        _url
-    ):
-        """Một giao diện Test Builder dùng cho Dashboard / Login / Danh mục xe."""
-        for builder in self.test_builder_pages.values():
-            builder.set_page_by_key(page_key)
-
-    def change_page(
-        self,
-        page_name
-    ):
-
+    def change_page(self, page_name):
         if page_name not in self.page_indexes:
             return
 
-        index = self.page_indexes[
-            page_name
-        ]
+        index = self.page_indexes[page_name]
+        self.content.setCurrentIndex(index)
 
-        self.content.setCurrentIndex(
-            index
-        )
-
-        # Linh - đồng bộ Header khi mở riêng module Danh mục xe.
+        # Đồng bộ Header khi mở riêng module Danh mục xe
         if page_name == "vehicle_catalog":
             self.header.website_combo.setCurrentText("PLT Fleet Console")
             if self.header.page_combo.findText("Danh mục xe") < 0:
@@ -442,23 +297,14 @@ class MainWindow(QMainWindow):
             self.header.page_combo.setCurrentText("Danh mục xe")
             self.header.url_input.setText("https://courses.plt.pro.vn/cars/catalog")
 
-    def open_module_from_quick_menu(
-        self,
-        page_name
-    ):
-
+    def open_module_from_quick_menu(self, page_name):
         if page_name not in self.page_indexes:
             return
 
-        self.sidebar.set_active_page(
-            page_name
-        )
+        self.sidebar.set_active_page(page_name)
+        self.change_page(page_name)
 
-        self.change_page(
-            page_name
-        )
-
-   # =========================================================
+    # =========================================================
     # CONFIG PAGE (FORM CHỈNH SỬA + ICON SVG MẮT)
     # =========================================================
 
@@ -469,7 +315,6 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(page)
         layout.setContentsMargins(38, 30, 38, 30)
 
-        # 1. Breadcrumb & Title
         breadcrumb = QLabel(f"AutoTest   /   {title}")
         breadcrumb.setStyleSheet("color: #8091a5; font-size: 12px; background: transparent;")
         layout.addWidget(breadcrumb)
@@ -485,7 +330,6 @@ class MainWindow(QMainWindow):
         layout.addWidget(description)
         layout.addSpacing(28)
 
-        # 2. Card Form
         card = QFrame()
         card.setStyleSheet("""
             QFrame {
@@ -521,14 +365,12 @@ class MainWindow(QMainWindow):
         form_layout.setLabelAlignment(Qt.AlignLeft)
         form_layout.setFormAlignment(Qt.AlignLeft | Qt.AlignTop)
 
-        # Inputs Căn Trái
         self.input_base_url = QLineEdit("https://courses.plt.pro.vn/login")
         self.input_base_url.setFixedWidth(450)
 
         self.input_email = QLineEdit("test@gmail.com")
         self.input_email.setFixedWidth(450)
 
-        # Password + Nút SVG Eye
         pass_container = QWidget()
         pass_container.setFixedWidth(450)
         pass_layout = QHBoxLayout(pass_container)
@@ -538,11 +380,9 @@ class MainWindow(QMainWindow):
         self.input_password = QLineEdit("123123")
         self.input_password.setEchoMode(QLineEdit.Password)
 
-        # Tạo Icon SVG
         self.icon_eye_open = create_svg_icon(SVG_EYE_OPEN, 18, 18)
         self.icon_eye_off = create_svg_icon(SVG_EYE_OFF, 18, 18)
 
-        # Nút Mắt hiển thị Icon SVG
         self.btn_toggle_pass = QPushButton()
         self.btn_toggle_pass.setFixedSize(36, 34)
         self.btn_toggle_pass.setCursor(Qt.PointingHandCursor)
@@ -570,11 +410,9 @@ class MainWindow(QMainWindow):
         card_layout.addLayout(form_layout)
         card_layout.addSpacing(24)
 
-        # --- LAYOUT CHỨA BỘ NÚT BẤM (HÀNH ĐỘNG) ---
         btn_layout = QHBoxLayout()
         btn_layout.setSpacing(12)
 
-        # Nút Lưu Cấu Hình
         btn_save = QPushButton("Lưu cấu hình")
         btn_save.setFixedHeight(38)
         btn_save.setFixedWidth(130)
@@ -594,7 +432,6 @@ class MainWindow(QMainWindow):
         """)
         btn_save.clicked.connect(self.save_config)
 
-        # Nút Chạy Thử Đăng Nhập
         btn_test_login = QPushButton("Chạy thử")
         btn_test_login.setFixedHeight(38)
         btn_test_login.setFixedWidth(180)
@@ -637,7 +474,7 @@ class MainWindow(QMainWindow):
             self.input_password.setEchoMode(QLineEdit.Password)
             self.btn_toggle_pass.setIcon(self.icon_eye_open)
 
- # =========================================================
+    # =========================================================
     # HÀM LƯU CẤU HÌNH
     # =========================================================
 
@@ -657,7 +494,6 @@ class MainWindow(QMainWindow):
         email = self.input_email.text().strip()
         password = self.input_password.text().strip()
 
-        # Đồng bộ vào Config
         Config.BASE_URL = url
         Config.TEST_EMAIL = email
         Config.TEST_PASSWORD = password
