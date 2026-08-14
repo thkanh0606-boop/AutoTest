@@ -475,6 +475,15 @@ class MainWindow(QMainWindow):
             self.btn_toggle_pass.setIcon(self.icon_eye_open)
 
     # =========================================================
+    # SYNC SHARED TEST PAGE
+    # =========================================================
+
+    def sync_shared_test_page(self, page_key, url=""):
+        """Đồng bộ URL và thông tin trang cho các màn hình Test Builder dùng chung"""
+        for builder_page in self.builder_pages.values():
+            if hasattr(builder_page, 'url_input'):
+                builder_page.url_input.setText(url)
+    # =========================================================
     # HÀM LƯU CẤU HÌNH
     # =========================================================
 
