@@ -114,6 +114,16 @@ class MainWindow(QMainWindow):
 
         self.create_pages()
 
+        # Header chỉ đổi dữ liệu của các Test Builder dùng chung.
+        # Không chuyển content sang Danh mục xe riêng và không đụng Test Suite.
+        self.header.page_changed.connect(
+            self.sync_shared_test_page
+        )
+        self.sync_shared_test_page(
+            self.header.current_page_key(),
+            self.header.url_input.text(),
+        )
+
         # =====================================================
         # SIDEBAR ROUTING
         # =====================================================

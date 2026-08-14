@@ -9,10 +9,13 @@ from PySide6.QtWidgets import (
     QSizePolicy
 )
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 
 
 class Header(QWidget):
+
+    # page_key, url - dùng chung cho mọi Test Builder
+    page_changed = Signal(str, str)
 
     def __init__(self):
         super().__init__()
@@ -79,8 +82,8 @@ class Header(QWidget):
         self.website_combo = QComboBox()
 
         self.website_combo.addItems([
-            "StudyMate",
-            "CoffeeGame"
+            "PLT Fleet Console",
+            "Courses PLT"
         ])
 
         self.website_combo.setFixedWidth(135)
@@ -170,10 +173,9 @@ class Header(QWidget):
         self.page_combo = QComboBox()
 
         self.page_combo.addItems([
-            "Quản lý môn học",
-            "Danh sách sinh viên",
-            "Đăng nhập",
-            "Trang chủ"
+            "Trang tổng quan",
+            "Trang đăng nhập",
+            "Danh mục xe"
         ])
 
         self.page_combo.setFixedWidth(210)
@@ -245,7 +247,7 @@ class Header(QWidget):
         self.url_input = QLineEdit()
 
         self.url_input.setText(
-            "http://localhost/studymate/admin/subjects"
+            "https://courses.plt.pro.vn/dashboard"
         )
 
         self.url_input.setReadOnly(True)
@@ -328,3 +330,39 @@ class Header(QWidget):
         status_layout.addWidget(self.status_button)
 
         main_layout.addLayout(status_layout)
+
+        # Chọn trang chỉ đổi context test + URL, không đổi sang giao diện riêng.
+        self.page_combo.currentTextChanged.connect(
+            self._on_test_page_changed
+        )
+
+    @staticmethod
+    def _page_context(page_name: str):
+        mapping = {
+            "Trang tổng quan": (
+                "plt_dashboard",
+                "https://courses.plt.pro.vn/dashboard",
+            ),
+            "Trang đăng nhập": (
+                "plt_login",
+                "https://courses.plt.pro.vn/login",
+            ),
+            "Danh mục xe": (
+                "plt_vehicle_catalog",
+                "https://courses.plt.pro.vn/cars/catalog",
+            ),
+        }
+        return mapping.get(
+            page_name,
+            ("plt_dashboard", "https://courses.plt.pro.vn/dashboard"),
+        )
+
+    def _on_test_page_changed(self, page_name: str):
+        page_key, url = self._page_context(page_name)
+        self.url_input.setText(url)
+        self.page_changed.emit(page_key, url)
+
+    def current_page_key(self) -> str:
+        page_key, _url = self._page_context(self.page_combo.currentText())
+        return page_key
+
