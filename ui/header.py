@@ -11,6 +11,8 @@ from PySide6.QtWidgets import (
 
 from PySide6.QtCore import Qt, Signal
 
+from core.test_contract import TestContract
+
 
 class Header(QWidget):
 
@@ -172,11 +174,8 @@ class Header(QWidget):
 
         self.page_combo = QComboBox()
 
-        self.page_combo.addItems([
-            "Trang tổng quan",
-            "Trang đăng nhập",
-            "Danh mục xe"
-        ])
+        self.page_contexts = {page.name: page for page in TestContract.pages}
+        self.page_combo.addItems(list(self.page_contexts.keys()))
 
         self.page_combo.setFixedWidth(210)
         self.page_combo.setFixedHeight(34)
@@ -336,26 +335,9 @@ class Header(QWidget):
             self._on_test_page_changed
         )
 
-    @staticmethod
-    def _page_context(page_name: str):
-        mapping = {
-            "Trang tổng quan": (
-                "plt_dashboard",
-                "https://courses.plt.pro.vn/dashboard",
-            ),
-            "Trang đăng nhập": (
-                "plt_login",
-                "https://courses.plt.pro.vn/login",
-            ),
-            "Danh mục xe": (
-                "plt_vehicle_catalog",
-                "https://courses.plt.pro.vn/cars/catalog",
-            ),
-        }
-        return mapping.get(
-            page_name,
-            ("plt_dashboard", "https://courses.plt.pro.vn/dashboard"),
-        )
+    def _page_context(self, page_name: str):
+        page = self.page_contexts.get(page_name) or TestContract.pages[0]
+        return page.key, page.url
 
     def _on_test_page_changed(self, page_name: str):
         page_key, url = self._page_context(page_name)

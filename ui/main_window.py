@@ -481,7 +481,9 @@ class MainWindow(QMainWindow):
     def sync_shared_test_page(self, page_key, url=""):
         """Đồng bộ URL và thông tin trang cho các màn hình Test Builder dùng chung"""
         for builder_page in self.builder_pages.values():
-            if hasattr(builder_page, 'url_input'):
+            if hasattr(builder_page, 'set_page_by_key'):
+                builder_page.set_page_by_key(page_key)
+            elif hasattr(builder_page, 'url_input'):
                 builder_page.url_input.setText(url)
     # =========================================================
     # HÀM LƯU CẤU HÌNH

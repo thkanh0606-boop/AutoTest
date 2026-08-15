@@ -271,6 +271,17 @@ class TestBuilderPage(QWidget):
             self.page_combo.addItem(page.name)
         self._on_page_changed(0)
 
+    def set_page_by_key(self, page_key: str):
+        """Chọn đúng trang kiểm thử từ Header và nạp lại element theo module hiện tại."""
+        for index, page in enumerate(self.page_by_index):
+            if page.key == page_key:
+                if self.page_combo.currentIndex() == index:
+                    self._on_page_changed(index)
+                else:
+                    self.page_combo.setCurrentIndex(index)
+                return True
+        return False
+
     def _on_page_changed(self, index):
         if index < 0 or index >= len(self.page_by_index):
             return
