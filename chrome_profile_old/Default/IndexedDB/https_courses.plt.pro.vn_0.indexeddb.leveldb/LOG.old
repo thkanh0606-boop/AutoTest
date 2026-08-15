@@ -1,0 +1,25 @@
+2026/08/15-17:55:36.803 998 Reusing MANIFEST C:\AutoTest-Clean\chrome_profile\Default\IndexedDB\https_courses.plt.pro.vn_0.indexeddb.leveldb/MANIFEST-000001
+2026/08/15-17:55:36.804 998 Recovering log #116
+2026/08/15-17:55:36.804 998 Reusing old log C:\AutoTest-Clean\chrome_profile\Default\IndexedDB\https_courses.plt.pro.vn_0.indexeddb.leveldb/000116.log 
+2026/08/15-17:55:36.805 998 Delete type=2 #115
+2026/08/15-17:55:36.883 9fc Level-0 table #121: started
+2026/08/15-17:55:36.887 9fc Level-0 table #121: 3221 bytes OK
+2026/08/15-17:55:36.892 9fc Delete type=0 #116
+2026/08/15-17:55:36.893 1e4 Manual compaction at level-0 from '\x00!\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00"\x00\x00\x00' @ 0 : 0; will stop at '\x00!\x00\x00\x05' @ 1449 : 1
+2026/08/15-17:55:36.893 1e4 Compacting 1@0 + 1@1 files
+2026/08/15-17:55:36.895 1e4 Generated table #122@0: 86 keys, 3313 bytes
+2026/08/15-17:55:36.895 1e4 Compacted 1@0 + 1@1 files => 3313 bytes
+2026/08/15-17:55:36.896 1e4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/08/15-17:55:36.897 1e4 Delete type=2 #121
+2026/08/15-17:55:36.897 1e4 Manual compaction at level-0 from '\x00!\x00\x00\x05' @ 1449 : 1 .. '\x00"\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/08/15-17:56:07.695 9fc Level-0 table #124: started
+2026/08/15-17:56:07.698 9fc Level-0 table #124: 3294 bytes OK
+2026/08/15-17:56:07.702 9fc Delete type=2 #118
+2026/08/15-17:56:07.702 9fc Delete type=0 #120
+2026/08/15-17:56:07.704 1e4 Manual compaction at level-0 from '\x00"\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00#\x00\x00\x00' @ 0 : 0; will stop at '\x00"\x00\x00\x05' @ 1494 : 1
+2026/08/15-17:56:07.704 1e4 Compacting 1@0 + 1@1 files
+2026/08/15-17:56:07.706 1e4 Generated table #125@0: 87 keys, 3257 bytes
+2026/08/15-17:56:07.707 1e4 Compacted 1@0 + 1@1 files => 3257 bytes
+2026/08/15-17:56:07.707 1e4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/08/15-17:56:07.708 1e4 Delete type=2 #124
+2026/08/15-17:56:07.708 1e4 Manual compaction at level-0 from '\x00"\x00\x00\x05' @ 1494 : 1 .. '\x00#\x00\x00\x00' @ 0 : 0; will stop at (end)
