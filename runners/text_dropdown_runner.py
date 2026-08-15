@@ -1,22 +1,58 @@
+# runners/text_dropdown_runner.py
+
+import csv
 import os
 import re
 import sys
 import time
-import csv
 from io import StringIO
 
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    NoSuchElementException,
+    SessionNotCreatedException,
+    StaleElementReferenceException,
+    TimeoutException,
+    WebDriverException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
+)
 
 from core.config import Config
 from core.driver_factory import DriverFactory
-from core.helpers.utils import capture_screenshot, get_logger
-from core.test_result_repository import TestResultRepository
+from core.helpers.utils import (
+    capture_screenshot,
+    get_logger,
+)
+from core.test_result_repository import (
+    TestResultRepository,
+)
+
 
 logger = get_logger()
+
+
+# =========================================================
+# CUSTOM EXCEPTION
+# =========================================================
+
+class SeleniumTestError(RuntimeError):
+    """
+    Exception nội bộ, message đã được làm sạch (không chứa
+    stacktrace nội bộ của chromedriver), kèm context đầy đủ
+    (page/element/locator/url) để log/hiển thị cho người dùng.
+    """
+
+    __test__ = False
 
 
 # =========================================================
@@ -24,6 +60,7 @@ logger = get_logger()
 # =========================================================
 
 def _by(locator_type: str):
+
     mapping = {
         "css": By.CSS_SELECTOR,
         "xpath": By.XPATH,
@@ -40,6 +77,93 @@ def _by(locator_type: str):
 
 
 # =========================================================
+# EXCEPTION HELPERS
+# =========================================================
+
+def _clean_exception_message(error: Exception) -> str:
+    """
+    Loại bỏ phần "Stacktrace: chromedriver!..." khỏi message,
+    chỉ giữ lại phần mô tả lỗi thực tế do Selenium/W3C trả về.
+    """
+
+    raw = str(error) or ""
+
+    if "Stacktrace:" in raw:
+        raw = raw.split("Stacktrace:")[0]
+
+    raw = raw.strip()
+
+    if not raw:
+        return type(error).__name__
+
+    # Selenium thường trả "Message: <mô tả>\n" -> bỏ tiền tố "Message:"
+    if raw.startswith("Message:"):
+        raw = raw[len("Message:"):].strip()
+
+    return raw or type(error).__name__
+
+
+def _classify_exception(error: Exception) -> str:
+
+    if isinstance(error, TimeoutException):
+        return "TimeoutException"
+
+    if isinstance(error, NoSuchElementException):
+        return "NoSuchElementException"
+
+    if isinstance(error, StaleElementReferenceException):
+        return "StaleElementReferenceException"
+
+    if isinstance(error, ElementClickInterceptedException):
+        return "ElementClickInterceptedException"
+
+    if isinstance(error, SessionNotCreatedException):
+        return "SessionNotCreatedException"
+
+    if isinstance(error, WebDriverException):
+        return "WebDriverException"
+
+    return type(error).__name__
+
+
+def _safe_current_url(driver) -> str:
+
+    try:
+        return driver.current_url
+    except Exception:
+        return "(không lấy được URL - session có thể đã chết)"
+
+
+def _safe_title(driver) -> str:
+
+    try:
+        return driver.title
+    except Exception:
+        return "(không lấy được title)"
+
+
+def _format_selenium_error(
+    page_name: str,
+    element_name: str,
+    locator_type: str,
+    locator_value: str,
+    url: str,
+    exception_type: str,
+    message: str,
+) -> str:
+
+    return (
+        "[SELENIUM ERROR]\n"
+        f"page={page_name}\n"
+        f"element={element_name}\n"
+        f"locator={locator_type}:{locator_value}\n"
+        f"url={url}\n"
+        f"exception_type={exception_type}\n"
+        f"message={message}"
+    )
+
+
+# =========================================================
 # TEXT NORMALIZATION
 # =========================================================
 
@@ -48,10 +172,13 @@ def _normalize_text(
     trim: bool = True,
     case_sensitive: bool = True,
 ):
+
     value = text or ""
 
     if trim:
-        value = " ".join(value.split())
+        value = " ".join(
+            value.split()
+        )
 
     if not case_sensitive:
         value = value.lower()
@@ -60,6 +187,7 @@ def _normalize_text(
 
 
 def _split_compare_lines(text: str):
+
     return [
         line.strip()
         for line in (text or "").splitlines()
@@ -77,8 +205,14 @@ def _compare_line_pairs(
     trim: bool = True,
     case_sensitive: bool = True,
 ):
-    expected_lines = _split_compare_lines(expected)
-    actual_lines = _split_compare_lines(actual)
+
+    expected_lines = _split_compare_lines(
+        expected
+    )
+
+    actual_lines = _split_compare_lines(
+        actual
+    )
 
     pairs = []
 
@@ -88,6 +222,7 @@ def _compare_line_pairs(
     )
 
     for index in range(max_count):
+
         expected_line = (
             expected_lines[index]
             if index < len(expected_lines)
@@ -133,7 +268,8 @@ def _compare_line_pairs(
 
     status = (
         "PASSED"
-        if pairs and all(
+        if pairs
+        and all(
             pair["status"] == "PASS"
             for pair in pairs
         )
@@ -153,16 +289,14 @@ def _compare_unordered_lines(
     trim: bool = True,
     case_sensitive: bool = True,
 ):
-    """
-    So sánh 2 danh sách không phụ thuộc thứ tự.
 
-    Dùng cho Dropdown Hãng của Danh mục xe vì mục tiêu là
-    kiểm tra tính đồng bộ với danh sách Hãng đang hoạt động,
-    không phải thứ tự hiển thị.
-    """
+    expected_lines = _split_compare_lines(
+        expected
+    )
 
-    expected_lines = _split_compare_lines(expected)
-    actual_lines = _split_compare_lines(actual)
+    actual_lines = _split_compare_lines(
+        actual
+    )
 
     normalized_actual = [
         _normalize_text(
@@ -177,6 +311,7 @@ def _compare_unordered_lines(
     pairs = []
 
     for expected_line in expected_lines:
+
         expected_compare = _normalize_text(
             expected_line,
             trim=trim,
@@ -188,17 +323,20 @@ def _compare_unordered_lines(
         for index, actual_compare in enumerate(
             normalized_actual
         ):
+
             if index in used_actual_indexes:
                 continue
 
             if (
                 expected_compare
-                and expected_compare == actual_compare
+                and expected_compare
+                == actual_compare
             ):
                 matched_index = index
                 break
 
         if matched_index is None:
+
             pairs.append(
                 {
                     "index": len(pairs) + 1,
@@ -207,20 +345,28 @@ def _compare_unordered_lines(
                     "status": "FAIL",
                 }
             )
+
         else:
-            used_actual_indexes.add(matched_index)
+
+            used_actual_indexes.add(
+                matched_index
+            )
 
             pairs.append(
                 {
                     "index": len(pairs) + 1,
                     "expected": expected_line,
-                    "actual": actual_lines[matched_index],
+                    "actual": actual_lines[
+                        matched_index
+                    ],
                     "status": "PASS",
                 }
             )
 
-    # Option xuất hiện trong dropdown nhưng không thuộc danh sách Hãng active.
-    for index, actual_line in enumerate(actual_lines):
+    for index, actual_line in enumerate(
+        actual_lines
+    ):
+
         if index in used_actual_indexes:
             continue
 
@@ -235,7 +381,8 @@ def _compare_unordered_lines(
 
     status = (
         "PASSED"
-        if pairs and all(
+        if pairs
+        and all(
             pair["status"] == "PASS"
             for pair in pairs
         )
@@ -246,10 +393,11 @@ def _compare_unordered_lines(
 
 
 # =========================================================
-# TABLE HELPERS
+# TABLE
 # =========================================================
 
 def _split_table_line(line: str):
+
     if "\t" in line:
         return [
             cell.strip()
@@ -257,7 +405,12 @@ def _split_table_line(line: str):
         ]
 
     try:
-        cells = next(csv.reader(StringIO(line)))
+        cells = next(
+            csv.reader(
+                StringIO(line)
+            )
+        )
+
     except Exception:
         cells = [line]
 
@@ -268,13 +421,19 @@ def _split_table_line(line: str):
 
 
 def _table_matrix(text: str):
+
     rows = []
 
-    for line in (text or "").splitlines():
+    for line in (
+        text or ""
+    ).splitlines():
+
         if not line.strip():
             continue
 
-        cells = _split_table_line(line)
+        cells = _split_table_line(
+            line
+        )
 
         while cells and not cells[-1]:
             cells.pop()
@@ -286,6 +445,7 @@ def _table_matrix(text: str):
 
 
 def _table_text_from_element(element):
+
     table_rows = []
 
     row_elements = element.find_elements(
@@ -294,6 +454,7 @@ def _table_text_from_element(element):
     )
 
     for row_element in row_elements:
+
         cell_elements = row_element.find_elements(
             By.CSS_SELECTOR,
             "th, td, .ant-table-cell",
@@ -311,11 +472,15 @@ def _table_text_from_element(element):
             )
 
     if table_rows:
-        return "\n".join(table_rows)
+        return "\n".join(
+            table_rows
+        )
 
     lines = [
         line.strip()
-        for line in (element.text or "").splitlines()
+        for line in (
+            element.text or ""
+        ).splitlines()
         if line.strip()
     ]
 
@@ -328,8 +493,14 @@ def _compare_table_rows(
     trim: bool = True,
     case_sensitive: bool = True,
 ):
-    expected_rows = _table_matrix(expected)
-    actual_rows = _table_matrix(actual)
+
+    expected_rows = _table_matrix(
+        expected
+    )
+
+    actual_rows = _table_matrix(
+        actual
+    )
 
     max_rows = max(
         len(expected_rows),
@@ -339,6 +510,7 @@ def _compare_table_rows(
     pairs = []
 
     for row_index in range(max_rows):
+
         expected_cells = (
             expected_rows[row_index]
             if row_index < len(expected_rows)
@@ -356,16 +528,23 @@ def _compare_table_rows(
             len(actual_cells),
         )
 
-        for cell_index in range(max_cells):
+        for cell_index in range(
+            max_cells
+        ):
+
             expected_cell = (
                 expected_cells[cell_index]
-                if cell_index < len(expected_cells)
+                if cell_index < len(
+                    expected_cells
+                )
                 else ""
             )
 
             actual_cell = (
                 actual_cells[cell_index]
-                if cell_index < len(actual_cells)
+                if cell_index < len(
+                    actual_cells
+                )
                 else ""
             )
 
@@ -384,7 +563,8 @@ def _compare_table_rows(
             pair_status = (
                 "PASS"
                 if (
-                    expected_compare == actual_compare
+                    expected_compare
+                    == actual_compare
                     and expected_cell
                     and actual_cell
                 )
@@ -393,7 +573,10 @@ def _compare_table_rows(
 
             pairs.append(
                 {
-                    "index": f"R{row_index + 1}C{cell_index + 1}",
+                    "index": (
+                        f"R{row_index + 1}"
+                        f"C{cell_index + 1}"
+                    ),
                     "expected": expected_cell,
                     "actual": actual_cell,
                     "status": pair_status,
@@ -402,7 +585,8 @@ def _compare_table_rows(
 
     status = (
         "PASSED"
-        if pairs and all(
+        if pairs
+        and all(
             pair["status"] == "PASS"
             for pair in pairs
         )
@@ -422,7 +606,10 @@ def _compare_contains_all(
     trim: bool = True,
     case_sensitive: bool = True,
 ):
-    expected_lines = _split_compare_lines(expected)
+
+    expected_lines = _split_compare_lines(
+        expected
+    )
 
     actual_compare = _normalize_text(
         actual,
@@ -436,6 +623,7 @@ def _compare_contains_all(
         expected_lines,
         start=1,
     ):
+
         expected_compare = _normalize_text(
             expected_line,
             trim=trim,
@@ -444,21 +632,31 @@ def _compare_contains_all(
 
         matched = bool(
             expected_compare
-            and expected_compare in actual_compare
+            and expected_compare
+            in actual_compare
         )
 
         pairs.append(
             {
                 "index": index,
                 "expected": expected_line,
-                "actual": expected_line if matched else actual,
-                "status": "PASS" if matched else "FAIL",
+                "actual": (
+                    expected_line
+                    if matched
+                    else actual
+                ),
+                "status": (
+                    "PASS"
+                    if matched
+                    else "FAIL"
+                ),
             }
         )
 
     status = (
         "PASSED"
-        if pairs and all(
+        if pairs
+        and all(
             pair["status"] == "PASS"
             for pair in pairs
         )
@@ -474,6 +672,7 @@ def _compare_contains_all_has_number(
     trim: bool = True,
     case_sensitive: bool = True,
 ):
+
     status, pairs = _compare_contains_all(
         expected,
         actual,
@@ -482,7 +681,10 @@ def _compare_contains_all_has_number(
     )
 
     has_number = bool(
-        re.search(r"\d+", actual or "")
+        re.search(
+            r"\d+",
+            actual or "",
+        )
     )
 
     pairs.append(
@@ -524,6 +726,7 @@ def _compare_navigation_expected(
     trim: bool = True,
     case_sensitive: bool = True,
 ):
+
     expected_value = _normalize_text(
         expected,
         trim=trim,
@@ -540,7 +743,10 @@ def _compare_navigation_expected(
         return "FAILED"
 
     if expected_value.startswith(
-        ("http://", "https://")
+        (
+            "http://",
+            "https://",
+        )
     ):
         return (
             "PASSED"
@@ -559,9 +765,14 @@ def _compare_navigation_expected(
 # LOGIN
 # =========================================================
 
-def _login_form_visible(driver):
+def _login_form_visible(driver, timeout: float = 3):
+
     try:
-        WebDriverWait(driver, 3).until(
+
+        WebDriverWait(
+            driver,
+            timeout,
+        ).until(
             EC.presence_of_element_located(
                 (
                     By.CSS_SELECTOR,
@@ -577,9 +788,72 @@ def _login_form_visible(driver):
         return False
 
 
-def _ensure_logged_in(driver, target_url: str):
-    if not _login_form_visible(driver):
+def _on_login_url(driver) -> bool:
+    """
+    Kiểm tra URL hiện tại có phải trang login hay không. Đáng tin cậy
+    hơn nhiều so với việc kiểm tra form login còn hiển thị hay không,
+    vì trong SPA form login có thể vẫn còn trong DOM một lúc sau khi
+    đăng nhập thành công.
+    """
+
+    try:
+        return "/login" in (driver.current_url or "").lower()
+    except Exception:
+        return False
+
+
+def _read_login_error_text(driver) -> str:
+    """
+    Cố gắng đọc thông báo lỗi đăng nhập (sai email/mật khẩu) nếu có,
+    để báo lỗi rõ ràng ngay thay vì để timeout mơ hồ ở bước sau.
+    """
+
+    selectors = [
+        ".ant-form-item-explain-error",
+        ".ant-message-error",
+        "[role='alert']",
+        ".error-message",
+    ]
+
+    for selector in selectors:
+
+        try:
+
+            elements = driver.find_elements(
+                By.CSS_SELECTOR,
+                selector,
+            )
+
+            for element in elements:
+
+                if element.is_displayed():
+
+                    text = (
+                        element.text or ""
+                    ).strip()
+
+                    if text:
+                        return text
+
+        except Exception:
+            continue
+
+    return ""
+
+
+def _ensure_logged_in(
+    driver,
+    target_url: str,
+):
+
+    if not _login_form_visible(
+        driver
+    ):
         return
+
+    logger.info(
+        "[LOGIN] Website yêu cầu đăng nhập."
+    )
 
     wait = WebDriverWait(
         driver,
@@ -598,42 +872,432 @@ def _ensure_logged_in(driver, target_url: str):
         )
     )
 
-    password = driver.find_element(
-        By.CSS_SELECTOR,
-        "input[type='password'], input[name='password']",
+    password = wait.until(
+        EC.presence_of_element_located(
+            (
+                By.CSS_SELECTOR,
+                "input[type='password'], "
+                "input[name='password']",
+            )
+        )
     )
 
     email.clear()
-    email.send_keys(Config.TEST_EMAIL)
 
-    password.clear()
-    password.send_keys(Config.TEST_PASSWORD)
-
-    driver.find_element(
-        By.CSS_SELECTOR,
-        "button[type='submit'], "
-        "input[type='submit'], "
-        "button",
-    ).click()
-
-    wait.until(
-        lambda browser: not _login_form_visible(browser)
+    email.send_keys(
+        Config.TEST_EMAIL
     )
 
-    driver.get(target_url)
+    password.clear()
+
+    password.send_keys(
+        Config.TEST_PASSWORD
+    )
+
+    submit = wait.until(
+        EC.element_to_be_clickable(
+            (
+                By.CSS_SELECTOR,
+                "button[type='submit'], "
+                "input[type='submit']",
+            )
+        )
+    )
+
+    submit.click()
+
+    # =======================================================
+    # QUAN TRỌNG: chờ ĐÚNG tín hiệu login thành công là URL rời
+    # khỏi "/login". KHÔNG được driver.get(target_url) trước khi
+    # xác nhận điều này, vì request login (thường là async/AJAX)
+    # có thể chưa hoàn tất -> điều hướng sớm sẽ hủy ngang phiên
+    # đăng nhập, khiến mọi trang sau đó bị bounce về lại /login.
+    # =======================================================
+
+    try:
+
+        WebDriverWait(
+            driver,
+            Config.EXPLICIT_WAIT,
+        ).until(
+            lambda browser: not _on_login_url(browser)
+        )
+
+    except TimeoutException as error:
+
+        login_error_text = _read_login_error_text(driver)
+
+        if login_error_text:
+
+            raise SeleniumTestError(
+                "LoginFailedException: Đăng nhập thất bại.\n"
+                f"Thông báo từ trang: {login_error_text}\n"
+                f"URL={_safe_current_url(driver)}"
+            ) from error
+
+        raise SeleniumTestError(
+            "TimeoutException: Đăng nhập không hoàn tất sau "
+            f"{Config.EXPLICIT_WAIT} giây (URL vẫn ở trang /login).\n"
+            f"URL={_safe_current_url(driver)}\n"
+            "Kiểm tra lại email/password trong Config, hoặc trang "
+            "login có yêu cầu captcha/2FA không."
+        ) from error
+
+    # Chờ document + app render sau khi rời trang login
+    _wait_app_rendered(driver)
+
+    # Nếu sau login không tự về đúng target_url thì điều hướng tới
+    if target_url and target_url.rstrip("/") not in (driver.current_url or ""):
+
+        driver.get(
+            target_url
+        )
+
+    # Chờ document + app render tại trang đích
+    _wait_app_rendered(driver)
 
 
 # =========================================================
-# VEHICLE CATALOG - OLD LOGIC
+# APP RENDER WAIT (React / Ant Design hydration)
 # =========================================================
 
-def _active_brand_names_from_catalog(driver):
+def _wait_app_rendered(driver, timeout: float = None):
     """
-    Lấy tên các Hãng đang hoạt động trực tiếp từ bảng
-    Danh mục xe.
+    Chờ document ready VÀ có ít nhất vài phần tử con trong <body>.
 
-    Giữ nguyên logic cũ.
+    Ant Design / React render động sau khi document.readyState đã là
+    "complete", nên chỉ chờ readyState là chưa đủ - cần chờ DOM có
+    nội dung thật sự trước khi tìm element cụ thể.
     """
+
+    timeout = timeout or Config.EXPLICIT_WAIT
+
+    try:
+
+        WebDriverWait(driver, timeout).until(
+            lambda browser:
+                browser.execute_script(
+                    "return document.readyState"
+                )
+                == "complete"
+        )
+
+    except Exception:
+        pass
+
+    try:
+
+        WebDriverWait(driver, timeout).until(
+            lambda browser: len(
+                browser.find_elements(
+                    By.CSS_SELECTOR,
+                    "body *",
+                )
+            )
+            > 5
+        )
+
+    except Exception:
+        pass
+
+
+# =========================================================
+# BOOKING FORM AUTO-OPEN (self-healing, generic theo page_key)
+# =========================================================
+
+_BOOKING_FORM_TRIGGER_TEXTS = (
+    "tạo đơn thuê",
+    "thêm đặt xe",
+    "tạo đặt xe",
+    "tạo mới",
+    "thêm mới",
+)
+
+
+def _try_open_booking_form(driver) -> bool:
+    """
+    Trang Quản lý đặt xe (plt_booking) chỉ hiển thị các field
+    carId/customerId/status/paymentMethod... trên route con
+    (VD: /bookings/new) sau khi bấm nút mở form, KHÔNG có sẵn trên
+    trang danh sách. Hàm này tìm và click nút mở form đó dựa trên
+    text của button (generic, không hard-code theo element_key).
+
+    Trả về True nếu tìm và click được nút, False nếu không tìm thấy.
+    """
+
+    try:
+
+        clickable = driver.find_elements(
+            By.CSS_SELECTOR,
+            "button, a, [role='button']",
+        )
+
+    except Exception:
+        return False
+
+    target = None
+
+    for candidate in clickable:
+
+        try:
+
+            if not candidate.is_displayed():
+                continue
+
+            text = (
+                candidate.text or ""
+            ).strip().lower()
+
+            if any(
+                trigger in text
+                for trigger in _BOOKING_FORM_TRIGGER_TEXTS
+            ):
+                target = candidate
+                break
+
+        except Exception:
+            continue
+
+    if target is None:
+        return False
+
+    logger.info(
+        "[BOOKING FORM] Không thấy field trên trang danh sách, "
+        "thử mở form bằng nút: %r",
+        (target.text or "").strip(),
+    )
+
+    try:
+
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            target,
+        )
+
+    except Exception:
+        pass
+
+    clicked = False
+
+    try:
+        target.click()
+        clicked = True
+    except Exception:
+
+        try:
+            driver.execute_script(
+                "arguments[0].click();",
+                target,
+            )
+            clicked = True
+        except Exception:
+            clicked = False
+
+    if not clicked:
+        return False
+
+    _wait_app_rendered(driver)
+
+    return True
+
+
+# =========================================================
+# SAFE ELEMENT FINDER (core fix)
+# =========================================================
+
+def _wait_find_element(
+    driver,
+    locator_type: str,
+    locator_value: str,
+    page_name: str = "",
+    element_name: str = "",
+    element_key: str = "",
+    page_key: str = "",
+    timeout: float = None,
+    require_visible: bool = True,
+    _retried_after_form_open: bool = False,
+):
+    """
+    Tìm element an toàn, có wait rõ ràng (không dùng sleep) và khi
+    fail luôn ném SeleniumTestError với message sạch, kèm URL/title/
+    login-state để debug - thay vì để lộ stacktrace chromedriver.
+
+    Với page_key="plt_booking": nếu lần tìm đầu tiên timeout, tự
+    động thử mở form "Tạo đơn thuê" (các field booking chỉ tồn tại
+    trên route con /bookings/new) rồi thử lại một lần trước khi báo
+    lỗi thật.
+    """
+
+    timeout = timeout or Config.EXPLICIT_WAIT
+
+    by = _by(locator_type)
+
+    logger.info(
+        "[FIND] page=%s element=%s locator=%s:%s timeout=%s",
+        page_name,
+        element_name or element_key,
+        locator_type,
+        locator_value,
+        timeout,
+    )
+
+    wait = WebDriverWait(driver, timeout)
+
+    try:
+
+        element = wait.until(
+            EC.presence_of_element_located(
+                (by, locator_value)
+            )
+        )
+
+    except TimeoutException as error:
+
+        # ---------------------------------------------------
+        # Self-healing: thử mở form booking rồi tìm lại 1 lần
+        # ---------------------------------------------------
+
+        if (
+            page_key == "plt_booking"
+            and not _retried_after_form_open
+        ):
+
+            opened = _try_open_booking_form(driver)
+
+            if opened:
+
+                return _wait_find_element(
+                    driver=driver,
+                    locator_type=locator_type,
+                    locator_value=locator_value,
+                    page_name=page_name,
+                    element_name=element_name,
+                    element_key=element_key,
+                    page_key=page_key,
+                    timeout=timeout,
+                    require_visible=require_visible,
+                    _retried_after_form_open=True,
+                )
+
+        current_url = _safe_current_url(driver)
+        title = _safe_title(driver)
+        login_visible = _login_form_visible(driver, timeout=1)
+
+        detail_message = (
+            f"Không tìm thấy element sau {timeout} giây."
+        )
+
+        logger.error(
+            _format_selenium_error(
+                page_name,
+                element_name or element_key,
+                locator_type,
+                locator_value,
+                current_url,
+                "TimeoutException",
+                detail_message,
+            )
+        )
+
+        raise SeleniumTestError(
+            "TimeoutException: "
+            f"Không tìm thấy element \"{element_name or element_key}\"\n"
+            f"locator={locator_type}:{locator_value}\n"
+            f"URL={current_url}\n"
+            f"page_title={title}\n"
+            f"login_page_visible={login_visible}"
+        ) from error
+
+    except NoSuchElementException as error:
+
+        current_url = _safe_current_url(driver)
+        title = _safe_title(driver)
+
+        logger.error(
+            _format_selenium_error(
+                page_name,
+                element_name or element_key,
+                locator_type,
+                locator_value,
+                current_url,
+                "NoSuchElementException",
+                _clean_exception_message(error),
+            )
+        )
+
+        raise SeleniumTestError(
+            "NoSuchElementException: "
+            f"Không tồn tại element \"{element_name or element_key}\"\n"
+            f"locator={locator_type}:{locator_value}\n"
+            f"URL={current_url}\n"
+            f"page_title={title}"
+        ) from error
+
+    except SessionNotCreatedException as error:
+
+        raise SeleniumTestError(
+            "SessionNotCreatedException: "
+            "Chrome session không được tạo hoặc đã chết trước khi "
+            "tìm được element. Kiểm tra lại phiên bản Chrome/ChromeDriver.\n"
+            f"chi_tiet={_clean_exception_message(error)}"
+        ) from error
+
+    except WebDriverException as error:
+
+        current_url = _safe_current_url(driver)
+        title = _safe_title(driver)
+        clean_message = _clean_exception_message(error)
+
+        logger.error(
+            _format_selenium_error(
+                page_name,
+                element_name or element_key,
+                locator_type,
+                locator_value,
+                current_url,
+                "WebDriverException",
+                clean_message,
+            )
+        )
+
+        raise SeleniumTestError(
+            "WebDriverException: "
+            f"Lỗi khi tìm element \"{element_name or element_key}\"\n"
+            f"locator={locator_type}:{locator_value}\n"
+            f"URL={current_url}\n"
+            f"page_title={title}\n"
+            f"chi_tiet={clean_message}"
+        ) from error
+
+    if require_visible:
+
+        try:
+
+            wait.until(
+                EC.visibility_of(element)
+            )
+
+        except Exception:
+
+            logger.warning(
+                "[FIND] Element tồn tại nhưng chưa visible: "
+                "page=%s element=%s locator=%s:%s",
+                page_name,
+                element_name or element_key,
+                locator_type,
+                locator_value,
+            )
+
+    return element
+
+
+# =========================================================
+# VEHICLE CATALOG
+# =========================================================
+
+def _active_brand_names_from_catalog(
+    driver
+):
 
     heading_xpath = (
         "(//*[self::h1 or self::h2 or self::h3 or "
@@ -648,16 +1312,21 @@ def _active_brand_names_from_catalog(driver):
     )
 
     if not rows:
+
         rows = driver.find_elements(
             By.XPATH,
             heading_xpath
-            + "/following::*[@role='row'][position()>1]",
+            + "/following::*"
+            "[@role='row'][position()>1]",
         )
 
     active_names = []
 
     for row in rows:
-        row_text = (row.text or "").strip()
+
+        row_text = (
+            row.text or ""
+        ).strip()
 
         if not row_text:
             continue
@@ -694,9 +1363,12 @@ def _active_brand_names_from_catalog(driver):
 
         if (
             brand_name
-            and brand_name not in active_names
+            and brand_name
+            not in active_names
         ):
-            active_names.append(brand_name)
+            active_names.append(
+                brand_name
+            )
 
     return active_names
 
@@ -706,6 +1378,7 @@ def _is_catalog_brand_dropdown(
     page_key: str,
     element_key: str,
 ) -> bool:
+
     return (
         module == "dropdown"
         and page_key == "plt_vehicle_catalog"
@@ -714,19 +1387,13 @@ def _is_catalog_brand_dropdown(
 
 
 # =========================================================
-# NEW - BOOKING PAGE
+# BOOKING
 # =========================================================
 
 def _is_booking_page(
     module: str,
     page_key: str,
 ) -> bool:
-    """
-    Xác định test hiện tại có thuộc trang
-    Quản lý đặt xe hay không.
-
-    Không ảnh hưởng các page cũ.
-    """
 
     return (
         page_key == "plt_booking"
@@ -746,18 +1413,6 @@ def _is_booking_dropdown(
     page_key: str,
     element_key: str,
 ) -> bool:
-    """
-    Xác định Dropdown thuộc trang Quản lý đặt xe.
-
-    Không hard-code tên element để TestContract
-    vẫn là nguồn dữ liệu chính.
-
-    Vì vậy cả:
-        - Dropdown trạng thái booking
-        - Dropdown bộ lọc booking
-
-    đều được xử lý.
-    """
 
     return (
         module == "dropdown"
@@ -769,9 +1424,6 @@ def _booking_dropdown_log_name(
     element_key: str,
     element_name: str,
 ) -> str:
-    """
-    Tên hiển thị trong log cho Booking.
-    """
 
     if element_name:
         return element_name
@@ -782,242 +1434,318 @@ def _booking_dropdown_log_name(
     return "Booking Dropdown"
 
 
-def _wait_booking_dropdown_options(driver):
-    """
-    Chờ option của dropdown Booking xuất hiện.
+# =========================================================
+# WAIT ANT DESIGN OPTIONS
+# =========================================================
 
-    Hỗ trợ Ant Design.
-
-    Trả về danh sách WebElement.
+def _get_visible_booking_options(
+    driver
+):
     """
+    Ant Design render dropdown ở portal (thường append vào cuối
+    <body>), KHÔNG nằm trong DOM con của input. Vì vậy luôn tìm bằng
+    driver.find_elements(...) (toàn document), không dùng
+    element.find_elements(...).
+    """
+
+    selectors = [
+
+        # Ant Design
+        (
+            ".ant-select-dropdown:not("
+            ".ant-select-dropdown-hidden"
+            ") "
+            ".ant-select-item-option-content"
+        ),
+
+        # Ant Design role option
+        (
+            ".ant-select-dropdown:not("
+            ".ant-select-dropdown-hidden"
+            ") "
+            "[role='option']"
+        ),
+
+        # Generic listbox
+        (
+            "[role='listbox']:not("
+            "[aria-hidden='true'"
+            "]) "
+            "[role='option']"
+        ),
+
+        # Generic option
+        (
+            "[role='option']"
+        ),
+    ]
+
+    for selector in selectors:
+
+        elements = driver.find_elements(
+            By.CSS_SELECTOR,
+            selector,
+        )
+
+        visible = []
+
+        for element in elements:
+
+            try:
+
+                if element.is_displayed():
+
+                    text = (
+                        element.text or ""
+                    ).strip()
+
+                    if text:
+                        visible.append(
+                            element
+                        )
+
+            except Exception:
+                continue
+
+        if visible:
+            return visible
+
+    return []
+
+
+# =========================================================
+# READ BOOKING DROPDOWN
+# =========================================================
+
+def _read_booking_dropdown(
+    driver,
+    element,
+):
 
     wait = WebDriverWait(
         driver,
         Config.EXPLICIT_WAIT,
     )
 
-    return wait.until(
-        lambda browser: (
-            browser.find_elements(
-                By.CSS_SELECTOR,
-                ".ant-select-dropdown:not("
-                ".ant-select-dropdown-hidden"
-                ") "
-                ".ant-select-item-option-content",
-            )
-            or browser.find_elements(
-                By.CSS_SELECTOR,
-                ".ant-dropdown:not(.ant-dropdown-hidden) "
-                "[role='option']",
-            )
-            or browser.find_elements(
-                By.CSS_SELECTOR,
-                "[role='listbox']:not([aria-hidden='true']) "
-                "[role='option']",
-            )
-        )
+    element_id = (
+        element.get_attribute("id")
+        or ""
     )
 
-
-def _read_booking_dropdown(driver, element):
-    """
-    Đọc option của Dropdown thuộc trang Booking.
-
-    Thứ tự xử lý:
-
-    1. Native <select>
-    2. Ant Design
-    3. role=listbox
-    4. ul/li
-    5. Dropdown text trong element
-
-    Hàm này chỉ được gọi khi:
-        page_key == plt_booking
-        module == dropdown
-    """
+    logger.info(
+        "[BOOKING DROPDOWN] "
+        "Reading id=%s",
+        element_id,
+    )
 
     # -----------------------------------------------------
-    # 1. Native SELECT
-    # -----------------------------------------------------
-
-    tag_name = (
-        element.tag_name or ""
-    ).lower()
-
-    if tag_name == "select":
-        options = element.find_elements(
-            By.TAG_NAME,
-            "option",
-        )
-
-        values = []
-
-        for option in options:
-            text = (
-                option.text or ""
-            ).strip()
-
-            if text and text not in values:
-                values.append(text)
-
-        if values:
-            return "\n".join(values)
-
-    # -----------------------------------------------------
-    # 2. Element bên trong là SELECT
+    # Scroll
     # -----------------------------------------------------
 
     try:
-        nested_select = element.find_elements(
-            By.CSS_SELECTOR,
-            "select",
+
+        driver.execute_script(
+            """
+            arguments[0].scrollIntoView({
+                behavior: 'instant',
+                block: 'center'
+            });
+            """,
+            element,
         )
-
-        if nested_select:
-            options = nested_select[0].find_elements(
-                By.TAG_NAME,
-                "option",
-            )
-
-            values = []
-
-            for option in options:
-                text = (
-                    option.text or ""
-                ).strip()
-
-                if text and text not in values:
-                    values.append(text)
-
-            if values:
-                return "\n".join(values)
 
     except Exception:
         pass
 
     # -----------------------------------------------------
-    # 3. Click Booking dropdown
+    # Nếu element là input
     # -----------------------------------------------------
 
+    target = element
+
     try:
-        WebDriverWait(
-            driver,
-            Config.EXPLICIT_WAIT,
-        ).until(
-            lambda _driver: (
-                element.is_displayed()
-                and element.is_enabled()
+
+        if (
+            element.tag_name or ""
+        ).lower() != "input":
+
+            nested = element.find_elements(
+                By.CSS_SELECTOR,
+                "input[role='combobox']",
+            )
+
+            if nested:
+                target = nested[0]
+
+    except Exception:
+        pass
+
+    # -----------------------------------------------------
+    # Click
+    # -----------------------------------------------------
+
+    clicked = False
+
+    try:
+
+        wait.until(
+            EC.visibility_of(target)
+        )
+
+        wait.until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    ".",
+                )
             )
         )
 
-        try:
-            element.click()
-        except Exception:
-            driver.execute_script(
-                "arguments[0].click();",
-                element,
-            )
+        target.click()
 
-    except Exception as error:
+        clicked = True
+
+    except (
+        ElementClickInterceptedException,
+        StaleElementReferenceException,
+        TimeoutException,
+        WebDriverException,
+    ) as error:
+
         logger.warning(
             "[BOOKING DROPDOWN] "
-            "Không click được element: %s",
-            error,
+            "Normal click failed (%s): %s",
+            type(error).__name__,
+            _clean_exception_message(error),
         )
 
     # -----------------------------------------------------
-    # 4. Ant Design
+    # JS click fallback
+    # -----------------------------------------------------
+
+    if not clicked:
+
+        try:
+
+            driver.execute_script(
+                "arguments[0].click();",
+                target,
+            )
+
+            clicked = True
+
+        except Exception as error:
+
+            logger.warning(
+                "[BOOKING DROPDOWN] "
+                "JS click failed: %s",
+                _clean_exception_message(error),
+            )
+
+    if not clicked:
+
+        raise SeleniumTestError(
+            "ElementClickInterceptedException: "
+            "Không click được dropdown "
+            f"id={element_id}\n"
+            f"URL={_safe_current_url(driver)}"
+        )
+
+    # -----------------------------------------------------
+    # Chờ option (KHÔNG dùng sleep)
     # -----------------------------------------------------
 
     try:
-        option_elements = _wait_booking_dropdown_options(
-            driver
+
+        options = wait.until(
+            lambda browser:
+                _get_visible_booking_options(
+                    browser
+                )
+                or False
         )
 
-        values = []
+    except TimeoutException as error:
 
-        for option in option_elements:
+        try:
+            capture_screenshot(
+                driver,
+                f"booking_dropdown_{element_id}",
+            )
+        except Exception:
+            pass
+
+        raise SeleniumTestError(
+            "TimeoutException: "
+            "Dropdown đã được click nhưng không thấy option xuất hiện "
+            f"sau {Config.EXPLICIT_WAIT} giây.\n"
+            f"id={element_id}\n"
+            f"URL={_safe_current_url(driver)}\n"
+            "Gợi ý: option có thể được load bằng API - kiểm tra "
+            "Network tab xem API có trả dữ liệu không."
+        ) from error
+
+    # -----------------------------------------------------
+    # Đọc text
+    # -----------------------------------------------------
+
+    values = []
+
+    for option in options:
+
+        try:
+
             text = (
                 option.text or ""
             ).strip()
 
-            if text and text not in values:
+            if (
+                text
+                and text not in values
+            ):
                 values.append(text)
 
-        if values:
-            return "\n".join(values)
-
-    except Exception:
-        pass
+        except StaleElementReferenceException:
+            continue
+        except Exception:
+            continue
 
     # -----------------------------------------------------
-    # 5. Generic role=listbox
+    # Không có value
+    # -----------------------------------------------------
+
+    if not values:
+
+        raise SeleniumTestError(
+            "NoSuchElementException: "
+            "Dropdown mở nhưng không đọc được option nào (option "
+            "rỗng hoặc chỉ có khoảng trắng).\n"
+            f"id={element_id}"
+        )
+
+    logger.info(
+        "[BOOKING DROPDOWN] "
+        "id=%s -> %s options",
+        element_id,
+        len(values),
+    )
+
+    # -----------------------------------------------------
+    # Close dropdown
     # -----------------------------------------------------
 
     try:
-        option_elements = driver.find_elements(
-            By.CSS_SELECTOR,
-            "[role='listbox']:not([aria-hidden='true']) "
-            "[role='option']",
+
+        driver.execute_script(
+            """
+            document.body.click();
+            """
         )
-
-        values = []
-
-        for option in option_elements:
-            if not option.is_displayed():
-                continue
-
-            text = (
-                option.text or ""
-            ).strip()
-
-            if text and text not in values:
-                values.append(text)
-
-        if values:
-            return "\n".join(values)
 
     except Exception:
         pass
 
-    # -----------------------------------------------------
-    # 6. Generic dropdown ul/li
-    # -----------------------------------------------------
-
-    try:
-        option_elements = driver.find_elements(
-            By.CSS_SELECTOR,
-            "ul[role='listbox'] li, "
-            ".dropdown-menu li, "
-            ".select-options li",
-        )
-
-        values = []
-
-        for option in option_elements:
-            if not option.is_displayed():
-                continue
-
-            text = (
-                option.text or ""
-            ).strip()
-
-            if text and text not in values:
-                values.append(text)
-
-        if values:
-            return "\n".join(values)
-
-    except Exception:
-        pass
-
-    # -----------------------------------------------------
-    # 7. Fallback
-    # -----------------------------------------------------
-
-    return (
-        element.text or ""
-    ).strip()
+    return "\n".join(values)
 
 
 # =========================================================
@@ -1036,17 +1764,23 @@ def _read_actual(
 ) -> str:
 
     # -----------------------------------------------------
-    # NAVIGATION
+    # Navigation
     # -----------------------------------------------------
 
     if action_type == "click_url_contains":
+
         WebDriverWait(
             driver,
             Config.EXPLICIT_WAIT,
         ).until(
-            lambda _driver: (
-                element.is_displayed()
-                and element.is_enabled()
+            EC.element_to_be_clickable(
+                (
+                    _by("css"),
+                    element.get_attribute(
+                        "data-testid"
+                    )
+                    or "#"
+                )
             )
         )
 
@@ -1056,25 +1790,31 @@ def _read_actual(
             driver,
             Config.EXPLICIT_WAIT,
         ).until(
-            EC.url_contains(target_path)
+            EC.url_contains(
+                target_path
+            )
         )
 
         return driver.current_url
 
     if action_type == "deep_link_url_contains":
+
         WebDriverWait(
             driver,
             Config.EXPLICIT_WAIT,
         ).until(
             EC.presence_of_element_located(
-                (By.CSS_SELECTOR, "main")
+                (
+                    By.CSS_SELECTOR,
+                    "main",
+                )
             )
         )
 
         return driver.current_url
 
     # -----------------------------------------------------
-    # BOOKING DROPDOWN
+    # Booking Dropdown
     # -----------------------------------------------------
 
     if _is_booking_dropdown(
@@ -1082,6 +1822,7 @@ def _read_actual(
         page_key,
         element_key,
     ):
+
         logger.info(
             "[BOOKING DROPDOWN] "
             "Đọc element: %s (%s)",
@@ -1098,78 +1839,107 @@ def _read_actual(
         )
 
     # -----------------------------------------------------
-    # GENERIC DROPDOWN
+    # Generic Dropdown
     # -----------------------------------------------------
 
     if module == "dropdown":
+
+        # Native select
         options = element.find_elements(
             By.TAG_NAME,
             "option",
         )
 
         if options:
+
             return "\n".join(
                 option.text.strip()
                 for option in options
                 if option.text.strip()
             )
 
+        # Ant Design
+        try:
+
+            driver.execute_script(
+                """
+                arguments[0].scrollIntoView({
+                    behavior: 'instant',
+                    block: 'center'
+                });
+                """,
+                element,
+            )
+
+        except Exception:
+            pass
+
         try:
             element.click()
 
         except Exception:
+
             try:
-                element.find_element(
+
+                nested_input = element.find_element(
                     By.CSS_SELECTOR,
                     "input[role='combobox']",
-                ).click()
+                )
+
+                nested_input.click()
 
             except Exception:
                 pass
 
         try:
+
             WebDriverWait(
                 driver,
                 Config.EXPLICIT_WAIT,
             ).until(
-                EC.visibility_of_element_located(
-                    (
-                        By.CSS_SELECTOR,
-                        ".ant-select-dropdown:not("
-                        ".ant-select-dropdown-hidden"
-                        ") "
-                        ".ant-select-item-option-content",
+                lambda browser:
+                    _get_visible_booking_options(
+                        browser
                     )
-                )
+                    or False
             )
+
         except Exception:
             pass
 
-        option_elements = driver.find_elements(
-            By.CSS_SELECTOR,
-            ".ant-select-dropdown:not("
-            ".ant-select-dropdown-hidden"
-            ") "
-            ".ant-select-item-option-content",
+        option_elements = (
+            _get_visible_booking_options(
+                driver
+            )
         )
 
         values = []
 
         for option in option_elements:
-            text = (
-                option.text or ""
-            ).strip()
 
-            if text and text not in values:
-                values.append(text)
+            try:
+
+                text = (
+                    option.text or ""
+                ).strip()
+
+                if (
+                    text
+                    and text not in values
+                ):
+                    values.append(text)
+
+            except Exception:
+                continue
 
         return "\n".join(values)
 
     # -----------------------------------------------------
-    # IMAGE
+    # Image
     # -----------------------------------------------------
 
     if module == "image":
+
         return (
             element.get_attribute("alt")
             or element.get_attribute("src")
@@ -1177,10 +1947,11 @@ def _read_actual(
         )
 
     # -----------------------------------------------------
-    # TABLE
+    # Table
     # -----------------------------------------------------
 
     if module == "table":
+
         return _table_text_from_element(
             element
         )
@@ -1190,6 +1961,7 @@ def _read_actual(
     # -----------------------------------------------------
 
     if module == "ui":
+
         return (
             "visible"
             if element.is_displayed()
@@ -1197,7 +1969,7 @@ def _read_actual(
         )
 
     # -----------------------------------------------------
-    # LABEL / TEXT
+    # Label / Text
     # -----------------------------------------------------
 
     return (
@@ -1232,14 +2004,15 @@ def run_label_text_test(
     step_delay: float = 0,
     close_delay: float = 0,
 ):
+
     driver = None
 
     repository = TestResultRepository()
 
     screenshot_path = ""
     error_message = ""
-    actual = ""
 
+    actual = ""
     status = "ERROR"
     message = ""
 
@@ -1248,16 +2021,25 @@ def run_label_text_test(
     try:
 
         # =================================================
-        # LOG - OPEN PAGE
+        # LOG
         # =================================================
 
         if worker:
+
             worker.log_signal.emit(
                 f"[{module.upper()}] "
                 f"Mở trang kiểm thử: {page_name}"
             )
 
-            worker.progress_signal.emit(20)
+            worker.progress_signal.emit(
+                10
+            )
+
+        logger.info(
+            "[%s] Opening: %s",
+            module.upper(),
+            url,
+        )
 
         # =================================================
         # CREATE DRIVER
@@ -1268,7 +2050,24 @@ def run_label_text_test(
             keep_session=True,
         )
 
+        if worker:
+
+            worker.log_signal.emit(
+                "[SELENIUM] Chrome đã khởi động."
+            )
+
+            worker.progress_signal.emit(
+                25
+            )
+
+        # =================================================
+        # OPEN URL
+        # =================================================
+
         driver.get(url)
+
+        # Chờ document + app render (React/Ant Design hydration)
+        _wait_app_rendered(driver)
 
         # =================================================
         # LOGIN
@@ -1278,6 +2077,12 @@ def run_label_text_test(
             driver,
             url,
         )
+
+        # =================================================
+        # WAIT AFTER LOGIN / PAGE LOAD
+        # =================================================
+
+        _wait_app_rendered(driver)
 
         if step_delay > 0:
             time.sleep(step_delay)
@@ -1290,7 +2095,9 @@ def run_label_text_test(
             module,
             page_key,
         ):
+
             if worker:
+
                 worker.log_signal.emit(
                     "[BOOKING] "
                     f"Đang kiểm tra: {element_name}"
@@ -1301,16 +2108,38 @@ def run_label_text_test(
         # =================================================
 
         if worker:
+
             worker.log_signal.emit(
                 f"[{module.upper()}] "
-                f"Kiểm tra element: {element_name}"
+                f"Đang tìm element: "
+                f"{element_name}"
             )
 
-            worker.progress_signal.emit(60)
+            worker.progress_signal.emit(
+                50
+            )
 
-        element = driver.find_element(
-            _by(locator_type),
+        logger.info(
+            "[%s] locator=%s %s",
+            module.upper(),
+            locator_type,
             locator_value,
+        )
+
+        # =================================================
+        # WAIT + FIND ELEMENT (an toàn, không sleep,
+        # exception rõ ràng nếu fail)
+        # =================================================
+
+        element = _wait_find_element(
+            driver=driver,
+            locator_type=locator_type,
+            locator_value=locator_value,
+            page_name=page_name,
+            element_name=element_name,
+            element_key=element_key,
+            page_key=page_key,
+            timeout=Config.EXPLICIT_WAIT,
         )
 
         # =================================================
@@ -1320,25 +2149,32 @@ def run_label_text_test(
         if step_delay > 0:
 
             try:
+
                 driver.execute_script(
-                    "arguments[0].scrollIntoView("
-                    "{behavior:'smooth', block:'center'});"
-                    "arguments[0].style.outline="
-                    "'3px solid #ef4444';"
-                    "arguments[0].style.outlineOffset="
-                    "'4px';",
+                    """
+                    arguments[0].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                    arguments[0].style.outline =
+                        '3px solid #ef4444';
+
+                    arguments[0].style.outlineOffset =
+                        '4px';
+                    """,
                     element,
                 )
 
             except Exception:
-                # Visual assistance must never
-                # change the test result.
                 pass
 
-            time.sleep(step_delay)
+            time.sleep(
+                step_delay
+            )
 
         # =================================================
-        # VEHICLE CATALOG SPECIAL CASE
+        # SPECIAL CASE
         # =================================================
 
         auto_catalog_dropdown = (
@@ -1349,10 +2185,6 @@ def run_label_text_test(
             )
         )
 
-        # =================================================
-        # BOOKING SPECIAL CASE
-        # =================================================
-
         booking_dropdown = (
             _is_booking_dropdown(
                 module,
@@ -1361,14 +2193,21 @@ def run_label_text_test(
             )
         )
 
-        if booking_dropdown and worker:
-            worker.log_signal.emit(
-                "[BOOKING] "
-                f"Dropdown: {element_name}"
-            )
+        # =================================================
+        # BOOKING LOG
+        # =================================================
+
+        if booking_dropdown:
+
+            if worker:
+
+                worker.log_signal.emit(
+                    "[BOOKING] "
+                    f"Dropdown: {element_name}"
+                )
 
         # =================================================
-        # AUTO EXPECTED - VEHICLE CATALOG
+        # VEHICLE CATALOG EXPECTED
         # =================================================
 
         if auto_catalog_dropdown:
@@ -1380,9 +2219,11 @@ def run_label_text_test(
             )
 
             if not active_brands:
-                raise RuntimeError(
-                    "Không đọc được danh sách Hãng "
-                    "đang hoạt động từ bảng Hãng xe."
+
+                raise SeleniumTestError(
+                    "NoSuchElementException: "
+                    "Không đọc được danh sách "
+                    "Hãng đang hoạt động từ bảng Hãng xe."
                 )
 
             expected = "\n".join(
@@ -1392,8 +2233,9 @@ def run_label_text_test(
             expected_result = expected
 
             if worker:
+
                 worker.log_signal.emit(
-                    f"[DROPDOWN] "
+                    "[DROPDOWN] "
                     f"Tự lấy {len(active_brands)} "
                     "Hãng đang hoạt động làm Expected."
                 )
@@ -1403,9 +2245,9 @@ def run_label_text_test(
         # =================================================
 
         actual = _read_actual(
-            driver,
-            element,
-            module,
+            driver=driver,
+            element=element,
+            module=module,
             action_type=action_type,
             target_path=target_path,
             page_key=page_key,
@@ -1420,51 +2262,41 @@ def run_label_text_test(
         # COMPARE
         # =================================================
 
-        # -------------------------------------------------
-        # VEHICLE CATALOG
-        # -------------------------------------------------
-
         if auto_catalog_dropdown:
 
-            status, pairs = _compare_unordered_lines(
-                expected,
-                actual,
-                trim=trim,
-                case_sensitive=case_sensitive,
+            status, pairs = (
+                _compare_unordered_lines(
+                    expected,
+                    actual,
+                    trim=trim,
+                    case_sensitive=case_sensitive,
+                )
             )
-
-        # -------------------------------------------------
-        # NAVIGATION
-        # -------------------------------------------------
 
         elif action_type in (
             "click_url_contains",
             "deep_link_url_contains",
         ):
 
-            status = _compare_navigation_expected(
-                expected,
-                actual,
-                trim=trim,
-                case_sensitive=case_sensitive,
+            status = (
+                _compare_navigation_expected(
+                    expected,
+                    actual,
+                    trim=trim,
+                    case_sensitive=case_sensitive,
+                )
             )
-
-        # -------------------------------------------------
-        # CONTAINS
-        # -------------------------------------------------
 
         elif action_type == "contains_all":
 
-            status, pairs = _compare_contains_all(
-                expected,
-                actual,
-                trim=trim,
-                case_sensitive=case_sensitive,
+            status, pairs = (
+                _compare_contains_all(
+                    expected,
+                    actual,
+                    trim=trim,
+                    case_sensitive=case_sensitive,
+                )
             )
-
-        # -------------------------------------------------
-        # CONTAINS + NUMBER
-        # -------------------------------------------------
 
         elif action_type == "contains_all_has_number":
 
@@ -1477,38 +2309,30 @@ def run_label_text_test(
                 )
             )
 
-        # -------------------------------------------------
-        # DROPDOWN / MENU
-        # -------------------------------------------------
-
         elif module in (
             "dropdown",
             "menu",
         ):
 
-            status, pairs = _compare_line_pairs(
-                expected,
-                actual,
-                trim=trim,
-                case_sensitive=case_sensitive,
+            status, pairs = (
+                _compare_line_pairs(
+                    expected,
+                    actual,
+                    trim=trim,
+                    case_sensitive=case_sensitive,
+                )
             )
-
-        # -------------------------------------------------
-        # TABLE
-        # -------------------------------------------------
 
         elif module == "table":
 
-            status, pairs = _compare_table_rows(
-                expected,
-                actual,
-                trim=trim,
-                case_sensitive=case_sensitive,
+            status, pairs = (
+                _compare_table_rows(
+                    expected,
+                    actual,
+                    trim=trim,
+                    case_sensitive=case_sensitive,
+                )
             )
-
-        # -------------------------------------------------
-        # LABEL / TEXT / OTHER
-        # -------------------------------------------------
 
         else:
 
@@ -1526,7 +2350,10 @@ def run_label_text_test(
 
             status = (
                 "PASSED"
-                if actual_compare == expected_compare
+                if (
+                    actual_compare
+                    == expected_compare
+                )
                 else "FAILED"
             )
 
@@ -1537,96 +2364,242 @@ def run_label_text_test(
         if status == "PASSED":
 
             if auto_catalog_dropdown:
+
                 message = (
-                    "Dropdown đồng bộ với các "
-                    "Hãng đang hoạt động"
+                    "Dropdown đồng bộ với "
+                    "các Hãng đang hoạt động."
                 )
 
             elif booking_dropdown:
+
                 message = (
                     "Dropdown Booking khớp "
-                    "với Expected"
+                    "với Expected."
                 )
 
             else:
+
                 message = (
-                    "Expected khớp Actual"
+                    "Expected khớp Actual."
                 )
 
         elif auto_catalog_dropdown:
 
             message = (
                 "Dropdown chưa đồng bộ với "
-                "danh sách Hãng đang hoạt động"
+                "danh sách Hãng đang hoạt động."
             )
 
         elif booking_dropdown:
 
             message = (
                 "Dropdown Booking chưa khớp "
-                "với Expected"
+                "với Expected."
             )
 
-        elif not (expected or "").strip():
+        elif not (
+            expected or ""
+        ).strip():
 
             message = (
-                "Expected Result đang trống"
+                "Expected Result đang trống."
             )
 
         else:
 
             message = (
-                "Expected khác Actual"
+                "Expected khác Actual."
             )
 
         # =================================================
-        # SCREENSHOT WHEN FAILED
+        # SCREENSHOT FAILED
         # =================================================
 
-        if status != "PASSED" and driver:
-            screenshot_path = capture_screenshot(
-                driver,
-                case_id
-                or element_key
-                or module,
-            )
+        if (
+            status != "PASSED"
+            and driver
+        ):
 
-    except Exception as error:
+            try:
+
+                screenshot_path = (
+                    capture_screenshot(
+                        driver,
+                        case_id
+                        or element_key
+                        or module,
+                    )
+                )
+
+            except Exception:
+                screenshot_path = ""
+
+    # =====================================================
+    # ERROR - đã phân loại, message sạch (không có
+    # stacktrace chromedriver)
+    # =====================================================
+
+    except SeleniumTestError as error:
 
         actual = f"ERROR: {error}"
 
         status = "ERROR"
 
-        message = (
-            "Không lấy được dữ liệu từ Selenium"
-        )
+        message = str(error).split("\n", 1)[0]
 
         error_message = str(error)
 
+        logger.error(
+            "[%s] page=%s element=%s\n%s",
+            module.upper(),
+            page_name,
+            element_name,
+            error_message,
+        )
+
         if driver:
-            screenshot_path = capture_screenshot(
-                driver,
-                case_id
-                or element_key
-                or module,
-            )
+
+            try:
+
+                screenshot_path = (
+                    capture_screenshot(
+                        driver,
+                        case_id
+                        or element_key
+                        or module,
+                    )
+                )
+
+            except Exception:
+                screenshot_path = ""
+
+    except (
+        TimeoutException,
+        NoSuchElementException,
+        StaleElementReferenceException,
+        ElementClickInterceptedException,
+        SessionNotCreatedException,
+        WebDriverException,
+    ) as error:
+
+        exception_type = _classify_exception(error)
+        clean_message = _clean_exception_message(error)
+        current_url = _safe_current_url(driver) if driver else ""
+        title = _safe_title(driver) if driver else ""
+
+        formatted = _format_selenium_error(
+            page_name,
+            element_name,
+            locator_type,
+            locator_value,
+            current_url,
+            exception_type,
+            clean_message,
+        )
+
+        logger.error(formatted)
+
+        actual = (
+            f"ERROR: {exception_type}: {clean_message}\n"
+            f"URL={current_url}\n"
+            f"page_title={title}"
+        )
+
+        status = "ERROR"
+
+        message = (
+            f"{exception_type} khi thao tác với "
+            f"element \"{element_name or element_key}\"."
+        )
+
+        error_message = (
+            f"{exception_type}: {clean_message}"
+        )
+
+        if driver:
+
+            try:
+
+                screenshot_path = (
+                    capture_screenshot(
+                        driver,
+                        case_id
+                        or element_key
+                        or module,
+                    )
+                )
+
+            except Exception:
+                screenshot_path = ""
+
+    except Exception as error:
+
+        clean_message = _clean_exception_message(error)
+
+        actual = (
+            f"ERROR: {type(error).__name__}: {clean_message}"
+        )
+
+        status = "ERROR"
+
+        message = (
+            "Lỗi không xác định trong quá trình test."
+        )
+
+        error_message = clean_message
+
+        logger.exception(
+            "[%s] UNEXPECTED ERROR page=%s element=%s",
+            module.upper(),
+            page_name,
+            element_name,
+        )
+
+        if driver:
+
+            try:
+
+                screenshot_path = (
+                    capture_screenshot(
+                        driver,
+                        case_id
+                        or element_key
+                        or module,
+                    )
+                )
+
+            except Exception:
+                screenshot_path = ""
+
+    # =====================================================
+    # FINALLY
+    # =====================================================
 
     finally:
 
         if driver:
 
             if close_delay > 0:
-                time.sleep(close_delay)
 
-            driver.quit()
+                time.sleep(
+                    close_delay
+                )
+
+            DriverFactory.quit_driver(
+                driver
+            )
 
     # =====================================================
-    # RESULT PAYLOAD
+    # RESULT
     # =====================================================
 
     effective_case_id = (
         case_id
-        or f"{module}:{page_key}:{element_key}"
+        or (
+            f"{module}:"
+            f"{page_key}:"
+            f"{element_key}"
+        )
     )
 
     effective_expected_result = (
@@ -1663,18 +2636,21 @@ def run_label_text_test(
         "screenshot_path": screenshot_path,
         "pairs": pairs,
         "database": repository.db_path,
-        "auto_expected": _is_catalog_brand_dropdown(
-            module,
-            page_key,
-            element_key,
+        "auto_expected": (
+            _is_catalog_brand_dropdown(
+                module,
+                page_key,
+                element_key,
+            )
         ),
     }
 
     # =====================================================
-    # SAVE RESULT
+    # SAVE
     # =====================================================
 
     if persist:
+
         payload["test_case_id"] = (
             repository.save_case_and_result(
                 payload
@@ -1686,8 +2662,8 @@ def run_label_text_test(
     # =====================================================
 
     logger.info(
-        "[%s] page=%s element=%s expected=%s "
-        "actual=%s status=%s",
+        "[%s] page=%s element=%s "
+        "expected=%s actual=%s status=%s",
         module.upper(),
         page_name,
         element_name,
@@ -1697,12 +2673,14 @@ def run_label_text_test(
     )
 
     # =====================================================
-    # WORKER RESULT
+    # WORKER
     # =====================================================
 
     if worker:
 
-        worker.progress_signal.emit(100)
+        worker.progress_signal.emit(
+            100
+        )
 
         worker.log_signal.emit(
             f"[{module.upper()}] "
@@ -1720,14 +2698,16 @@ def run_text_dropdown_test(
     worker=None,
     **kwargs,
 ):
+
     return run_label_text_test(
         worker=worker,
         **kwargs,
     )
 
 
-# Prevent pytest from treating runner functions
-# as test functions.
+# =========================================================
+# PYTEST PROTECTION
+# =========================================================
 
 run_label_text_test.__test__ = False
 run_text_dropdown_test.__test__ = False
