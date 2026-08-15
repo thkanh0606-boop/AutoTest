@@ -46,9 +46,24 @@ class TestContract:
             path="/cars/catalog",
             url="https://courses.plt.pro.vn/cars/catalog",
         ),
+        # =====================================================
+        # THÊM TRANG QUẢN LÝ ĐẶT XE
+        # =====================================================
+        PageUnderTest(
+            key="plt_booking",
+            name="Quản lý đặt xe",
+            path="/bookings",
+            url="https://courses.plt.pro.vn/bookings",
+        ),
     ]
 
     elements: List[ElementUnderTest] = [
+        # =====================================================
+        # CÁC ELEMENT HIỆN CÓ (GIỮ NGUYÊN)
+        # =====================================================
+        # Bạn có thể thêm element cho trang mới ở đây nếu muốn,
+        # nhưng không bắt buộc vì Test Builder cho phép nhập thủ công.
+        # =====================================================
         ElementUnderTest(
             key="dashboard_main_title",
             page_key="plt_dashboard",
@@ -453,6 +468,20 @@ class TestContract:
             sample_expected="Danh mục xe",
             case_id="CAT-017",
         ),
+        # =====================================================
+        # CÓ THỂ THÊM ELEMENT CHO QUẢN LÝ ĐẶT XE Ở ĐÂY
+        # VÍ DỤ:
+        # ElementUnderTest(
+        #     key="booking_page_title",
+        #     page_key="plt_booking",
+        #     test_type="label",
+        #     name="Tiêu đề trang đặt xe",
+        #     locator_type="xpath",
+        #     locator_value="//h1[contains(text(), 'Quản lý đặt xe')]",
+        #     sample_expected="Quản lý đặt xe",
+        #     case_id="BOOK-001",
+        # ),
+        # =====================================================
     ]
 
     @classmethod
