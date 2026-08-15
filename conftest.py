@@ -1,53 +1,113 @@
-import os
-from datetime import datetime
-
 import pytest
 
-from core.config import Config
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from core.driver_factory import DriverFactory
-from pages.login_page import LoginPage
 
 
-@pytest.fixture(scope="function")
-def driver(request):
-    _driver = DriverFactory.create_driver(headless=False)
-    request.node.driver = _driver
-    yield _driver
-    _driver.quit()
-    
+LOGIN_URL = "https://courses.plt.pro.vn/login"
+BOOKING_URL = "https://courses.plt.pro.vn/bookings"
 
-import time
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from pages.login_page import LoginPage
-import os
-from datetime import datetime
+TEST_EMAIL = "test@gmail.com"
+TEST_PASSWORD = "123123"
+
+WAIT_TIME = 20
 
 
+def login(driver):
+    driver.get(LOGIN_URL)
 
-@pytest.fixture(scope="function")
-def logged_in_driver(driver):
-    driver.get(Config.BASE_URL)
-    login_page = LoginPage(driver)
-    login_page.login(Config.TEST_EMAIL, Config.TEST_PASSWORD)
-    return driver
+    wait = WebDriverWait(driver, WAIT_TIME)
+
+    email = wait.until(
+        EC.visibility_of_element_located(
+            (
+                By.CSS_SELECTOR,
+                "input[placeholder='ban@plt.pro.vn']"
+            )
+        )
+    )
+    email.clear()
+    email.send_keys(TEST_EMAIL)
+
+    password = wait.until(
+        EC.visibility_of_element_located(
+            (
+                By.CSS_SELECTOR,
+                "input[placeholder='Nhập mật khẩu']"
+            )
+        )
+    )
+    password.clear()
+    password.send_keys(TEST_PASSWORD)
+
+    button = wait.until(
+        EC.element_to_be_clickable(
+            (
+                By.CSS_SELECTOR,
+                "button[type='submit']"
+            )
+        )
+    )
+    button.click()
+
+    wait.until(
+        lambda d: "/login" not in d.current_url.lower()
+    )
+
+    print("[LOGIN] PASS")
+    print("[LOGIN] URL:", driver.current_url)
 
 
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    outcome = yield
-    report = outcome.get_result()
+@pytest.fixture
+def driver():
+    driver = None
 
-    if report.when == "call" and report.failed:
-        driver = getattr(item, "driver", None)
+    try:
+        driver = DriverFactory.create_driver(
+            headless=False,
+            keep_session=False
+        )
+
+        login(driver)
+
+        driver.get(BOOKING_URL)
+
+        WebDriverWait(
+            driver,
+            WAIT_TIME
+        ).until(
+            lambda d: "/bookings" in d.current_url.lower()
+        )
+
+        WebDriverWait(
+            driver,
+            WAIT_TIME
+        ).until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//main")
+            )
+        )
+
+        WebDriverWait(
+            driver,
+            WAIT_TIME
+        ).until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//main//table")
+            )
+        )
+
+        print("[BOOKING] PASS")
+        print("[BOOKING] URL:", driver.current_url)
+
+        yield driver
+
+    finally:
         if driver:
-            screenshot_dir = os.path.join(os.getcwd(), "reports", "screenshots")
-            os.makedirs(screenshot_dir, exist_ok=True)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            file_path = os.path.join(screenshot_dir, f"FAIL_{item.name}_{timestamp}.png")
-            driver.save_screenshot(file_path)
-
-            print(f"\n[SCREENSHOT] Đã lưu ảnh lỗi tại: {file_path}")
-
-            print(f"\n[SCREENSHOT] Saved failure screenshot: {file_path}")
+            try:
+                driver.quit()
+            except Exception:
+                pass

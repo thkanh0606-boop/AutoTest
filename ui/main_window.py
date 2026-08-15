@@ -217,6 +217,11 @@ class MainWindow(QMainWindow):
             "vehicle_catalog": "Danh mục xe",
             "booking_management": "Quản lý đặt xe",
             "test_suite": "Chạy Test Suite",
+
+            # =================================================
+            # TEST BUILDER MODULES
+            # =================================================
+
             "dropdown": "Kiểm tra Dropdown List",
             "label": "Kiểm tra Label / Text",
             "table": "Kiểm tra Table",
@@ -229,7 +234,10 @@ class MainWindow(QMainWindow):
 
         self.page_indexes = {}
 
-        # Lưu reference tới TestBuilderPage
+        # =====================================================
+        # LƯU REFERENCE TEST BUILDER
+        # =====================================================
+
         self.builder_pages = {}
 
         for page_name, title in pages.items():
@@ -254,7 +262,9 @@ class MainWindow(QMainWindow):
                     title
                 )
 
-                self.builder_pages[page_name] = page
+                self.builder_pages[
+                    page_name
+                ] = page
 
             # =================================================
             # CONFIG
@@ -278,12 +288,10 @@ class MainWindow(QMainWindow):
 
                 self.page_management = page
 
-                # Mở Test Builder
                 page.open_test_builder_signal.connect(
                     self.on_open_test_builder_from_management
                 )
 
-                # Điều hướng Test Builder
                 page.navigate_to_module_signal.connect(
                     self.handle_navigate_to_builder
                 )
@@ -382,34 +390,71 @@ class MainWindow(QMainWindow):
             module_key
         ]
 
+        # =====================================================
         # URL
-        if hasattr(builder, "url_input"):
+        # =====================================================
+
+        if hasattr(
+            builder,
+            "url_input"
+        ):
+
             builder.url_input.setText(
                 page_url
             )
 
-        # Locator type
+        # =====================================================
+        # LOCATOR TYPE
+        # =====================================================
+
         if hasattr(
             builder,
             "locator_type_combo"
         ):
-            builder.locator_type_combo.setCurrentText(
-                element_data.get(
-                    "locator_type",
-                    ""
-                )
+
+            locator_type = element_data.get(
+                "locator_type",
+                ""
             )
 
-        # Locator
+            if locator_type:
+
+                builder.locator_type_combo.setCurrentText(
+                    locator_type
+                )
+
+        # =====================================================
+        # LOCATOR
+        # =====================================================
+
         if hasattr(
             builder,
             "locator_input"
         ):
+
             builder.locator_input.setText(
                 element_data.get(
                     "locator_value",
                     ""
                 )
+            )
+
+        # =====================================================
+        # EXPECTED
+        # =====================================================
+
+        if hasattr(
+            builder,
+            "expected_input"
+        ):
+
+            expected_result = element_data.get(
+                "expected_result",
+                ""
+            )
+
+            builder.expected_input.setPlainText(
+                expected_result
             )
 
         self.open_module_from_quick_menu(
@@ -628,6 +673,11 @@ class MainWindow(QMainWindow):
                 "https://courses.plt.pro.vn/cars/catalog"
             )
 
+            # Đồng bộ tất cả Test Builder
+            self.sync_test_builders_to_page(
+                "plt_vehicle_catalog"
+            )
+
         # =====================================================
         # BOOKING MANAGEMENT
         # =====================================================
@@ -653,6 +703,48 @@ class MainWindow(QMainWindow):
             self.header.url_input.setText(
                 "https://courses.plt.pro.vn/bookings"
             )
+
+            # =================================================
+            # QUAN TRỌNG:
+            # ĐỒNG BỘ TRANG BOOKING CHO TEST BUILDER
+            # =================================================
+
+            self.sync_test_builders_to_page(
+                "plt_booking"
+            )
+
+    # =========================================================
+    # SYNC TEST BUILDERS
+    # =========================================================
+
+    def sync_test_builders_to_page(
+        self,
+        page_key: str
+    ):
+        """
+        Đồng bộ tất cả Test Builder về cùng một
+        trang đang kiểm thử.
+
+        Ví dụ:
+            plt_booking
+
+        Sau đó mỗi Test Builder tự lấy:
+            TestContract.elements_for(
+                'plt_booking',
+                module_key
+            )
+        """
+
+        for builder_page in self.builder_pages.values():
+
+            if hasattr(
+                builder_page,
+                "set_page_by_key"
+            ):
+
+                builder_page.set_page_by_key(
+                    page_key
+                )
 
     # =========================================================
     # QUICK MENU
@@ -965,7 +1057,10 @@ class MainWindow(QMainWindow):
 
         btn_layout.setSpacing(12)
 
-        # Save
+        # =====================================================
+        # SAVE
+        # =====================================================
+
         btn_save = QPushButton(
             "Lưu cấu hình"
         )
@@ -996,7 +1091,10 @@ class MainWindow(QMainWindow):
             self.save_config
         )
 
-        # Test login
+        # =====================================================
+        # TEST LOGIN
+        # =====================================================
+
         btn_test_login = QPushButton(
             "Chạy thử"
         )
@@ -1090,29 +1188,57 @@ class MainWindow(QMainWindow):
         url=""
     ):
         """
-        Đồng bộ URL và thông tin trang
-        cho các màn hình Test Builder dùng chung.
+        Đồng bộ URL và trang đang kiểm thử
+        cho tất cả Test Builder.
+
+        Header chọn:
+            plt_booking
+
+        => tất cả Test Builder sẽ chọn:
+            Quản lý đặt xe
         """
 
-        for builder_page in self.builder_pages.values():
+        # =====================================================
+        # ƯU TIÊN PAGE KEY
+        # =====================================================
 
-            if hasattr(
-                builder_page,
-                "set_page_by_key"
-            ):
+        if page_key:
 
-                builder_page.set_page_by_key(
-                    page_key
-                )
+            synced = False
 
-            elif hasattr(
-                builder_page,
-                "url_input"
-            ):
+            for builder_page in self.builder_pages.values():
 
-                builder_page.url_input.setText(
-                    url
-                )
+                if hasattr(
+                    builder_page,
+                    "set_page_by_key"
+                ):
+
+                    result = builder_page.set_page_by_key(
+                        page_key
+                    )
+
+                    if result:
+                        synced = True
+
+            if synced:
+                return
+
+        # =====================================================
+        # FALLBACK URL
+        # =====================================================
+
+        if url:
+
+            for builder_page in self.builder_pages.values():
+
+                if hasattr(
+                    builder_page,
+                    "url_input"
+                ):
+
+                    builder_page.url_input.setText(
+                        url
+                    )
 
     # =========================================================
     # SAVE CONFIG
