@@ -1,27 +1,22 @@
 import pytest
 import time
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import InvalidSessionIdException, WebDriverException
 
+from core.driver_factory import DriverFactory
+
 # Cấu hình thông tin tài khoản và URL
 LOGIN_URL = "https://courses.plt.pro.vn/login"
 TARGET_URL = "https://courses.plt.pro.vn/users"
-USER_EMAIL = "test@gmail.com"  # <--- Thay Email chuẩn của bạn
-USER_PASS = "123123"         # <--- Thay Pass chuẩn của bạn
+USER_EMAIL = "test@gmail.com"
+USER_PASS = "123123"
 
 def create_browser_instance():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(2)
-    return driver
+    # Sử dụng DriverFactory chung của dự án
+    return DriverFactory.create_driver(headless=False, keep_session=False)
 
 @pytest.fixture(scope="class")
 def setup_driver(request):
@@ -59,11 +54,11 @@ def ensure_user_page_ready(request):
             driver.get(LOGIN_URL)
             wait = WebDriverWait(driver, 8)
             
-            email_el = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='email' or @id='email' or @name='email' or contains(@placeholder, 'email')]")))
+            email_el = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='email' or @id='email' or @name='email' or contains(@placeholder, 'email') or contains(@placeholder, 'ban@plt.pro.vn')]")))
             email_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             email_el.send_keys(USER_EMAIL)
             
-            pass_el = driver.find_element(By.XPATH, "//input[@type='password' or @id='password' or @name='password' or contains(@placeholder, 'Password')]")
+            pass_el = driver.find_element(By.XPATH, "//input[@type='password' or @id='password' or @name='password' or contains(@placeholder, 'Password') or contains(@placeholder, 'mật khẩu')]")
             pass_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             pass_el.send_keys(USER_PASS)
             

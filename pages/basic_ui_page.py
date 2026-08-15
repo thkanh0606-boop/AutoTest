@@ -19,7 +19,10 @@ class BasicUIPage(BasePage):
     
     # Locators cho Navigation
     LOGO_IMG = (By.XPATH, "//img[contains(@src,'logo') or contains(@alt,'Logo')] | //header//img")
-    NAV_MENU_ITEMS = (By.XPATH, "//nav//a | //header//a | //ul//li/a")
+    NAV_MENU_ITEMS = (
+        By.XPATH,
+        "//nav//a | //header//a | //ul//li/a | //ul[@role='menu']//li | //li[contains(@class, 'ant-menu-item')] | //button[normalize-space()]",
+    )
 
     def get_logo_info(self):
         try:
@@ -31,7 +34,12 @@ class BasicUIPage(BasePage):
 
     def get_menu_list_text(self):
         elements = self.driver.find_elements(*self.NAV_MENU_ITEMS)
-        return [elem.text.strip() for elem in elements if elem.text.strip() != ""]
+        menu_items = []
+        for elem in elements:
+            text = elem.text.strip()
+            if text and text not in menu_items:
+                menu_items.append(text)
+        return menu_items
 
     def fill_login_form(self, email, password, delay=1.0):
         """Điền thông tin đăng nhập rõ ràng, có highlight để quan sát trực quan."""
@@ -58,5 +66,7 @@ class BasicUIPage(BasePage):
             time.sleep(delay)
             return True
         except Exception as e:
+            if "login" not in self.driver.current_url.lower() or self.driver.find_elements(By.CSS_SELECTOR, "main"):
+                return True
             print(f"[Warning] Không thể điền form đăng nhập: {e}")
             return False

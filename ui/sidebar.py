@@ -237,6 +237,7 @@ class Sidebar(QWidget):
             "Cấu hình",
             "config"
         )
+
         # ---------------------------------
 
         layout.addSpacing(
@@ -250,6 +251,13 @@ class Sidebar(QWidget):
         self.add_section_title(
             layout,
             "KIỂM THỬ"
+        )
+
+        self.add_menu_item(
+            layout,
+            "▶",
+            "Test Suite",
+            "test_suite"
         )
 
         self.add_menu_item(
