@@ -1,70 +1,81 @@
 import pytest
-<<<<<<< HEAD
-from core.driver_factory import DriverFactory
-
-@pytest.fixture(scope="function")
-def driver():
-    """Fixture tạo và đóng WebDriver tự động cho từng test case của PyTest"""
-    _driver = DriverFactory.create_driver(headless=False)
-    yield _driver
-    _driver.quit()
-    
-=======
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from pages.login_page import LoginPage
-import os
-from datetime import datetime
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import InvalidSessionIdException, WebDriverException
 
+# Cấu hình thông tin tài khoản và URL
+LOGIN_URL = "https://courses.plt.pro.vn/login"
+TARGET_URL = "https://courses.plt.pro.vn/users"
+USER_EMAIL = "test@gmail.com"  # <--- Thay Email chuẩn của bạn
+USER_PASS = "123123"         # <--- Thay Pass chuẩn của bạn
 
-@pytest.fixture(scope="function")
-def driver(request):
+def create_browser_instance():
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
-    # options.add_argument("--headless") # Mở comment nếu muốn chạy ngầm
-    
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    request.node.driver = driver
-    
-    yield driver
-    
-    driver.quit()
-
-@pytest.fixture(scope="function")
-def logged_in_driver(driver):
-    """Fixture dùng chung cho Test Case 2 & 3: Đã đăng nhập sẵn."""
-    driver.get("https://courses.plt.pro.vn/login")
-    login_page = LoginPage(driver)
-    
-    # Thực hiện login
-    login_page.login("test@gmail.com", "123123", delay=0.5)
-    time.sleep(2)
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)
+    driver.implicitly_wait(2)
     return driver
 
+@pytest.fixture(scope="class")
+def setup_driver(request):
+    driver = create_browser_instance()
+    request.cls.driver = driver
+    yield driver
+    try:
+        driver.quit()
+    except Exception:
+        pass
 
+@pytest.fixture(scope="function", autouse=True)
+def ensure_user_page_ready(request):
+    """
+    Chạy trước MỖI testcase: Đảm bảo driver sống, luôn quay về trang Quản lý người dùng.
+    Nếu bị out ra trang Login thì sẽ tự động đăng nhập lại.
+    """
+    driver = getattr(request.cls, "driver", None)
+    if not driver:
+        return
 
+    # 1. Kiểm tra driver hỏng session -> Tạo lại
+    try:
+        _ = driver.current_url
+    except (InvalidSessionIdException, WebDriverException):
+        print("\n[HỆ THỐNG] Session đóng. Đang khởi tạo lại Driver...")
+        driver = create_browser_instance()
+        request.cls.driver = driver
 
+    SIGN_OUT_LOCATOR = (By.XPATH, "//button[contains(., 'Sign out') or contains(., 'Đăng xuất')] | //*[contains(@class, 'anticon-logout')]")
 
-# Hook tự động chụp ảnh màn hình khi Test bị Fail
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    outcome = yield
-    report = outcome.get_result()
-    
-    # Chỉ xử lý trong giai đoạn call (thực thi test case)
-    if report.when == "call" and report.failed:
-        driver = getattr(item, "driver", None)
-        if driver:
-            screenshot_dir = os.path.join(os.getcwd(), "reports", "screenshots")
-            os.makedirs(screenshot_dir, exist_ok=True)
+    # 2. Xử lý Đăng nhập nếu bị văng ra trang Login
+    try:
+        if "login" in driver.current_url.lower() or len(driver.find_elements(*SIGN_OUT_LOCATOR)) == 0:
+            driver.get(LOGIN_URL)
+            wait = WebDriverWait(driver, 8)
             
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            test_name = item.name
-            file_name = f"FAIL_{test_name}_{timestamp}.png"
-            file_path = os.path.join(screenshot_dir, file_name)
+            email_el = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='email' or @id='email' or @name='email' or contains(@placeholder, 'email')]")))
+            email_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+            email_el.send_keys(USER_EMAIL)
             
-            driver.save_screenshot(file_path)
-            print(f"\n[SCREENSHOT] Đã lưu ảnh lỗi tại: {file_path}")
->>>>>>> 4a18db9 (Initial commit: Completed Selenium Pytest Automation Suite for PLT Courses)
+            pass_el = driver.find_element(By.XPATH, "//input[@type='password' or @id='password' or @name='password' or contains(@placeholder, 'Password')]")
+            pass_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+            pass_el.send_keys(USER_PASS)
+            
+            driver.find_element(By.XPATH, "//button[@type='submit' or contains(., 'Log in') or contains(., 'Đăng nhập')]").click()
+            wait.until(EC.presence_of_element_located(SIGN_OUT_LOCATOR))
+    except Exception as e:
+        print(f"\n[WARN Login]: {e}")
+
+    # 3. Đảm bảo luôn đứng ở đúng trang Quản lý người dùng trước mỗi testcase
+    try:
+        if driver.current_url != TARGET_URL:
+            driver.get(TARGET_URL)
+            time.sleep(1)
+    except Exception:
+        pass
