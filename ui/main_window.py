@@ -215,6 +215,7 @@ class MainWindow(QMainWindow):
             "pages": "Quản lý trang",
             "config": "Cấu hình hệ thống",
             "vehicle_catalog": "Danh mục xe",
+            "car_management": "Quản lý xe",
             "booking_management": "Quản lý đặt xe",
             "test_suite": "Chạy Test Suite",
 
@@ -712,6 +713,16 @@ class MainWindow(QMainWindow):
             self.sync_test_builders_to_page(
                 "plt_booking"
             )
+            # --- CẬP NHẬT HEADER CHO TRANG QUẢN LÝ XE ---
+        elif page_name in (
+            "car_management", "test_suite", "dropdown", "label",
+            "table", "radio", "image", "title", "ui", "menu"
+        ):
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("Quản lý xe") < 0:
+                self.header.page_combo.addItem("Quản lý xe")
+            self.header.page_combo.setCurrentText("Quản lý xe")
+            self.header.url_input.setText("https://courses.plt.pro.vn/cars")
 
     # =========================================================
     # SYNC TEST BUILDERS
