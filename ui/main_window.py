@@ -189,6 +189,7 @@ class MainWindow(QMainWindow):
             "pages": "Quản lý trang",
             "config": "Cấu hình hệ thống",
             "vehicle_catalog": "Danh mục xe",
+            "car_management": "Quản lý xe",
             "test_suite": "Chạy Test Suite",
             "dropdown": "Kiểm tra Dropdown List",
             "label": "Kiểm tra Label / Text",
@@ -214,6 +215,8 @@ class MainWindow(QMainWindow):
                 page = self.create_config_page(title)
             elif page_name == "vehicle_catalog":
                 page = VehicleCatalogPage()
+            elif page_name == "test_suite":
+                page = TestSuitePage()
             elif page_name == "test_suite":
                 page = TestSuitePage()
             else:
@@ -420,7 +423,17 @@ class MainWindow(QMainWindow):
                 self.header.page_combo.addItem("Danh mục xe")
             self.header.page_combo.setCurrentText("Danh mục xe")
             self.header.url_input.setText("https://courses.plt.pro.vn/cars/catalog")
-
+       # --- CẬP NHẬT HEADER CHO TRANG QUẢN LÝ XE VÀ TOÀN BỘ MỤC KIỂM THỬ ---
+        elif page_name in (
+            "car_management", "test_suite", "dropdown", "label", 
+            "table", "radio", "image", "title", "ui", "menu"
+        ):
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("Quản lý xe") < 0:
+                self.header.page_combo.addItem("Quản lý xe")
+            self.header.page_combo.setCurrentText("Quản lý xe")
+            self.header.url_input.setText("https://courses.plt.pro.vn/cars")
+        # ---------------------------------------------------------------------
     def open_module_from_quick_menu(
         self,
         page_name
