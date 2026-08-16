@@ -1,5 +1,7 @@
-import pytest
+import os
 import time
+import logging
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -7,11 +9,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import InvalidSessionIdException, WebDriverException
 
-# Cấu hình thông tin tài khoản và URL
+# Cấu hình Logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+
 LOGIN_URL = "https://courses.plt.pro.vn/login"
 TARGET_URL = "https://courses.plt.pro.vn/users"
-USER_EMAIL = "test@gmail.com"  # <--- Thay Email chuẩn của bạn
-USER_PASS = "123123"         # <--- Thay Pass chuẩn của bạn
+USER_EMAIL = "test@gmail.com"
+USER_PASS = "123123"
 
 def create_browser_instance():
     options = webdriver.ChromeOptions()
@@ -20,7 +24,7 @@ def create_browser_instance():
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(3)
     return driver
 
 @pytest.fixture(scope="class")
@@ -34,30 +38,25 @@ def setup_driver(request):
         pass
 
 @pytest.fixture(scope="function", autouse=True)
-def ensure_user_page_ready(request):
-    """
-    Chạy trước MỖI testcase: Đảm bảo driver sống, luôn quay về trang Quản lý người dùng.
-    Nếu bị out ra trang Login thì sẽ tự động đăng nhập lại.
-    """
+def ensure_logged_in_and_on_users_page(request):
     driver = getattr(request.cls, "driver", None)
     if not driver:
         return
 
-    # 1. Kiểm tra driver hỏng session -> Tạo lại
     try:
         _ = driver.current_url
     except (InvalidSessionIdException, WebDriverException):
-        print("\n[HỆ THỐNG] Session đóng. Đang khởi tạo lại Driver...")
         driver = create_browser_instance()
         request.cls.driver = driver
 
-    SIGN_OUT_LOCATOR = (By.XPATH, "//button[contains(., 'Sign out') or contains(., 'Đăng xuất')] | //*[contains(@class, 'anticon-logout')]")
+    wait = WebDriverWait(driver, 8)
+    SIGN_OUT_LOCATOR = (By.XPATH, "//button[contains(., 'Đăng xuất') or contains(., 'Sign out')] | //*[contains(@class, 'logout')]")
 
-    # 2. Xử lý Đăng nhập nếu bị văng ra trang Login
     try:
-        if "login" in driver.current_url.lower() or len(driver.find_elements(*SIGN_OUT_LOCATOR)) == 0:
+        is_logged_in = len(driver.find_elements(*SIGN_OUT_LOCATOR)) > 0
+        if "login" in driver.current_url.lower() or not is_logged_in:
+            logging.info("Thực hiện đăng nhập tự động...")
             driver.get(LOGIN_URL)
-            wait = WebDriverWait(driver, 8)
             
             email_el = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='email' or @id='email' or @name='email' or contains(@placeholder, 'email')]")))
             email_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
@@ -67,15 +66,31 @@ def ensure_user_page_ready(request):
             pass_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             pass_el.send_keys(USER_PASS)
             
-            driver.find_element(By.XPATH, "//button[@type='submit' or contains(., 'Log in') or contains(., 'Đăng nhập')]").click()
-            wait.until(EC.presence_of_element_located(SIGN_OUT_LOCATOR))
+            btn_login = driver.find_element(By.XPATH, "//button[@type='submit' or contains(., 'Log in') or contains(., 'Đăng nhập')]")
+            btn_login.click()
+            time.sleep(1.5)
     except Exception as e:
-        print(f"\n[WARN Login]: {e}")
+        logging.warning(f"Lỗi đăng nhập: {e}")
 
-    # 3. Đảm bảo luôn đứng ở đúng trang Quản lý người dùng trước mỗi testcase
     try:
-        if driver.current_url != TARGET_URL:
+        if TARGET_URL not in driver.current_url:
             driver.get(TARGET_URL)
             time.sleep(1)
     except Exception:
         pass
+
+# --- HOOK CHUẨN CỦA PYTEST: pytest_runtest_makereport (ĐÃ FIX TÊN HOOK) ---
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == "call" and report.failed:
+        driver = getattr(item.cls, "driver", None) if item.cls else None
+        if driver:
+            screenshot_dir = os.path.join(os.getcwd(), "screenshots")
+            os.makedirs(screenshot_dir, exist_ok=True)
+            filename = f"{item.name}_{int(time.time())}.png"
+            filepath = os.path.join(screenshot_dir, filename)
+            driver.save_screenshot(filepath)
+            logging.error(f"[FAIL EVIDENCE] Đã tự động chụp ảnh màn hình tại: {filepath}")
