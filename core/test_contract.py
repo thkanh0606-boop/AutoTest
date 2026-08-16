@@ -2,10 +2,6 @@ from dataclasses import dataclass
 from typing import Dict, List
 
 
-# =========================================================
-# PAGE CONTRACT
-# =========================================================
-
 @dataclass(frozen=True)
 class PageUnderTest:
     key: str
@@ -13,10 +9,6 @@ class PageUnderTest:
     path: str
     url: str
 
-
-# =========================================================
-# ELEMENT CONTRACT
-# =========================================================
 
 @dataclass(frozen=True)
 class ElementUnderTest:
@@ -26,85 +18,37 @@ class ElementUnderTest:
     name: str
     locator_type: str
     locator_value: str
-
     sample_expected: str = ""
     case_id: str = ""
     steps: str = ""
     expected_result: str = ""
-
     action_type: str = "text_equals"
     target_path: str = ""
 
 
-# =========================================================
-# TEST CONTRACT
-# =========================================================
-
 class TestContract:
-
-    # =====================================================
-    # PAGES
-    # =====================================================
-
     pages: List[PageUnderTest] = [
-
-        # -------------------------------------------------
-        # DASHBOARD
-        # -------------------------------------------------
-
         PageUnderTest(
             key="plt_dashboard",
             name="Trang tổng quan",
             path="/dashboard",
             url="https://courses.plt.pro.vn/dashboard",
         ),
-
-        # -------------------------------------------------
-        # LOGIN
-        # -------------------------------------------------
-
         PageUnderTest(
             key="plt_login",
             name="Trang đăng nhập",
             path="/login",
             url="https://courses.plt.pro.vn/login",
         ),
-
-        # -------------------------------------------------
-        # VEHICLE CATALOG
-        # -------------------------------------------------
-
         PageUnderTest(
-            key="plt_vehicle_catalog",
-            name="Danh mục xe",
-            path="/cars/catalog",
-            url="https://courses.plt.pro.vn/cars/catalog",
-        ),
-
-        # -------------------------------------------------
-        # BOOKING MANAGEMENT
-        # -------------------------------------------------
-
-        PageUnderTest(
-            key="plt_booking",
-            name="Quản lý đặt xe",
-            path="/bookings",
-            url="https://courses.plt.pro.vn/bookings",
+            key="plt_fleet",
+            name="Quản lý xe",
+            path="/cars",
+            url="https://courses.plt.pro.vn/cars",
         ),
     ]
 
-    # =====================================================
-    # ELEMENTS
-    # =====================================================
-
     elements: List[ElementUnderTest] = [
-
-        # =================================================
-        #
-        # DASHBOARD
-        #
-        # =================================================
-
         ElementUnderTest(
             key="dashboard_main_title",
             page_key="plt_dashboard",
@@ -114,16 +58,9 @@ class TestContract:
             locator_value="//h1[normalize-space()='Dashboard']",
             sample_expected="Dashboard",
             case_id="DASH-001",
-            steps=(
-                "1. Mở trang /dashboard bằng tài khoản test. "
-                "2. Đợi Dashboard tải xong. "
-                "3. Lấy text tiêu đề hero."
-            ),
-            expected_result=(
-                "Tiêu đề hero hiển thị đúng text Dashboard."
-            ),
+            steps="1. Mở trang /dashboard bằng tài khoản test. 2. Đợi Dashboard tải xong. 3. Lấy text tiêu đề hero.",
+            expected_result="Tiêu đề hero hiển thị đúng text Dashboard.",
         ),
-
         ElementUnderTest(
             key="dashboard_header_title",
             page_key="plt_dashboard",
@@ -133,99 +70,48 @@ class TestContract:
             locator_value="//h3[normalize-space()='Bảng điều khiển vận hành']",
             sample_expected="Bảng điều khiển vận hành",
             case_id="DASH-002",
-            steps=(
-                "1. Mở trang /dashboard. "
-                "2. Đợi header hiển thị. "
-                "3. Lấy text tiêu đề header."
-            ),
-            expected_result=(
-                "Header hiển thị đúng nội dung "
-                "Bảng điều khiển vận hành."
-            ),
+            steps="1. Mở trang /dashboard. 2. Đợi header hiển thị. 3. Lấy text tiêu đề header.",
+            expected_result="Header hiển thị đúng nội dung Bảng điều khiển vận hành.",
         ),
-
         ElementUnderTest(
             key="dashboard_rented_cars_value",
             page_key="plt_dashboard",
             test_type="label",
             name="KPI xe đang cho thuê",
             locator_type="xpath",
-            locator_value=(
-                "(//main//div[contains(@class,'grid')])[1]/*[1]"
-            ),
-            sample_expected=(
-                "XE ĐANG CHO THUÊ\n"
-                "Các xe hiện đang ở ngoài với khách."
-            ),
+            locator_value="(//main//div[contains(@class,'grid')])[1]/*[1]",
+            sample_expected="XE ĐANG CHO THUÊ\nCác xe hiện đang ở ngoài với khách.",
             case_id="DASH-003",
-            steps=(
-                "1. Mở Dashboard. "
-                "2. Tìm card KPI xe đang cho thuê. "
-                "3. Kiểm tra nhãn, mô tả và số liệu trên card."
-            ),
-            expected_result=(
-                "Card XE ĐANG CHO THUÊ hiển thị đúng "
-                "nhãn, mô tả và có số liệu."
-            ),
+            steps="1. Mở Dashboard. 2. Tìm card KPI xe đang cho thuê. 3. Kiểm tra nhãn, mô tả và số liệu trên card.",
+            expected_result="Card XE ĐANG CHO THUÊ hiển thị đúng nhãn, mô tả và có số liệu.",
             action_type="contains_all_has_number",
         ),
-
         ElementUnderTest(
             key="dashboard_ready_cars_value",
             page_key="plt_dashboard",
             test_type="label",
             name="KPI xe sẵn sàng hôm nay",
             locator_type="xpath",
-            locator_value=(
-                "(//main//div[contains(@class,'grid')])[1]/*[2]"
-            ),
-            sample_expected=(
-                "XE SẴN SÀNG HÔM NAY\n"
-                "Có thể bàn giao ngay cho booking tiếp theo."
-            ),
+            locator_value="(//main//div[contains(@class,'grid')])[1]/*[2]",
+            sample_expected="XE SẴN SÀNG HÔM NAY\nCó thể bàn giao ngay cho booking tiếp theo.",
             case_id="DASH-004",
-            steps=(
-                "1. Mở Dashboard. "
-                "2. Tìm card KPI xe sẵn sàng hôm nay. "
-                "3. Kiểm tra nhãn, mô tả và số liệu trên card."
-            ),
-            expected_result=(
-                "Card XE SẴN SÀNG HÔM NAY hiển thị đúng "
-                "nhãn, mô tả và có số liệu."
-            ),
+            steps="1. Mở Dashboard. 2. Tìm card KPI xe sẵn sàng hôm nay. 3. Kiểm tra nhãn, mô tả và số liệu trên card.",
+            expected_result="Card XE SẴN SÀNG HÔM NAY hiển thị đúng nhãn, mô tả và có số liệu.",
             action_type="contains_all_has_number",
         ),
-
         ElementUnderTest(
             key="dashboard_overdue_booking_value",
             page_key="plt_dashboard",
             test_type="label",
             name="KPI booking trễ hạn",
             locator_type="xpath",
-            locator_value=(
-                "(//main//div[contains(@class,'grid')])[2]/*[1]"
-            ),
-            sample_expected=(
-                "BOOKING TRỄ HẠN\n"
-                "Các booking đã quá thời gian trả xe dự kiến."
-            ),
+            locator_value="(//main//div[contains(@class,'grid')])[2]/*[1]",
+            sample_expected="BOOKING TRỄ HẠN\nCác booking đã quá thời gian trả xe dự kiến.",
             case_id="DASH-005",
-            steps=(
-                "1. Mở Dashboard. "
-                "2. Tìm card KPI booking trễ hạn. "
-                "3. Kiểm tra nhãn, mô tả và số liệu trên card."
-            ),
-            expected_result=(
-                "Card BOOKING TRỄ HẠN hiển thị đúng "
-                "nhãn, mô tả và có số liệu."
-            ),
+            steps="1. Mở Dashboard. 2. Tìm card KPI booking trễ hạn. 3. Kiểm tra nhãn, mô tả và số liệu trên card.",
+            expected_result="Card BOOKING TRỄ HẠN hiển thị đúng nhãn, mô tả và có số liệu.",
             action_type="contains_all_has_number",
         ),
-
-        # -------------------------------------------------
-        # DASHBOARD - DROPDOWN
-        # -------------------------------------------------
-
         ElementUnderTest(
             key="dashboard_language_dropdown",
             page_key="plt_dashboard",
@@ -235,66 +121,36 @@ class TestContract:
             locator_value=".ant-select",
             sample_expected="English\nTiếng Việt",
             case_id="DASH-006",
-            steps=(
-                "1. Mở Dashboard. "
-                "2. Mở dropdown ngôn ngữ. "
-                "3. So sánh từng option theo đúng vị trí."
-            ),
-            expected_result=(
-                "Dropdown ngôn ngữ có English và Tiếng Việt."
-            ),
+            steps="1. Mở Dashboard. 2. Mở dropdown ngôn ngữ. 3. So sánh từng option theo đúng vị trí Expected - Actual.",
+            expected_result="Dropdown ngôn ngữ có English ở vị trí 1 và Tiếng Việt ở vị trí 2.",
         ),
-
-        # -------------------------------------------------
-        # DASHBOARD - TABLE
-        # -------------------------------------------------
-
         ElementUnderTest(
             key="dashboard_booking_list",
             page_key="plt_dashboard",
             test_type="table",
             name="Danh sách bàn giao sắp tới",
             locator_type="xpath",
-            locator_value=(
-                "(//main//div[contains(@class,'grid')])[6]/*[1]"
-            ),
+            locator_value="(//main//div[contains(@class,'grid')])[6]/*[1]",
             sample_expected="Các lượt bàn giao sắp tới",
         ),
-
         ElementUnderTest(
             key="dashboard_first_booking_row",
             page_key="plt_dashboard",
             test_type="table",
             name="Dòng booking đầu tiên",
             locator_type="xpath",
-            locator_value=(
-                "((//main//div[contains(@class,'grid')])[6]"
-                "/*[1]//button[contains(., 'BK-')])[1]"
-            ),
-            sample_expected="BK-",
+            locator_value="((//main//div[contains(@class,'grid')])[6]/*[1]//button[contains(., 'BK-')])[1]",
+            sample_expected="BK-20260405-9228\tĐang thực hiện\tPhúc Trần Minh\tXem\tNHẬN XE\t19:00 05 thg 4\tTRẢ XE\t19:00 06 thg 4\t60C2-77188\tVinfast VF3",
         ),
-
-        # -------------------------------------------------
-        # DASHBOARD - RADIO
-        # -------------------------------------------------
-
         ElementUnderTest(
             key="dashboard_selected_menu_state",
             page_key="plt_dashboard",
             test_type="radio",
             name="Trạng thái menu Dashboard đang chọn",
             locator_type="xpath",
-            locator_value=(
-                "//li[@role='menuitem' and "
-                "contains(@class, 'ant-menu-item-selected')]"
-            ),
+            locator_value="//li[@role='menuitem' and contains(@class, 'ant-menu-item-selected')]",
             sample_expected="Dashboard",
         ),
-
-        # -------------------------------------------------
-        # DASHBOARD - IMAGE
-        # -------------------------------------------------
-
         ElementUnderTest(
             key="dashboard_logo",
             page_key="plt_dashboard",
@@ -304,27 +160,15 @@ class TestContract:
             locator_value="aside img[alt='PLT Solutions']",
             sample_expected="PLT Solutions",
         ),
-
-        # -------------------------------------------------
-        # DASHBOARD - TITLE
-        # -------------------------------------------------
-
         ElementUnderTest(
             key="dashboard_browser_header_title",
             page_key="plt_dashboard",
             test_type="title",
             name="Tiêu đề trang trên header",
             locator_type="xpath",
-            locator_value=(
-                "//h3[normalize-space()='Bảng điều khiển vận hành']"
-            ),
+            locator_value="//h3[normalize-space()='Bảng điều khiển vận hành']",
             sample_expected="Bảng điều khiển vận hành",
         ),
-
-        # -------------------------------------------------
-        # DASHBOARD - UI
-        # -------------------------------------------------
-
         ElementUnderTest(
             key="dashboard_hero_visible",
             page_key="plt_dashboard",
@@ -334,9 +178,10 @@ class TestContract:
             locator_value="(//main//section)[1]",
             sample_expected="visible",
             case_id="DASH-007",
+            steps="1. Mở Dashboard. 2. Đợi hero section xuất hiện. 3. Kiểm tra element đang hiển thị.",
+            expected_result="Hero tổng quan hiển thị trên Dashboard.",
             action_type="visible",
         ),
-
         ElementUnderTest(
             key="dashboard_quick_actions_visible",
             page_key="plt_dashboard",
@@ -346,13 +191,10 @@ class TestContract:
             locator_value="(//main//section)[2]",
             sample_expected="visible",
             case_id="DASH-008",
+            steps="1. Mở Dashboard. 2. Đợi khối thao tác nhanh xuất hiện. 3. Kiểm tra element đang hiển thị.",
+            expected_result="Khối thao tác nhanh hiển thị trên Dashboard.",
             action_type="visible",
         ),
-
-        # -------------------------------------------------
-        # DASHBOARD - MENU
-        # -------------------------------------------------
-
         ElementUnderTest(
             key="dashboard_sidebar_menu",
             page_key="plt_dashboard",
@@ -360,1235 +202,192 @@ class TestContract:
             name="Menu sidebar",
             locator_type="css",
             locator_value="ul[role='menu']",
-            sample_expected=(
-                "Dashboard Đặt xe Xe Danh mục xe "
-                "Tài chính Người dùng"
-            ),
+            sample_expected="Dashboard Đặt xe Xe Danh mục xe Tài chính Người dùng",
+            case_id="DASH-009",
+            steps="1. Mở Dashboard. 2. Lấy danh sách menu sidebar. 3. So sánh nội dung menu theo từng vị trí.",
+            expected_result="Menu sidebar hiển thị đủ các module chính theo đúng thứ tự.",
         ),
-
         ElementUnderTest(
             key="dashboard_menu_item",
             page_key="plt_dashboard",
             test_type="menu",
             name="Item menu Dashboard",
             locator_type="xpath",
-            locator_value=(
-                "//li[@role='menuitem']"
-                "[.//span[normalize-space()='Dashboard']]"
-            ),
+            locator_value="//li[@role='menuitem'][.//span[normalize-space()='Dashboard']]",
             sample_expected="Dashboard",
+            case_id="DASH-010",
+            steps="1. Mở Dashboard. 2. Kiểm tra item Dashboard trên sidebar. 3. Xác nhận item đang tồn tại và đúng text.",
+            expected_result="Item Dashboard trên sidebar hiển thị đúng.",
         ),
-
         ElementUnderTest(
             key="dashboard_quick_booking_list",
             page_key="plt_dashboard",
             test_type="menu",
             name="Menu nhanh mở danh sách booking",
             locator_type="xpath",
-            locator_value=(
-                "//main//h4[normalize-space()='Thao tác nhanh']"
-                "/ancestor::section//button"
-                "[.//p[normalize-space()='Xem danh sách booking']]"
-            ),
+            locator_value="//main//h4[normalize-space()='Thao tác nhanh']/ancestor::section//button[.//p[normalize-space()='Xem danh sách booking']]",
             sample_expected="/bookings",
             case_id="DASH-011",
+            steps="1. Mở Dashboard. 2. Click menu nhanh Xem danh sách booking. 3. Kiểm tra URL sau điều hướng.",
+            expected_result="Menu nhanh mở đúng module Booking với URL chứa /bookings.",
             action_type="click_url_contains",
             target_path="/bookings",
         ),
-
         ElementUnderTest(
             key="dashboard_quick_fleet",
             page_key="plt_dashboard",
             test_type="menu",
             name="Menu nhanh mở đội xe",
             locator_type="xpath",
-            locator_value=(
-                "//main//h4[normalize-space()='Thao tác nhanh']"
-                "/ancestor::section//button"
-                "[.//p[normalize-space()='Kiểm tra đội xe']]"
-            ),
+            locator_value="//main//h4[normalize-space()='Thao tác nhanh']/ancestor::section//button[.//p[normalize-space()='Kiểm tra đội xe']]",
             sample_expected="/cars",
             case_id="DASH-012",
+            steps="1. Mở Dashboard. 2. Click menu nhanh Kiểm tra đội xe. 3. Kiểm tra URL sau điều hướng.",
+            expected_result="Menu nhanh mở đúng module Xe với URL chứa /cars.",
             action_type="click_url_contains",
             target_path="/cars",
         ),
-
         ElementUnderTest(
             key="dashboard_quick_finance",
             page_key="plt_dashboard",
             test_type="menu",
             name="Menu nhanh mở tài chính",
             locator_type="xpath",
-            locator_value=(
-                "//main//h4[normalize-space()='Thao tác nhanh']"
-                "/ancestor::section//button"
-                "[.//p[normalize-space()='Mở tài chính']]"
-            ),
+            locator_value="//main//h4[normalize-space()='Thao tác nhanh']/ancestor::section//button[.//p[normalize-space()='Mở tài chính']]",
             sample_expected="/finance",
             case_id="DASH-013",
+            steps="1. Mở Dashboard. 2. Click menu nhanh Mở tài chính. 3. Kiểm tra URL sau điều hướng.",
+            expected_result="Menu nhanh mở đúng module Tài chính với URL chứa /finance.",
             action_type="click_url_contains",
             target_path="/finance",
         ),
-
-        # =================================================
-        #
-        # VEHICLE CATALOG
-        #
-        # =================================================
-
         ElementUnderTest(
-            key="catalog_page_title",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Tiêu đề Danh mục xe",
-            locator_type="xpath",
-            locator_value=(
-                "(//*[normalize-space()='Danh mục xe' "
-                "and not(ancestor::aside)])[1]"
-            ),
-            sample_expected="Danh mục xe",
-            case_id="CAT-001",
-        ),
-
-        ElementUnderTest(
-            key="catalog_total_brand_label",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Nhãn Tổng số hãng",
-            locator_type="xpath",
-            locator_value=(
-                "//*[normalize-space()='Tổng số hãng' "
-                "or normalize-space()='TỔNG SỐ HÃNG']"
-            ),
-            sample_expected="Tổng số hãng",
-            case_id="CAT-002",
-        ),
-
-        ElementUnderTest(
-            key="catalog_active_brand_label",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Nhãn Hãng đang hoạt động",
-            locator_type="xpath",
-            locator_value=(
-                "//*[normalize-space()='Hãng đang hoạt động' "
-                "or normalize-space()='HÃNG ĐANG HOẠT ĐỘNG']"
-            ),
-            sample_expected="Hãng đang hoạt động",
-            case_id="CAT-003",
-        ),
-
-        ElementUnderTest(
-            key="catalog_total_model_label",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Nhãn Tổng số mẫu xe",
-            locator_type="xpath",
-            locator_value=(
-                "//*[normalize-space()='Tổng số mẫu xe' "
-                "or normalize-space()='TỔNG SỐ MẪU XE']"
-            ),
-            sample_expected="Tổng số mẫu xe",
-            case_id="CAT-004",
-        ),
-
-        ElementUnderTest(
-            key="catalog_brand_section_title",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Tiêu đề Danh sách hãng xe",
-            locator_type="xpath",
-            locator_value="//h4[normalize-space()='Danh sách hãng xe']",
-            sample_expected="Danh sách hãng xe",
-            case_id="CAT-005",
-        ),
-
-        ElementUnderTest(
-            key="catalog_model_section_title",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Tiêu đề Danh sách mẫu xe",
-            locator_type="xpath",
-            locator_value="//h4[normalize-space()='Danh sách mẫu xe']",
-            sample_expected="Danh sách mẫu xe",
-            case_id="CAT-006",
-        ),
-
-        ElementUnderTest(
-            key="catalog_add_brand_button",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Nút Thêm hãng xe",
-            locator_type="xpath",
-            locator_value=(
-                "//button[.//span[normalize-space()='Thêm hãng xe'] "
-                "or normalize-space()='Thêm hãng xe']"
-            ),
-            sample_expected="Thêm hãng xe",
-            case_id="CAT-007",
-        ),
-
-        ElementUnderTest(
-            key="catalog_add_model_button",
-            page_key="plt_vehicle_catalog",
-            test_type="label",
-            name="Nút Thêm mẫu xe",
-            locator_type="xpath",
-            locator_value=(
-                "//button[.//span[normalize-space()='Thêm mẫu xe'] "
-                "or normalize-space()='Thêm mẫu xe']"
-            ),
-            sample_expected="Thêm mẫu xe",
-            case_id="CAT-008",
-        ),
-
-        ElementUnderTest(
-            key="catalog_brand_filter",
-            page_key="plt_vehicle_catalog",
-            test_type="dropdown",
-            name="Dropdown lọc Hãng ở bảng Mẫu",
-            locator_type="xpath",
-            locator_value=(
-                "//h4[normalize-space()='Danh sách mẫu xe']"
-                "/ancestor::section[1]//*[@role='combobox'][1]"
-            ),
-            sample_expected="",
-            case_id="CAT-009",
-        ),
-
-        ElementUnderTest(
-            key="catalog_brand_table",
-            page_key="plt_vehicle_catalog",
-            test_type="table",
-            name="Bảng danh sách hãng xe",
-            locator_type="xpath",
-            locator_value=(
-                "//h4[normalize-space()='Danh sách hãng xe']"
-                "/ancestor::section[1]//table"
-            ),
-            sample_expected="",
-            case_id="CAT-010",
-        ),
-
-        ElementUnderTest(
-            key="catalog_model_table",
-            page_key="plt_vehicle_catalog",
-            test_type="table",
-            name="Bảng danh sách mẫu xe",
-            locator_type="xpath",
-            locator_value=(
-                "//h4[normalize-space()='Danh sách mẫu xe']"
-                "/ancestor::section[1]//table"
-            ),
-            sample_expected="",
-            case_id="CAT-011",
-        ),
-
-        ElementUnderTest(
-            key="catalog_active_status",
-            page_key="plt_vehicle_catalog",
-            test_type="radio",
-            name="Trạng thái Đang hoạt động",
-            locator_type="xpath",
-            locator_value=(
-                "(//span[contains(@class,'ant-tag') "
-                "and normalize-space()='Đang hoạt động'])[1]"
-            ),
-            sample_expected="Đang hoạt động",
-            case_id="CAT-012",
-        ),
-
-        ElementUnderTest(
-            key="catalog_logo",
-            page_key="plt_vehicle_catalog",
-            test_type="image",
-            name="Logo PLT Solutions",
+            key="dashboard_deep_link",
+            page_key="plt_dashboard",
+            test_type="ui",
+            name="Deep link mở Dashboard",
             locator_type="css",
-            locator_value="aside img[alt='PLT Solutions']",
-            sample_expected="PLT Solutions",
-            case_id="CAT-013",
+            locator_value="main",
+            sample_expected="/dashboard",
+            case_id="DASH-014",
+            steps="1. Mở trực tiếp URL /dashboard. 2. Đợi trang tải xong. 3. Kiểm tra URL và nội dung chính.",
+            expected_result="Deep link /dashboard mở đúng trang tổng quan.",
+            action_type="deep_link_url_contains",
+            target_path="/dashboard",
         ),
-
+        # --- Quản lý xe (plt_fleet, /cars) ---------------------------------
+        # Locator dựa trên ảnh chụp thực tế trang "Xe" (15/08/2026). Có thể
+        # cần chỉnh lại nếu FE đổi cấu trúc DOM - xem hint trong Test Builder.
         ElementUnderTest(
-            key="catalog_header_title",
-            page_key="plt_vehicle_catalog",
-            test_type="title",
-            name="Tiêu đề trang Danh mục xe",
-            locator_type="xpath",
-            locator_value=(
-                "(//*[normalize-space()='Danh mục xe' "
-                "and not(ancestor::aside)])[1]"
-            ),
-            sample_expected="Danh mục xe",
-            case_id="CAT-014",
-        ),
-
-        ElementUnderTest(
-            key="catalog_brand_section_visible",
-            page_key="plt_vehicle_catalog",
-            test_type="ui",
-            name="Khu Danh sách hãng xe hiển thị",
-            locator_type="xpath",
-            locator_value=(
-                "//h4[normalize-space()='Danh sách hãng xe']"
-                "/ancestor::section[1]"
-            ),
-            sample_expected="visible",
-            case_id="CAT-015",
-            action_type="visible",
-        ),
-
-        ElementUnderTest(
-            key="catalog_model_section_visible",
-            page_key="plt_vehicle_catalog",
-            test_type="ui",
-            name="Khu Danh sách mẫu xe hiển thị",
-            locator_type="xpath",
-            locator_value=(
-                "//h4[normalize-space()='Danh sách mẫu xe']"
-                "/ancestor::section[1]"
-            ),
-            sample_expected="visible",
-            case_id="CAT-016",
-            action_type="visible",
-        ),
-
-        ElementUnderTest(
-            key="catalog_sidebar_menu_item",
-            page_key="plt_vehicle_catalog",
-            test_type="menu",
-            name="Item menu Danh mục xe",
-            locator_type="xpath",
-            locator_value=(
-                "//li[@role='menuitem']"
-                "[.//span[normalize-space()='Danh mục xe']]"
-            ),
-            sample_expected="Danh mục xe",
-            case_id="CAT-017",
-        ),
-
-        # =================================================
-        #
-        # BOOKING MANAGEMENT
-        #
-        # =================================================
-
-        # -------------------------------------------------
-        # BOOKING - LABEL
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_page_title",
-            page_key="plt_booking",
+            key="fleet_main_title",
+            page_key="plt_fleet",
             test_type="label",
-            name="Tiêu đề Quản lý đặt xe",
+            name="Tiêu đề hero trang Xe",
             locator_type="xpath",
-            locator_value=(
-                "//*[normalize-space()='Quản lý đặt xe' "
-                "and not(ancestor::aside)]"
-            ),
-            sample_expected="Quản lý đặt xe",
-            case_id="BOOK-001",
-        ),
-
-        ElementUnderTest(
-            key="booking_list_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn khu vực danh sách booking",
-            locator_type="xpath",
-            locator_value=(
-                "//main//*["
-                "contains(normalize-space(), 'booking') "
-                "or contains(normalize-space(), 'Booking') "
-                "or contains(normalize-space(), 'Đặt xe')"
-                "]"
-            ),
-            sample_expected="",
-            case_id="BOOK-002",
-        ),
-
-        # =================================================
-        # BOOKING CREATE FORM
-        # =================================================
-
-        # -------------------------------------------------
-        # CREATE FORM - LABEL
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_create_car_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Xe",
-            locator_type="xpath",
-            locator_value="//label[@for='carId']",
+            locator_value="//h1[normalize-space()='Xe']",
             sample_expected="Xe",
-            case_id="BOOK-FORM-001",
+            case_id="XE-001",
+            steps="1. Mở trang /cars bằng tài khoản test. 2. Đợi trang Xe tải xong. 3. Lấy text tiêu đề hero.",
+            expected_result="Tiêu đề hero hiển thị đúng text Xe.",
         ),
-
         ElementUnderTest(
-            key="booking_create_customer_label",
-            page_key="plt_booking",
+            key="fleet_stat_total",
+            page_key="plt_fleet",
             test_type="label",
-            name="Nhãn Khách có sẵn",
+            name="KPI Tất cả xe",
             locator_type="xpath",
-            locator_value="//label[@for='customerId']",
-            sample_expected="Khách có sẵn",
-            case_id="BOOK-FORM-002",
+            locator_value="//*[contains(normalize-space(.),'Tất cả xe')][1]/ancestor::*[self::div][1]",
+            sample_expected="TẤT CẢ XE\nToàn bộ xe trong đội.",
+            case_id="XE-002",
+            steps="1. Mở trang Xe. 2. Tìm card KPI Tất cả xe. 3. Kiểm tra nhãn, mô tả và số liệu trên card.",
+            expected_result="Card TẤT CẢ XE hiển thị đúng nhãn, mô tả và có số liệu.",
+            action_type="contains_all_has_number",
         ),
-
         ElementUnderTest(
-            key="booking_create_customer_name_label",
-            page_key="plt_booking",
+            key="fleet_stat_ready",
+            page_key="plt_fleet",
             test_type="label",
-            name="Nhãn Tên khách",
+            name="KPI Sẵn sàng hôm nay",
             locator_type="xpath",
-            locator_value="//label[@for='customerName']",
-            sample_expected="Tên khách",
-            case_id="BOOK-FORM-003",
+            locator_value="//*[contains(normalize-space(.),'Sẵn sàng hôm nay')][1]/ancestor::*[self::div][1]",
+            sample_expected="SẴN SÀNG HÔM NAY\nCó thể giao ngay.",
+            case_id="XE-003",
+            steps="1. Mở trang Xe. 2. Tìm card KPI Sẵn sàng hôm nay. 3. Kiểm tra nhãn, mô tả và có số liệu.",
+            expected_result="Card SẴN SÀNG HÔM NAY hiển thị đúng nhãn, mô tả và có số liệu.",
+            action_type="contains_all_has_number",
         ),
-
         ElementUnderTest(
-            key="booking_create_phone_label",
-            page_key="plt_booking",
+            key="fleet_stat_maintenance",
+            page_key="plt_fleet",
             test_type="label",
-            name="Nhãn Số điện thoại",
+            name="KPI Đang bảo dưỡng",
             locator_type="xpath",
-            locator_value="//label[@for='customerPhoneNumber']",
-            sample_expected="Số điện thoại",
-            case_id="BOOK-FORM-004",
+            locator_value="//*[contains(normalize-space(.),'Đang bảo dưỡng')][1]/ancestor::*[self::div][1]",
+            sample_expected="ĐANG BẢO DƯỠNG\nĐang vệ sinh hoặc sửa chữa.",
+            case_id="XE-004",
+            steps="1. Mở trang Xe. 2. Tìm card KPI Đang bảo dưỡng. 3. Kiểm tra nhãn, mô tả và có số liệu.",
+            expected_result="Card ĐANG BẢO DƯỠNG hiển thị đúng nhãn, mô tả và có số liệu.",
+            action_type="contains_all_has_number",
         ),
-
         ElementUnderTest(
-            key="booking_create_email_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Email",
-            locator_type="xpath",
-            locator_value="//label[@for='customerEmail']",
-            sample_expected="Email",
-            case_id="BOOK-FORM-005",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_start_date_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Ngày nhận xe",
-            locator_type="xpath",
-            locator_value="//label[@for='startDate']",
-            sample_expected="Ngày nhận xe",
-            case_id="BOOK-FORM-006",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_end_date_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Ngày trả xe",
-            locator_type="xpath",
-            locator_value="//label[@for='endDate']",
-            sample_expected="Ngày trả xe",
-            case_id="BOOK-FORM-007",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_pickup_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Điểm nhận xe",
-            locator_type="xpath",
-            locator_value="//label[@for='pickupLocation']",
-            sample_expected="Điểm nhận xe",
-            case_id="BOOK-FORM-008",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_return_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Điểm trả xe",
-            locator_type="xpath",
-            locator_value="//label[@for='returnLocation']",
-            sample_expected="Điểm trả xe",
-            case_id="BOOK-FORM-009",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_status_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Trạng thái đơn thuê",
-            locator_type="xpath",
-            locator_value="//label[@for='status']",
-            sample_expected="Trạng thái đơn thuê",
-            case_id="BOOK-FORM-010",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_rental_amount_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Tiền thuê xe",
-            locator_type="xpath",
-            locator_value="//label[@for='rentalAmount']",
-            sample_expected="Tiền thuê xe",
-            case_id="BOOK-FORM-011",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_deposit_amount_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Tiền cọc giữ chỗ",
-            locator_type="xpath",
-            locator_value="//label[@for='depositAmount']",
-            sample_expected="Tiền cọc giữ chỗ",
-            case_id="BOOK-FORM-012",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_security_deposit_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Tiền thế chân",
-            locator_type="xpath",
-            locator_value="//label[@for='securityDeposit']",
-            sample_expected="Tiền thế chân",
-            case_id="BOOK-FORM-013",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_payment_amount_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Thu lần này",
-            locator_type="xpath",
-            locator_value="//label[@for='paymentAmountThisTime']",
-            sample_expected="Thu lần này",
-            case_id="BOOK-FORM-014",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_payment_method_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Cách thanh toán",
-            locator_type="xpath",
-            locator_value="//label[@for='paymentMethod']",
-            sample_expected="Cách thanh toán",
-            case_id="BOOK-FORM-015",
-        ),
-
-        ElementUnderTest(
-            key="booking_create_payment_note_label",
-            page_key="plt_booking",
-            test_type="label",
-            name="Nhãn Ghi chú thanh toán",
-            locator_type="xpath",
-            locator_value="//label[@for='paymentNote']",
-            sample_expected="Ghi chú thanh toán",
-            case_id="BOOK-FORM-016",
-        ),
-
-        # -------------------------------------------------
-        # CREATE FORM - INPUT
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_customer_name_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Tên khách",
-            locator_type="id",
-            locator_value="customerName",
-            sample_expected="",
-            case_id="BOOK-INPUT-001",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_customer_phone_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Số điện thoại",
-            locator_type="id",
-            locator_value="customerPhoneNumber",
-            sample_expected="",
-            case_id="BOOK-INPUT-002",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_customer_email_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Email",
-            locator_type="id",
-            locator_value="customerEmail",
-            sample_expected="",
-            case_id="BOOK-INPUT-003",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_start_date_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Ngày nhận xe",
-            locator_type="id",
-            locator_value="startDate",
-            sample_expected="Chọn thời điểm",
-            case_id="BOOK-INPUT-004",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_end_date_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Ngày trả xe",
-            locator_type="id",
-            locator_value="endDate",
-            sample_expected="Chọn thời điểm",
-            case_id="BOOK-INPUT-005",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_pickup_location_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Điểm nhận xe",
-            locator_type="id",
-            locator_value="pickupLocation",
-            sample_expected="Văn phòng PLT",
-            case_id="BOOK-INPUT-006",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_return_location_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Điểm trả xe",
-            locator_type="id",
-            locator_value="returnLocation",
-            sample_expected="Văn phòng PLT",
-            case_id="BOOK-INPUT-007",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_rental_amount_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Tiền thuê xe",
-            locator_type="id",
-            locator_value="rentalAmount",
-            sample_expected="0 ₫",
-            case_id="BOOK-INPUT-008",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_deposit_amount_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Tiền cọc giữ chỗ",
-            locator_type="id",
-            locator_value="depositAmount",
-            sample_expected="0 ₫",
-            case_id="BOOK-INPUT-009",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_security_deposit_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Tiền thế chân",
-            locator_type="id",
-            locator_value="securityDeposit",
-            sample_expected="0 ₫",
-            case_id="BOOK-INPUT-010",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_payment_amount_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Thu lần này",
-            locator_type="id",
-            locator_value="paymentAmountThisTime",
-            sample_expected="0 ₫",
-            case_id="BOOK-INPUT-011",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_payment_note_input",
-            page_key="plt_booking",
-            test_type="input",
-            name="Ô Ghi chú thanh toán",
-            locator_type="id",
-            locator_value="paymentNote",
-            sample_expected="",
-            case_id="BOOK-INPUT-012",
-            action_type="exists",
-        ),
-
-        # -------------------------------------------------
-        # CREATE FORM - DROPDOWN
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_car_dropdown",
-            page_key="plt_booking",
-            test_type="dropdown",
-            name="Chọn xe",
-            locator_type="id",
-            locator_value="carId",
-            sample_expected=(
-                "30L-678.90 • Everest Diesel • Sẵn sàng"
-            ),
-            case_id="BOOK-DROP-001",
-            steps=(
-                "1. Đăng nhập bằng email/password. "
-                "2. Mở /bookings/new. "
-                "3. Mở dropdown Chọn xe. "
-                "4. Kiểm tra option."
-            ),
-            expected_result=(
-                "Dropdown Chọn xe tồn tại và có dữ liệu xe."
-            ),
-            action_type="dropdown_has_options",
-        ),
-
-        ElementUnderTest(
-            key="booking_customer_dropdown",
-            page_key="plt_booking",
-            test_type="dropdown",
-            name="Chọn khách",
-            locator_type="id",
-            locator_value="customerId",
-            sample_expected="Chọn khách",
-            case_id="BOOK-DROP-002",
-            steps=(
-                "1. Đăng nhập bằng email/password. "
-                "2. Mở /bookings/new. "
-                "3. Mở dropdown Chọn khách. "
-                "4. Kiểm tra option."
-            ),
-            expected_result=(
-                "Dropdown Chọn khách tồn tại và có dữ liệu."
-            ),
-            action_type="dropdown_has_options",
-        ),
-
-        ElementUnderTest(
-            key="booking_status_dropdown",
-            page_key="plt_booking",
-            test_type="dropdown",
-            name="Trạng thái",
-            locator_type="id",
-            locator_value="status",
-            sample_expected=(
-                "Nháp\n"
-                "Đã xác nhận\n"
-                "Đang thuê\n"
-                "Hoàn tất\n"
-                "Đã hủy"
-            ),
-            case_id="BOOK-DROP-003",
-            steps=(
-                "1. Đăng nhập bằng email/password. "
-                "2. Mở /bookings/new. "
-                "3. Mở dropdown Trạng thái. "
-                "4. Kiểm tra toàn bộ option."
-            ),
-            expected_result=(
-                "Dropdown Trạng thái có đủ các trạng thái."
-            ),
-            action_type="dropdown_has_options",
-        ),
-
-        ElementUnderTest(
-            key="booking_payment_method_dropdown",
-            page_key="plt_booking",
-            test_type="dropdown",
-            name="Phương thức thanh toán",
-            locator_type="id",
-            locator_value="paymentMethod",
-            sample_expected=(
-                "Chuyển khoản\n"
-                "Thẻ\n"
-                "Khác"
-            ),
-            case_id="BOOK-DROP-004",
-            steps=(
-                "1. Đăng nhập bằng email/password. "
-                "2. Mở /bookings/new. "
-                "3. Mở dropdown Phương thức thanh toán. "
-                "4. Kiểm tra toàn bộ option."
-            ),
-            expected_result=(
-                "Dropdown Phương thức thanh toán "
-                "có đủ các option."
-            ),
-            action_type="dropdown_has_options",
-        ),
-
-        # -------------------------------------------------
-        # CREATE FORM - BUTTON
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_create_button",
-            page_key="plt_booking",
-            test_type="button",
-            name="Nút Tạo đơn thuê",
-            locator_type="xpath",
-            locator_value=(
-                "//button[@type='submit' "
-                "and normalize-space()='Tạo đơn thuê']"
-            ),
-            sample_expected="Tạo đơn thuê",
-            case_id="BOOK-BTN-001",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_back_button",
-            page_key="plt_booking",
-            test_type="button",
-            name="Nút Quay lại danh sách đơn thuê",
-            locator_type="xpath",
-            locator_value=(
-                "//button[contains(normalize-space(), "
-                "'Quay lại danh sách đơn thuê')]"
-            ),
-            sample_expected="Quay lại danh sách đơn thuê",
-            case_id="BOOK-BTN-002",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_add_extra_charge_button",
-            page_key="plt_booking",
-            test_type="button",
-            name="Nút Thêm phụ phí",
-            locator_type="xpath",
-            locator_value=(
-                "//button[normalize-space()='Thêm phụ phí']"
-            ),
-            sample_expected="Thêm phụ phí",
-            case_id="BOOK-BTN-003",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_add_discount_button",
-            page_key="plt_booking",
-            test_type="button",
-            name="Nút Thêm giảm giá hoặc hoàn tiền",
-            locator_type="xpath",
-            locator_value=(
-                "//button[normalize-space()='"
-                "Thêm giảm giá hoặc hoàn tiền']"
-            ),
-            sample_expected="Thêm giảm giá hoặc hoàn tiền",
-            case_id="BOOK-BTN-004",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_upload_button",
-            page_key="plt_booking",
-            test_type="button",
-            name="Nút Tải tệp lên",
-            locator_type="xpath",
-            locator_value=(
-                "//button[normalize-space()='Tải tệp lên']"
-            ),
-            sample_expected="Tải tệp lên",
-            case_id="BOOK-BTN-005",
-            action_type="exists",
-        ),
-
-        # -------------------------------------------------
-        # BOOKING LIST - TABLE
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_table",
-            page_key="plt_booking",
+            key="fleet_table",
+            page_key="plt_fleet",
             test_type="table",
-            name="Bảng danh sách booking",
-            locator_type="xpath",
-            locator_value="//main//table",
-            sample_expected=(
-                "Đơn thuê\n"
-                "Xe\n"
-                "Ngày thuê\n"
-                "Trạng thái\n"
-                "Thanh toán\n"
-                "Tệp\n"
-                "Tổng tiền\n"
-                "Thao tác"
-            ),
-            case_id="BOOK-004",
-            action_type="table_headers",
+            name="Bảng Danh sách xe",
+            locator_type="css",
+            locator_value="div.ant-table-wrapper table",
+            sample_expected="Ảnh\tXe\tThông số\tTrạng thái\tĐơn đang thuê\tThao tác",
+            case_id="XE-005",
+            steps="1. Mở trang Xe. 2. Đợi bảng Danh sách xe tải xong. 3. So sánh tiêu đề cột / dữ liệu bảng.",
+            expected_result="Bảng Danh sách xe hiển thị đúng cột và dữ liệu mong đợi.",
         ),
-
         ElementUnderTest(
-            key="booking_first_row",
-            page_key="plt_booking",
-            test_type="table",
-            name="Dòng booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]"
-            ),
-            sample_expected="BK-",
-            case_id="BOOK-005",
-            action_type="contains_booking_code",
-        ),
-
-        ElementUnderTest(
-            key="booking_first_row_booking_code",
-            page_key="plt_booking",
-            test_type="table",
-            name="Mã booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]//td[1]"
-            ),
-            sample_expected="BK-",
-            case_id="BOOK-006",
-            action_type="starts_with",
-        ),
-
-        ElementUnderTest(
-            key="booking_first_row_vehicle",
-            page_key="plt_booking",
-            test_type="table",
-            name="Thông tin xe của booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]//td[2]"
-            ),
-            sample_expected="Tên xe",
-            case_id="BOOK-007",
-            action_type="not_empty",
-        ),
-
-        ElementUnderTest(
-            key="booking_first_row_rental_date",
-            page_key="plt_booking",
-            test_type="table",
-            name="Ngày thuê booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]//td[3]"
-            ),
-            sample_expected="Ngày thuê",
-            case_id="BOOK-008",
-            action_type="not_empty",
-        ),
-
-        ElementUnderTest(
-            key="booking_first_row_status",
-            page_key="plt_booking",
-            test_type="table",
-            name="Trạng thái booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]//td[4]"
-            ),
-            sample_expected="Trạng thái",
-            case_id="BOOK-009",
-            action_type="not_empty",
-        ),
-
-        ElementUnderTest(
-            key="booking_first_row_payment",
-            page_key="plt_booking",
-            test_type="table",
-            name="Trạng thái thanh toán booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]//td[5]"
-            ),
-            sample_expected="Thanh toán",
-            case_id="BOOK-010",
-            action_type="not_empty",
-        ),
-
-        ElementUnderTest(
-            key="booking_first_row_file",
-            page_key="plt_booking",
-            test_type="table",
-            name="Tệp booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]//td[6]"
-            ),
-            sample_expected="Tệp",
-            case_id="BOOK-011",
-            action_type="exists",
-        ),
-
-        ElementUnderTest(
-            key="booking_first_row_total",
-            page_key="plt_booking",
-            test_type="table",
-            name="Tổng tiền booking đầu tiên",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table//tbody//tr["
-                "not(@aria-hidden='true') "
-                "and normalize-space(.)!=''"
-                "])[1]//td[7]"
-            ),
-            sample_expected="500.000 ₫",
-            case_id="BOOK-012",
-            action_type="not_empty",
-        ),
-
-        # -------------------------------------------------
-        # BOOKING - CHECKBOX
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_checkbox",
-            page_key="plt_booking",
+            key="fleet_selected_menu_state",
+            page_key="plt_fleet",
             test_type="radio",
-            name="Checkbox trong bảng Booking",
+            name="Trạng thái menu Xe đang chọn",
             locator_type="xpath",
-            locator_value=(
-                "(//main//table//input[@type='checkbox'])[1]"
-            ),
-            sample_expected="checkbox",
-            case_id="BOOK-013",
-            action_type="exists",
+            locator_value="//li[@role='menuitem' and contains(@class, 'ant-menu-item-selected')]",
+            sample_expected="Xe",
+            case_id="XE-006",
+            steps="1. Mở trang Xe. 2. Đợi sidebar tải xong. 3. Lấy text menu item đang được đánh dấu chọn.",
+            expected_result="Menu item đang chọn trên sidebar hiển thị đúng text Xe.",
         ),
-
-        # -------------------------------------------------
-        # BOOKING - IMAGE
-        # -------------------------------------------------
-
         ElementUnderTest(
-            key="booking_logo",
-            page_key="plt_booking",
+            key="fleet_logo",
+            page_key="plt_fleet",
             test_type="image",
             name="Logo PLT Solutions",
             locator_type="css",
             locator_value="aside img[alt='PLT Solutions']",
             sample_expected="PLT Solutions",
-            case_id="BOOK-014",
+            case_id="XE-007",
+            steps="1. Mở trang Xe. 2. Tìm logo PLT Solutions trên sidebar. 3. Kiểm tra thuộc tính alt.",
+            expected_result="Logo hiển thị đúng, thuộc tính alt = PLT Solutions.",
         ),
-
-        # -------------------------------------------------
-        # BOOKING - TITLE
-        # -------------------------------------------------
-
         ElementUnderTest(
-            key="booking_title",
-            page_key="plt_booking",
-            test_type="title",
-            name="Tiêu đề trang Booking",
-            locator_type="xpath",
-            locator_value=(
-                "//*[normalize-space()='Quản lý đặt xe' "
-                "and not(ancestor::aside)]"
-            ),
-            sample_expected="Quản lý đặt xe",
-            case_id="BOOK-015",
-        ),
-
-        # -------------------------------------------------
-        # BOOKING - UI
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_main_section",
-            page_key="plt_booking",
+            key="fleet_add_button_visible",
+            page_key="plt_fleet",
             test_type="ui",
-            name="Khu vực quản lý booking hiển thị",
+            name="Nút Thêm xe hiển thị",
             locator_type="xpath",
-            locator_value="//main",
+            locator_value="//button[contains(normalize-space(.), 'Thêm xe')]",
             sample_expected="visible",
-            case_id="BOOK-016",
+            case_id="XE-008",
+            steps="1. Mở trang Xe. 2. Đợi nút Thêm xe xuất hiện. 3. Kiểm tra element đang hiển thị.",
+            expected_result="Nút + Thêm xe hiển thị ở góc phải khối Danh sách xe.",
             action_type="visible",
-        ),
-
-        ElementUnderTest(
-            key="booking_table_section_visible",
-            page_key="plt_booking",
-            test_type="ui",
-            name="Khu vực bảng booking hiển thị",
-            locator_type="xpath",
-            locator_value=(
-                "(//main//table/"
-                "ancestor::*[self::section or self::div][1])[1]"
-            ),
-            sample_expected="visible",
-            case_id="BOOK-017",
-            action_type="visible",
-        ),
-
-        # -------------------------------------------------
-        # BOOKING - MENU
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_sidebar_menu",
-            page_key="plt_booking",
-            test_type="menu",
-            name="Menu sidebar Booking",
-            locator_type="css",
-            locator_value="ul[role='menu']",
-            sample_expected=(
-                "Dashboard Đặt xe Xe Danh mục xe "
-                "Tài chính Người dùng"
-            ),
-            case_id="BOOK-018",
-        ),
-
-        ElementUnderTest(
-            key="booking_sidebar_menu_item",
-            page_key="plt_booking",
-            test_type="menu",
-            name="Item menu Đặt xe",
-            locator_type="xpath",
-            locator_value=(
-                "//li[@role='menuitem']"
-                "[.//span[contains(normalize-space(), 'Đặt xe')]]"
-            ),
-            sample_expected="Đặt xe",
-            case_id="BOOK-019",
-        ),
-
-        # -------------------------------------------------
-        # BOOKING - PAGINATION
-        # -------------------------------------------------
-
-        ElementUnderTest(
-            key="booking_pagination",
-            page_key="plt_booking",
-            test_type="ui",
-            name="Phân trang danh sách booking",
-            locator_type="css",
-            locator_value=".ant-pagination",
-            sample_expected="pagination",
-            case_id="BOOK-020",
-            action_type="exists",
         ),
     ]
 
-    # =====================================================
-    # PAGE MAP
-    # =====================================================
-
     @classmethod
     def page_map(cls) -> Dict[str, PageUnderTest]:
-        return {
-            page.key: page
-            for page in cls.pages
-        }
-
-    # =====================================================
-    # GET ELEMENTS BY PAGE + TEST TYPE
-    # =====================================================
+        return {page.key: page for page in cls.pages}
 
     @classmethod
-    def elements_for(
-        cls,
-        page_key: str,
-        test_type: str,
-    ) -> List[ElementUnderTest]:
-
+    def elements_for(cls, page_key: str, test_type: str) -> List[ElementUnderTest]:
         return [
             element
             for element in cls.elements
-            if (
-                element.page_key == page_key
-                and element.test_type == test_type
-            )
+            if element.page_key == page_key and element.test_type == test_type
         ]
-
-    # =====================================================
-    # GET ALL ELEMENTS OF PAGE
-    # =====================================================
-
-    @classmethod
-    def elements_for_page(
-        cls,
-        page_key: str,
-    ) -> List[ElementUnderTest]:
-
-        return [
-            element
-            for element in cls.elements
-            if element.page_key == page_key
-        ]
-
-    # =====================================================
-    # GET ELEMENT BY KEY
-    # =====================================================
-
-    @classmethod
-    def get_element(
-        cls,
-        key: str,
-    ) -> ElementUnderTest:
-
-        for element in cls.elements:
-            if element.key == key:
-                return element
-
-        raise KeyError(
-            f"Không tìm thấy element contract: {key}"
-        )
-
-    # =====================================================
-    # GET PAGE BY KEY
-    # =====================================================
-
-    @classmethod
-    def get_page(
-        cls,
-        key: str,
-    ) -> PageUnderTest:
-
-        for page in cls.pages:
-            if page.key == key:
-                return page
-
-        raise KeyError(
-            f"Không tìm thấy page contract: {key}"
-        )

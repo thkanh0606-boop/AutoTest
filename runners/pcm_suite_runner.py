@@ -319,11 +319,11 @@ def _booking_scenario(driver, key: str) -> str:
 def _fleet_scenario(driver, key: str) -> str:
     if key == "fleet_table_headers":
         actual = _table_headers(driver)
-        _assert_contains(actual, ["Ảnh", "Xe", "Thông số", "Trạng thái", "Mã booking", "Thao tác"])
+        _assert_contains(actual, ["Ảnh", "Xe", "Thông số", "Trạng thái", "Đơn đang thuê", "Thao tác"])
         return actual
 
     if key == "fleet_dependent_model":
-        add = _clickable(driver, "//button[contains(.,'Thêm xe mới')]")
+        add = _clickable(driver, "//button[contains(normalize-space(.),'Thêm xe')]")
         _highlight(driver, add); add.click(); time.sleep(1.5)
         form = _visible(driver, "//form | //div[contains(@class,'ant-modal') and not(contains(@style,'display: none'))]")
         combos = form.find_elements(By.XPATH, ".//*[@role='combobox']")
@@ -352,7 +352,7 @@ def _fleet_scenario(driver, key: str) -> str:
         edit = _clickable(driver, "(//tbody//button[contains(@aria-label,'Chỉnh sửa') or contains(@title,'Sửa')])[1]")
         _highlight(driver, edit); edit.click(); time.sleep(1.5)
         form_text = _visible(driver, "//form | //div[contains(@class,'ant-modal') and not(contains(@style,'display: none'))]").text
-        _assert_contains(form_text, ["Đời", "Màu", "Nhiên liệu"])
+        _assert_contains(form_text, ["Năm", "Màu", "Nhiên liệu"])
         _cancel_dialog(driver)
         return form_text
 
@@ -367,7 +367,7 @@ def _fleet_scenario(driver, key: str) -> str:
     if key == "fleet_stats":
         body = _body_text(driver)
         values = []
-        for label in ("Tổng số xe", "Sẵn sàng hôm nay", "Đang bảo dưỡng"):
+        for label in ("Tất cả xe", "Sẵn sàng hôm nay", "Đang bảo dưỡng"):
             label_element = _visible(driver, f"//*[contains(normalize-space(.),'{label}')][1]")
             candidates = label_element.find_elements(By.XPATH, "following::*[position() <= 12]")
             number = next(
@@ -392,7 +392,11 @@ def _fleet_scenario(driver, key: str) -> str:
         if "đang thuê" in _normal(text) and re.search(r"BK-[A-Z0-9-]+", text, re.I):
             _highlight(driver, row)
             return text
-    raise ScenarioFailure("Không thấy xe Đang thuê có mã BK-")
+    raise ScenarioFailure(
+        "Không thấy xe nào ở trạng thái 'Đang thuê' có mã booking (BK-...) trong "
+        "dữ liệu hiện tại. Đây là assertion phụ thuộc dữ liệu: cần có ít nhất 1 xe "
+        "đang được thuê (tạo qua module Đặt xe) tại thời điểm chạy để kiểm tra được."
+    )
 
 
 def _catalog_scenario(case: dict) -> dict | None:

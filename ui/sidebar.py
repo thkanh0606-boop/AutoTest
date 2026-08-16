@@ -230,14 +230,7 @@ class Sidebar(QWidget):
             "5"
         )
 
-        # Trân - Module Owner: Quản lý xe
-        self.add_menu_item(
-            layout,
-            "🚗",  # Icon chiếc xe
-            "Quản lý xe",
-            "car_management" # Tên biến định tuyến
-        )
-
+    
         # --- THÊM MỤC CẤU HÌNH TẠI ĐÂY ---
         self.add_menu_item(
             layout,

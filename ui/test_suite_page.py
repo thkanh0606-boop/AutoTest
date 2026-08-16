@@ -262,6 +262,7 @@ class TestSuitePage(QWidget):
         self.module_filter = QComboBox()
         self.module_filter.addItem("Tất cả module", "")
         self.module_filter.currentIndexChanged.connect(self._refresh_case_table)
+        self.module_filter.currentIndexChanged.connect(self._auto_set_run_mode_for_filter)
         filter_row.addWidget(self.module_filter)
         self.case_search = QLineEdit()
         self.case_search.setPlaceholderText("Tìm TC ID hoặc tên case...")
@@ -638,6 +639,20 @@ class TestSuitePage(QWidget):
     def _case_module(self, case: dict) -> str:
         return str(case.get("module") or case.get("area") or case.get("page_key") or "General")
 
+    def _auto_set_run_mode_for_filter(self, _index=None):
+        """Khi người dùng lọc theo 1 Module cụ thể (không phải 'Tất cả module'),
+        tự chuyển 'Chế độ chạy' sang 'Current Page (module đang lọc)' để nút
+        Chạy chạy đúng module đang lọc - tránh trường hợp Module đã lọc là 'Xe'
+        nhưng Chế độ chạy vẫn còn ở 'Full Website' từ lần trước (khiến bấm
+        Chạy lại chạy toàn bộ 31 case thay vì đúng các case của module đang
+        chọn)."""
+        module = self.module_filter.currentData() or ""
+        if not module:
+            return
+        idx = self.run_mode_combo.findData("current_module")
+        if idx >= 0 and self.run_mode_combo.currentIndex() != idx:
+            self.run_mode_combo.setCurrentIndex(idx)
+
     def _is_executable(self, case: dict) -> bool:
         return bool(
             case.get("action_type") in {"route_smoke", "pcm_scenario"}
@@ -744,6 +759,24 @@ class TestSuitePage(QWidget):
     def _run_tests(self):
         if self.worker and self.worker.isRunning():
             return
+        module = self.module_filter.currentData() or ""
+        run_mode = self.run_mode_combo.currentData()
+        if module and run_mode == "full_website":
+            answer = QMessageBox.question(
+                self,
+                "Module đang lọc khác với Chế độ chạy",
+                f"Bạn đang lọc theo module '{module}' nhưng Chế độ chạy đang là "
+                "'Full Website' - bấm Chạy sẽ chạy TOÀN BỘ test case, không chỉ "
+                f"module '{module}' đang lọc.\n\n"
+                f"Bấm Yes để chỉ chạy module '{module}' đang lọc, "
+                "hoặc No để vẫn chạy Full Website.",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.Yes,
+            )
+            if answer == QMessageBox.StandardButton.Yes:
+                idx = self.run_mode_combo.findData("current_module")
+                if idx >= 0:
+                    self.run_mode_combo.setCurrentIndex(idx)
         try:
             cases, mode_label = self._cases_for_run()
         except ValueError as error:
