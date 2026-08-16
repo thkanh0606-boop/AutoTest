@@ -230,7 +230,34 @@ class Sidebar(QWidget):
             "5"
         )
 
-    
+        self.add_menu_item(
+            layout,
+            "▣",
+            "Danh mục xe",
+            "vehicle_catalog"
+        )
+
+        self.add_menu_item(
+            layout,
+            "▥",
+            "Quản lý xe",
+            "car_management"
+        )
+
+        self.add_menu_item(
+            layout,
+            "▨",
+            "Quản lý đặt xe",
+            "booking_management"
+        )
+
+        self.add_menu_item(
+            layout,
+            "▧",
+            "Nhân sự",
+            "staff_management"
+        )
+
         # --- THÊM MỤC CẤU HÌNH TẠI ĐÂY ---
         self.add_menu_item(
             layout,
