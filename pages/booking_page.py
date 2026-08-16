@@ -50,10 +50,14 @@ class BookingPage(BasePage):
         """Thực hiện tìm kiếm với phản hồi trực quan."""
         inputs = self.driver.find_elements(*self.SEARCH_INPUT)
         if len(inputs) > 0:
-            elem = inputs[0]
+            elem = next((item for item in inputs if item.is_displayed() and item.is_enabled()), inputs[0])
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", elem)
             self.highlight_element(elem, color="cyan", border="2px solid blue")
-            elem.clear()
+            try:
+                elem.clear()
+            except Exception:
+                elem.send_keys(Keys.CONTROL + "a")
+                elem.send_keys(Keys.BACKSPACE)
             elem.send_keys(keyword)
             time.sleep(delay)
             

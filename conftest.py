@@ -9,23 +9,20 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import InvalidSessionIdException, WebDriverException
 
+from core.driver_factory import DriverFactory
+
 # Cấu hình Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
+# Cấu hình thông tin tài khoản và URL
 LOGIN_URL = "https://courses.plt.pro.vn/login"
 TARGET_URL = "https://courses.plt.pro.vn/users"
 USER_EMAIL = "test@gmail.com"
 USER_PASS = "123123"
 
 def create_browser_instance():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(3)
-    return driver
+    # Sử dụng DriverFactory chung của dự án
+    return DriverFactory.create_driver(headless=False, keep_session=False)
 
 @pytest.fixture(scope="class")
 def setup_driver(request):
@@ -58,11 +55,11 @@ def ensure_logged_in_and_on_users_page(request):
             logging.info("Thực hiện đăng nhập tự động...")
             driver.get(LOGIN_URL)
             
-            email_el = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='email' or @id='email' or @name='email' or contains(@placeholder, 'email')]")))
+            email_el = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='email' or @id='email' or @name='email' or contains(@placeholder, 'email') or contains(@placeholder, 'ban@plt.pro.vn')]")))
             email_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             email_el.send_keys(USER_EMAIL)
             
-            pass_el = driver.find_element(By.XPATH, "//input[@type='password' or @id='password' or @name='password' or contains(@placeholder, 'Password')]")
+            pass_el = driver.find_element(By.XPATH, "//input[@type='password' or @id='password' or @name='password' or contains(@placeholder, 'Password') or contains(@placeholder, 'mật khẩu')]")
             pass_el.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             pass_el.send_keys(USER_PASS)
             
@@ -79,7 +76,7 @@ def ensure_logged_in_and_on_users_page(request):
     except Exception:
         pass
 
-# --- HOOK CHUẨN CỦA PYTEST: pytest_runtest_makereport (ĐÃ FIX TÊN HOOK) ---
+# --- HOOK CHUẨN CỦA PYTEST: pytest_runtest_makereport ---
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield

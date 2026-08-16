@@ -9,10 +9,15 @@ from PySide6.QtWidgets import (
     QSizePolicy
 )
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
+
+from core.test_contract import TestContract
 
 
 class Header(QWidget):
+
+    # page_key, url - dùng chung cho mọi Test Builder
+    page_changed = Signal(str, str)
 
     def __init__(self):
         super().__init__()
@@ -169,10 +174,8 @@ class Header(QWidget):
 
         self.page_combo = QComboBox()
 
-        self.page_combo.addItems([
-            "Trang tổng quan",
-            "Trang đăng nhập"
-        ])
+        self.page_contexts = {page.name: page for page in TestContract.pages}
+        self.page_combo.addItems(list(self.page_contexts.keys()))
 
         self.page_combo.setFixedWidth(210)
         self.page_combo.setFixedHeight(34)
@@ -326,3 +329,22 @@ class Header(QWidget):
         status_layout.addWidget(self.status_button)
 
         main_layout.addLayout(status_layout)
+
+        # Chọn trang chỉ đổi context test + URL, không đổi sang giao diện riêng.
+        self.page_combo.currentTextChanged.connect(
+            self._on_test_page_changed
+        )
+
+    def _page_context(self, page_name: str):
+        page = self.page_contexts.get(page_name) or TestContract.pages[0]
+        return page.key, page.url
+
+    def _on_test_page_changed(self, page_name: str):
+        page_key, url = self._page_context(page_name)
+        self.url_input.setText(url)
+        self.page_changed.emit(page_key, url)
+
+    def current_page_key(self) -> str:
+        page_key, _url = self._page_context(self.page_combo.currentText())
+        return page_key
+
