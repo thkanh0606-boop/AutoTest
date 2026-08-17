@@ -5,6 +5,7 @@ import os
 import re
 import sys
 import time
+from datetime import datetime
 from io import StringIO
 
 from selenium.common.exceptions import (
@@ -703,6 +704,78 @@ def _compare_contains_all_has_number(
             ),
         }
     )
+
+    status = (
+        "PASSED"
+        if all(
+            pair["status"] == "PASS"
+            for pair in pairs
+        )
+        else "FAILED"
+    )
+
+    return status, pairs
+
+
+# =========================================================
+# DATE
+# =========================================================
+
+def _vietnamese_today_text(now: datetime | None = None) -> str:
+
+    current = now or datetime.now()
+
+    return (
+        f"{current.day} thg "
+        f"{current.month}, "
+        f"{current.year}"
+    )
+
+
+def _compare_today_vi_date(
+    actual: str,
+    trim: bool = True,
+    case_sensitive: bool = True,
+):
+
+    expected_parts = [
+        "Hôm nay",
+        _vietnamese_today_text(),
+    ]
+
+    actual_compare = _normalize_text(
+        actual,
+        trim=trim,
+        case_sensitive=case_sensitive,
+    )
+
+    pairs = []
+
+    for index, expected_part in enumerate(
+        expected_parts,
+        start=1,
+    ):
+
+        expected_compare = _normalize_text(
+            expected_part,
+            trim=trim,
+            case_sensitive=case_sensitive,
+        )
+
+        matched = expected_compare in actual_compare
+
+        pairs.append(
+            {
+                "index": index,
+                "expected": expected_part,
+                "actual": actual,
+                "status": (
+                    "PASS"
+                    if matched
+                    else "FAIL"
+                ),
+            }
+        )
 
     status = (
         "PASSED"
@@ -1773,15 +1846,7 @@ def _read_actual(
             driver,
             Config.EXPLICIT_WAIT,
         ).until(
-            EC.element_to_be_clickable(
-                (
-                    _by("css"),
-                    element.get_attribute(
-                        "data-testid"
-                    )
-                    or "#"
-                )
-            )
+            EC.element_to_be_clickable(element)
         )
 
         element.click()
@@ -2303,6 +2368,16 @@ def run_label_text_test(
             status, pairs = (
                 _compare_contains_all_has_number(
                     expected,
+                    actual,
+                    trim=trim,
+                    case_sensitive=case_sensitive,
+                )
+            )
+
+        elif action_type == "today_vi_date":
+
+            status, pairs = (
+                _compare_today_vi_date(
                     actual,
                     trim=trim,
                     case_sensitive=case_sensitive,

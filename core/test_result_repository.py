@@ -161,6 +161,7 @@ class TestResultRepository:
                 error_message TEXT NOT NULL DEFAULT '',
                 screenshot_path TEXT NOT NULL DEFAULT '',
                 log_text TEXT NOT NULL DEFAULT '',
+                comparison_json TEXT NOT NULL DEFAULT '',
                 started_at TEXT NOT NULL,
                 finished_at TEXT NOT NULL,
                 duration_ms INTEGER NOT NULL DEFAULT 0,
@@ -176,6 +177,12 @@ class TestResultRepository:
         )
         connection.execute(
             "CREATE INDEX IF NOT EXISTS idx_suite_results_run ON suite_results(run_id, result_index)"
+        )
+        self._add_column_if_missing(
+            connection,
+            "suite_results",
+            "comparison_json",
+            "TEXT NOT NULL DEFAULT ''",
         )
 
     def _column_names(self, connection: sqlite3.Connection, table_name: str) -> set:
@@ -201,7 +208,6 @@ class TestResultRepository:
         self._add_column_if_missing(connection, "test_results", "actual_result", "TEXT")
         self._add_column_if_missing(connection, "test_results", "error_message", "TEXT")
         self._add_column_if_missing(connection, "test_results", "screenshot_path", "TEXT")
-
         connection.execute(
             """
             CREATE UNIQUE INDEX IF NOT EXISTS idx_test_cases_case_id_unique
@@ -560,8 +566,8 @@ class TestResultRepository:
                 INSERT INTO suite_results
                     (run_id, result_index, case_id, title, module, page_key,
                      expected, actual, status, message, error_message,
-                     screenshot_path, log_text, started_at, finished_at, duration_ms)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     screenshot_path, log_text, comparison_json, started_at, finished_at, duration_ms)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     run_id,
@@ -577,6 +583,7 @@ class TestResultRepository:
                     payload.get("error_message", ""),
                     payload.get("screenshot_path", ""),
                     payload.get("log_text", ""),
+                    payload.get("comparison_json", ""),
                     started_at,
                     finished_at,
                     int(payload.get("duration_ms", 0)),

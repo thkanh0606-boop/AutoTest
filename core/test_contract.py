@@ -120,18 +120,18 @@ class TestContract:
             key="dashboard_main_title",
             page_key="plt_dashboard",
             test_type="label",
-            name="Tiêu đề hero Dashboard",
+            name="Tiêu đề trang Tổng quan",
             locator_type="xpath",
-            locator_value="//h1[normalize-space()='Dashboard']",
-            sample_expected="Dashboard",
+            locator_value="//header//h3[normalize-space()='Tổng quan']",
+            sample_expected="Tổng quan",
             case_id="DASH-001",
             steps=(
                 "1. Mở trang /dashboard bằng tài khoản test. "
                 "2. Đợi Dashboard tải xong. "
-                "3. Lấy text tiêu đề hero."
+                "3. Lấy text tiêu đề trang."
             ),
             expected_result=(
-                "Tiêu đề hero hiển thị đúng text Dashboard."
+                "Tiêu đề trang hiển thị đúng text Tổng quan."
             ),
         ),
 
@@ -139,19 +139,21 @@ class TestContract:
             key="dashboard_header_title",
             page_key="plt_dashboard",
             test_type="label",
-            name="Tiêu đề header vận hành",
+            name="Mô tả header tổng quan",
             locator_type="xpath",
-            locator_value="//h3[normalize-space()='Bảng điều khiển vận hành']",
-            sample_expected="Bảng điều khiển vận hành",
+            locator_value=(
+                "//header//*[normalize-space()="
+                "'Nhận xe, trả xe và việc cần xử lý trong ngày.']"
+            ),
+            sample_expected="Nhận xe, trả xe và việc cần xử lý trong ngày.",
             case_id="DASH-002",
             steps=(
                 "1. Mở trang /dashboard. "
-                "2. Đợi header hiển thị. "
-                "3. Lấy text tiêu đề header."
+                "2. Đợi phần mô tả header hiển thị. "
+                "3. Lấy text mô tả header."
             ),
             expected_result=(
-                "Header hiển thị đúng nội dung "
-                "Bảng điều khiển vận hành."
+                "Header hiển thị đúng mô tả vận hành trong ngày."
             ),
         ),
 
@@ -159,23 +161,23 @@ class TestContract:
             key="dashboard_rented_cars_value",
             page_key="plt_dashboard",
             test_type="label",
-            name="KPI xe đang cho thuê",
+            name="KPI nhận xe hôm nay",
             locator_type="xpath",
             locator_value=(
-                "(//main//div[contains(@class,'grid')])[1]/*[1]"
+                "//main//button[.//span[normalize-space()='Nhận xe hôm nay']]"
             ),
             sample_expected=(
-                "XE ĐANG CHO THUÊ\n"
-                "Các xe hiện đang ở ngoài với khách."
+                "NHẬN XE HÔM NAY\n"
+                "Đơn thuê bắt đầu trong ngày."
             ),
             case_id="DASH-003",
             steps=(
                 "1. Mở Dashboard. "
-                "2. Tìm card KPI xe đang cho thuê. "
+                "2. Tìm card KPI nhận xe hôm nay. "
                 "3. Kiểm tra nhãn, mô tả và số liệu trên card."
             ),
             expected_result=(
-                "Card XE ĐANG CHO THUÊ hiển thị đúng "
+                "Card NHẬN XE HÔM NAY hiển thị đúng "
                 "nhãn, mô tả và có số liệu."
             ),
             action_type="contains_all_has_number",
@@ -185,23 +187,23 @@ class TestContract:
             key="dashboard_ready_cars_value",
             page_key="plt_dashboard",
             test_type="label",
-            name="KPI xe sẵn sàng hôm nay",
+            name="KPI xe sẵn sàng",
             locator_type="xpath",
             locator_value=(
-                "(//main//div[contains(@class,'grid')])[1]/*[2]"
+                "//main//button[.//span[normalize-space()='Xe sẵn sàng']]"
             ),
             sample_expected=(
-                "XE SẴN SÀNG HÔM NAY\n"
-                "Có thể bàn giao ngay cho booking tiếp theo."
+                "XE SẴN SÀNG\n"
+                "Có thể giao ngay."
             ),
             case_id="DASH-004",
             steps=(
                 "1. Mở Dashboard. "
-                "2. Tìm card KPI xe sẵn sàng hôm nay. "
+                "2. Tìm card KPI xe sẵn sàng. "
                 "3. Kiểm tra nhãn, mô tả và số liệu trên card."
             ),
             expected_result=(
-                "Card XE SẴN SÀNG HÔM NAY hiển thị đúng "
+                "Card XE SẴN SÀNG hiển thị đúng "
                 "nhãn, mô tả và có số liệu."
             ),
             action_type="contains_all_has_number",
@@ -211,23 +213,23 @@ class TestContract:
             key="dashboard_overdue_booking_value",
             page_key="plt_dashboard",
             test_type="label",
-            name="KPI booking trễ hạn",
+            name="KPI quá hạn trả",
             locator_type="xpath",
             locator_value=(
-                "(//main//div[contains(@class,'grid')])[2]/*[1]"
+                "//main//button[.//span[normalize-space()='Quá hạn trả']]"
             ),
             sample_expected=(
-                "BOOKING TRỄ HẠN\n"
-                "Các booking đã quá thời gian trả xe dự kiến."
+                "QUÁ HẠN TRẢ\n"
+                "Đã quá giờ trả xe dự kiến."
             ),
             case_id="DASH-005",
             steps=(
                 "1. Mở Dashboard. "
-                "2. Tìm card KPI booking trễ hạn. "
+                "2. Tìm card KPI quá hạn trả. "
                 "3. Kiểm tra nhãn, mô tả và số liệu trên card."
             ),
             expected_result=(
-                "Card BOOKING TRỄ HẠN hiển thị đúng "
+                "Card QUÁ HẠN TRẢ hiển thị đúng "
                 "nhãn, mô tả và có số liệu."
             ),
             action_type="contains_all_has_number",
@@ -243,7 +245,7 @@ class TestContract:
             test_type="dropdown",
             name="Dropdown ngôn ngữ",
             locator_type="css",
-            locator_value=".ant-select",
+            locator_value="header .ant-select",
             sample_expected="English\nTiếng Việt",
             case_id="DASH-006",
             steps=(
@@ -264,12 +266,12 @@ class TestContract:
             key="dashboard_booking_list",
             page_key="plt_dashboard",
             test_type="table",
-            name="Danh sách bàn giao sắp tới",
+            name="Danh sách giao nhận sắp tới",
             locator_type="xpath",
             locator_value=(
-                "(//main//div[contains(@class,'grid')])[6]/*[1]"
+                "//main//section[.//h4[normalize-space()='Lượt giao nhận sắp tới']]"
             ),
-            sample_expected="Các lượt bàn giao sắp tới",
+            sample_expected="Lượt giao nhận sắp tới",
         ),
 
         ElementUnderTest(
@@ -279,8 +281,8 @@ class TestContract:
             name="Dòng booking đầu tiên",
             locator_type="xpath",
             locator_value=(
-                "((//main//div[contains(@class,'grid')])[6]"
-                "/*[1]//button[contains(., 'BK-')])[1]"
+                "(//main//section[.//h4[normalize-space()='Lượt giao nhận sắp tới']]"
+                "//button[contains(., 'BK-')])[1]"
             ),
             sample_expected="BK-",
         ),
@@ -296,10 +298,11 @@ class TestContract:
             name="Trạng thái menu Dashboard đang chọn",
             locator_type="xpath",
             locator_value=(
-                "//li[@role='menuitem' and "
-                "contains(@class, 'ant-menu-item-selected')]"
+                "//aside//li[@role='menuitem' and "
+                "contains(@class, 'ant-menu-item-selected') and "
+                "normalize-space()='Tổng quan']"
             ),
-            sample_expected="Dashboard",
+            sample_expected="Tổng quan",
         ),
 
         # -------------------------------------------------
@@ -327,9 +330,9 @@ class TestContract:
             name="Tiêu đề trang trên header",
             locator_type="xpath",
             locator_value=(
-                "//h3[normalize-space()='Bảng điều khiển vận hành']"
+                "//header//h3[normalize-space()='Tổng quan']"
             ),
-            sample_expected="Bảng điều khiển vận hành",
+            sample_expected="Tổng quan",
         ),
 
         # -------------------------------------------------
@@ -340,11 +343,19 @@ class TestContract:
             key="dashboard_hero_visible",
             page_key="plt_dashboard",
             test_type="ui",
-            name="Hero tổng quan hiển thị",
+            name="Header tổng quan hiển thị",
             locator_type="xpath",
-            locator_value="(//main//section)[1]",
+            locator_value="//header[.//h3[normalize-space()='Tổng quan']]",
             sample_expected="visible",
             case_id="DASH-007",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Đợi header Tổng quan hiển thị. "
+                "3. Kiểm tra header đang visible."
+            ),
+            expected_result=(
+                "Header Tổng quan hiển thị trên Dashboard."
+            ),
             action_type="visible",
         ),
 
@@ -352,12 +363,62 @@ class TestContract:
             key="dashboard_quick_actions_visible",
             page_key="plt_dashboard",
             test_type="ui",
-            name="Khối thao tác nhanh hiển thị",
+            name="Nút tạo đơn thuê hiển thị",
             locator_type="xpath",
-            locator_value="(//main//section)[2]",
+            locator_value="//main//button[normalize-space()='Tạo đơn thuê']",
             sample_expected="visible",
             case_id="DASH-008",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Tìm nút Tạo đơn thuê trong nội dung Dashboard. "
+                "3. Kiểm tra nút đang visible."
+            ),
+            expected_result=(
+                "Nút Tạo đơn thuê hiển thị và sẵn sàng thao tác."
+            ),
             action_type="visible",
+        ),
+
+        ElementUnderTest(
+            key="dashboard_today_date",
+            page_key="plt_dashboard",
+            test_type="label",
+            name="Ngày hiện tại trên Dashboard",
+            locator_type="xpath",
+            locator_value="//header//*[contains(normalize-space(), 'Hôm nay')]",
+            sample_expected="Hôm nay\nNgày hiện tại theo định dạng Việt Nam",
+            case_id="DASH-009",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Tìm nhãn ngày trong header. "
+                "3. Kiểm tra có chữ Hôm nay và ngày hiện tại."
+            ),
+            expected_result=(
+                "Header hiển thị đúng ngày hiện tại theo định dạng "
+                "d thg m, yyyy."
+            ),
+            action_type="today_vi_date",
+        ),
+
+        ElementUnderTest(
+            key="dashboard_create_booking",
+            page_key="plt_dashboard",
+            test_type="menu",
+            name="Nút Tạo đơn thuê mở form tạo mới",
+            locator_type="xpath",
+            locator_value="//main//button[normalize-space()='Tạo đơn thuê']",
+            sample_expected="/bookings/new",
+            case_id="DASH-010",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm nút Tạo đơn thuê. "
+                "3. Kiểm tra URL điều hướng."
+            ),
+            expected_result=(
+                "Dashboard điều hướng đến trang tạo đơn thuê /bookings/new."
+            ),
+            action_type="click_url_contains",
+            target_path="/bookings/new",
         ),
 
         # -------------------------------------------------
@@ -372,37 +433,58 @@ class TestContract:
             locator_type="css",
             locator_value="ul[role='menu']",
             sample_expected=(
-                "Dashboard Đặt xe Xe Danh mục xe "
-                "Tài chính Người dùng"
+                "Tổng quan\n"
+                "Đơn thuê\n"
+                "Khách hàng\n"
+                "Xe\n"
+                "Danh mục xe\n"
+                "Tài chính\n"
+                "Nhân sự"
             ),
+            case_id="DASH-019",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Lấy text toàn bộ sidebar. "
+                "3. Kiểm tra đủ các menu điều hướng chính."
+            ),
+            expected_result=(
+                "Sidebar có đủ Tổng quan, Đơn thuê, Khách hàng, Xe, "
+                "Danh mục xe, Tài chính và Nhân sự."
+            ),
+            action_type="contains_all",
         ),
 
         ElementUnderTest(
             key="dashboard_menu_item",
             page_key="plt_dashboard",
             test_type="menu",
-            name="Item menu Dashboard",
+            name="Item menu Tổng quan",
             locator_type="xpath",
             locator_value=(
-                "//li[@role='menuitem']"
-                "[.//span[normalize-space()='Dashboard']]"
+                "//aside//li[@role='menuitem' and normalize-space()='Tổng quan']"
             ),
-            sample_expected="Dashboard",
+            sample_expected="Tổng quan",
         ),
 
         ElementUnderTest(
             key="dashboard_quick_booking_list",
             page_key="plt_dashboard",
             test_type="menu",
-            name="Menu nhanh mở danh sách booking",
+            name="Sidebar mở danh sách đơn thuê",
             locator_type="xpath",
             locator_value=(
-                "//main//h4[normalize-space()='Thao tác nhanh']"
-                "/ancestor::section//button"
-                "[.//p[normalize-space()='Xem danh sách booking']]"
+                "//aside//li[@role='menuitem' and normalize-space()='Đơn thuê']"
             ),
             sample_expected="/bookings",
             case_id="DASH-011",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm item Đơn thuê trên sidebar. "
+                "3. Kiểm tra URL điều hướng."
+            ),
+            expected_result=(
+                "Sidebar điều hướng đến trang /bookings."
+            ),
             action_type="click_url_contains",
             target_path="/bookings",
         ),
@@ -411,15 +493,21 @@ class TestContract:
             key="dashboard_quick_fleet",
             page_key="plt_dashboard",
             test_type="menu",
-            name="Menu nhanh mở đội xe",
+            name="Sidebar mở danh sách xe",
             locator_type="xpath",
             locator_value=(
-                "//main//h4[normalize-space()='Thao tác nhanh']"
-                "/ancestor::section//button"
-                "[.//p[normalize-space()='Kiểm tra đội xe']]"
+                "//aside//li[@role='menuitem' and normalize-space()='Xe']"
             ),
             sample_expected="/cars",
             case_id="DASH-012",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm item Xe trên sidebar. "
+                "3. Kiểm tra URL điều hướng."
+            ),
+            expected_result=(
+                "Sidebar điều hướng đến trang /cars."
+            ),
             action_type="click_url_contains",
             target_path="/cars",
         ),
@@ -428,17 +516,136 @@ class TestContract:
             key="dashboard_quick_finance",
             page_key="plt_dashboard",
             test_type="menu",
-            name="Menu nhanh mở tài chính",
+            name="Sidebar mở tài chính",
             locator_type="xpath",
             locator_value=(
-                "//main//h4[normalize-space()='Thao tác nhanh']"
-                "/ancestor::section//button"
-                "[.//p[normalize-space()='Mở tài chính']]"
+                "//aside//li[@role='menuitem' and normalize-space()='Tài chính']"
             ),
             sample_expected="/finance",
             case_id="DASH-013",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm item Tài chính trên sidebar. "
+                "3. Kiểm tra URL điều hướng."
+            ),
+            expected_result=(
+                "Sidebar điều hướng đến trang /finance."
+            ),
             action_type="click_url_contains",
             target_path="/finance",
+        ),
+
+        ElementUnderTest(
+            key="dashboard_deep_link",
+            page_key="plt_dashboard",
+            test_type="menu",
+            name="Deep link mở trực tiếp Dashboard",
+            locator_type="css",
+            locator_value="main",
+            sample_expected="/dashboard",
+            case_id="DASH-014",
+            steps=(
+                "1. Mở trực tiếp URL /dashboard bằng tài khoản test. "
+                "2. Đợi nội dung Dashboard hiển thị. "
+                "3. Kiểm tra URL hiện tại."
+            ),
+            expected_result=(
+                "Deep link /dashboard mở đúng trang Tổng quan."
+            ),
+            action_type="deep_link_url_contains",
+            target_path="/dashboard",
+        ),
+
+        ElementUnderTest(
+            key="dashboard_menu_overview",
+            page_key="plt_dashboard",
+            test_type="menu",
+            name="Sidebar mở Tổng quan",
+            locator_type="xpath",
+            locator_value=(
+                "//aside//li[@role='menuitem' and normalize-space()='Tổng quan']"
+            ),
+            sample_expected="/dashboard",
+            case_id="DASH-015",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm item Tổng quan trên sidebar. "
+                "3. Kiểm tra URL vẫn ở Dashboard."
+            ),
+            expected_result=(
+                "Sidebar điều hướng hoặc giữ đúng trang /dashboard."
+            ),
+            action_type="click_url_contains",
+            target_path="/dashboard",
+        ),
+
+        ElementUnderTest(
+            key="dashboard_menu_customers",
+            page_key="plt_dashboard",
+            test_type="menu",
+            name="Sidebar mở khách hàng",
+            locator_type="xpath",
+            locator_value=(
+                "//aside//li[@role='menuitem' and normalize-space()='Khách hàng']"
+            ),
+            sample_expected="/customers",
+            case_id="DASH-016",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm item Khách hàng trên sidebar. "
+                "3. Kiểm tra URL điều hướng."
+            ),
+            expected_result=(
+                "Sidebar điều hướng đến trang /customers."
+            ),
+            action_type="click_url_contains",
+            target_path="/customers",
+        ),
+
+        ElementUnderTest(
+            key="dashboard_menu_catalog",
+            page_key="plt_dashboard",
+            test_type="menu",
+            name="Sidebar mở danh mục xe",
+            locator_type="xpath",
+            locator_value=(
+                "//aside//li[@role='menuitem' and normalize-space()='Danh mục xe']"
+            ),
+            sample_expected="/cars/catalog",
+            case_id="DASH-017",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm item Danh mục xe trên sidebar. "
+                "3. Kiểm tra URL điều hướng."
+            ),
+            expected_result=(
+                "Sidebar điều hướng đến trang /cars/catalog."
+            ),
+            action_type="click_url_contains",
+            target_path="/cars/catalog",
+        ),
+
+        ElementUnderTest(
+            key="dashboard_menu_users",
+            page_key="plt_dashboard",
+            test_type="menu",
+            name="Sidebar mở nhân sự",
+            locator_type="xpath",
+            locator_value=(
+                "//aside//li[@role='menuitem' and normalize-space()='Nhân sự']"
+            ),
+            sample_expected="/users",
+            case_id="DASH-018",
+            steps=(
+                "1. Mở trang /dashboard. "
+                "2. Bấm item Nhân sự trên sidebar. "
+                "3. Kiểm tra URL điều hướng."
+            ),
+            expected_result=(
+                "Sidebar điều hướng đến trang /users."
+            ),
+            action_type="click_url_contains",
+            target_path="/users",
         ),
 
         # =================================================

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import time
 from datetime import datetime
 from pathlib import Path
@@ -221,6 +222,7 @@ class SuiteWorker(QThread):
             "error_message": "",
             "screenshot_path": "",
             "log_text": "",
+            "comparison_json": "",
             "started_at": datetime.now().isoformat(timespec="seconds"),
             "finished_at": datetime.now().isoformat(timespec="seconds"),
             "duration_ms": 0,
@@ -285,6 +287,10 @@ class SuiteWorker(QThread):
             message=payload.get("message", ""),
             error_message=payload.get("error_message", ""),
             screenshot_path=payload.get("screenshot_path", ""),
+            comparison_json=json.dumps(
+                payload.get("pairs", []),
+                ensure_ascii=False,
+            ),
             log_text=(
                 f"OPEN {case.get('url') or _page_url(page_key)}\n"
                 f"LOCATOR {locator_type}={locator_value}\n"
