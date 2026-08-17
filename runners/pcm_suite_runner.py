@@ -198,7 +198,7 @@ def _dashboard_scenario(driver, key: str) -> str:
     if key == "dashboard_title":
         element = _visible(
             driver,
-            "//main//*[self::h1 or self::h2 or self::h3][contains(.,'Dashboard') or contains(.,'Bảng điều khiển')]",
+            "//header//h3[normalize-space()='Tổng quan']",
         )
         _highlight(driver, element)
         return element.text
@@ -206,8 +206,8 @@ def _dashboard_scenario(driver, key: str) -> str:
     if key == "dashboard_cards":
         body = _body_text(driver)
         labels = [
-            "XE ĐANG CHO THUÊ", "XE SẴN SÀNG HÔM NAY", "NHẬN XE", "TRẢ XE",
-            "BOOKING TRỄ HẠN", "BẢO DƯỠNG", "NHÂN SỰ",
+            "NHẬN XE HÔM NAY", "TRẢ XE HÔM NAY", "QUÁ HẠN TRẢ",
+            "XE SẴN SÀNG", "Nháp", "Đã xác nhận", "Đang thuê", "Hoàn tất",
         ]
         matches = [label for label in labels if _normal(label) in _normal(body)]
         number_elements = driver.find_elements(By.XPATH, "//main//*[self::span or self::div or self::p]")
@@ -224,22 +224,22 @@ def _dashboard_scenario(driver, key: str) -> str:
     if key == "dashboard_sidebar":
         sidebar = _visible(driver, "//aside | //ul[@role='menu']")
         text = sidebar.text
-        _assert_contains(text, ["Dashboard", "Đặt xe", "Xe", "Danh mục xe", "Tài chính", "Người dùng"])
-        links = sidebar.find_elements(By.XPATH, ".//a[@href]")
-        hrefs = [link.get_attribute("href") for link in links]
-        if len([href for href in hrefs if href]) < 6:
-            raise ScenarioFailure("Menu chưa có đủ href điều hướng")
+        _assert_contains(text, ["Tổng quan", "Đơn thuê", "Khách hàng", "Xe", "Danh mục xe", "Tài chính", "Nhân sự"])
+        items = sidebar.find_elements(By.XPATH, ".//li[@role='menuitem' and @data-menu-id]")
+        route_ids = [item.get_attribute("data-menu-id") for item in items]
+        if len([route_id for route_id in route_ids if route_id]) < 7:
+            raise ScenarioFailure("Menu chưa có đủ item điều hướng")
         _highlight(driver, sidebar)
-        return " | ".join(hrefs)
+        return " | ".join(route_ids)
 
     button = _clickable(
         driver,
-        "//main//button[contains(.,'Tạo booking')] | //main//a[contains(.,'Tạo booking')]",
+        "//main//button[normalize-space()='Tạo đơn thuê'] | //main//a[normalize-space()='Tạo đơn thuê']",
     )
     _highlight(driver, button)
     button.click()
     WebDriverWait(driver, 12).until(
-        lambda d: "booking" in d.current_url.lower()
+        lambda d: "booking" in d.current_url.lower() or "bookings" in d.current_url.lower()
     )
     return driver.current_url
 

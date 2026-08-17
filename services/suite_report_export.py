@@ -2,12 +2,66 @@
 
 from __future__ import annotations
 
+import json
 from html import escape
 from pathlib import Path
 
 
 def _duration(value: int) -> str:
     return f"{max(0, int(value or 0)) / 1000:.1f}s"
+
+
+def _comparison_rows(row: dict) -> list[dict]:
+    raw_json = row.get("comparison_json") or ""
+    rows: list[dict] = []
+    if raw_json:
+        try:
+            parsed = json.loads(raw_json)
+            if isinstance(parsed, list):
+                rows = [
+                    {
+                        "expected": str(item.get("expected", "")),
+                        "actual": str(item.get("actual", "")),
+                        "status": str(item.get("status", "")).upper(),
+                    }
+                    for item in parsed
+                    if isinstance(item, dict)
+                ]
+        except Exception:
+            rows = []
+    if rows:
+        return rows
+
+    status = str(row.get("status", "")).upper()
+    if status == "PASSED":
+        row_status = "PASS"
+    elif status in {"FAILED", "ERROR"}:
+        row_status = "FAIL"
+    else:
+        row_status = status or "N/A"
+    return [
+        {
+            "expected": str(row.get("expected", "")),
+            "actual": str(row.get("actual", "")),
+            "status": row_status,
+        }
+    ]
+
+
+def _comparison_table(row: dict) -> str:
+    comparison_rows = "".join(
+        "<tr>"
+        f"<td>{escape(item['expected'])}</td>"
+        f"<td>{escape(item['actual'])}</td>"
+        f"<td class='{item['status'].lower()}'>{escape(item['status'])}</td>"
+        "</tr>"
+        for item in _comparison_rows(row)
+    )
+    return (
+        "<table class='comparison'>"
+        "<thead><tr><th>Expected Result</th><th>Actual Result</th><th>Result</th></tr></thead>"
+        f"<tbody>{comparison_rows}</tbody></table>"
+    )
 
 
 def build_report_html(run: dict, results: list[dict], module_summary: list[dict]) -> str:
@@ -26,8 +80,7 @@ def build_report_html(run: dict, results: list[dict], module_summary: list[dict]
         f"<td>{escape(str(row.get('module', '')))}</td>"
         f"<td>{escape(str(row.get('title', '')))}</td>"
         f"<td class='{str(row.get('status', '')).lower()}'>{escape(str(row.get('status', '')))}</td>"
-        f"<td>{escape(str(row.get('expected', '')))}</td>"
-        f"<td>{escape(str(row.get('actual', '')))}</td>"
+        f"<td colspan='2'>{_comparison_table(row)}</td>"
         f"<td>{escape(str(row.get('message', '')))}</td>"
         f"<td>{_duration(row.get('duration_ms', 0))}</td>"
         "</tr>"
@@ -42,6 +95,8 @@ h1{{color:#0f3d8a}} .meta{{background:#f1f5f9;padding:14px;border-radius:8px}}
 table{{width:100%;border-collapse:collapse;margin:12px 0 28px;font-size:12px}}
 th,td{{border:1px solid #dbe3ec;padding:7px;text-align:left;vertical-align:top}}
 th{{background:#eaf0f8}} .pass,.passed{{color:#087f5b;font-weight:700}}
+.comparison{{margin:0;font-size:11px}} .comparison th{{background:#f8fafc}}
+.comparison td:nth-child(3){{white-space:nowrap}}
 .fail,.failed,.error{{color:#c92a2a;font-weight:700}} .skip,.skipped{{color:#b26a00;font-weight:700}}
 </style></head><body>
 <h1>TEST SUITE REPORT</h1>
@@ -60,7 +115,7 @@ th{{background:#eaf0f8}} .pass,.passed{{color:#087f5b;font-weight:700}}
 <table><thead><tr><th>Module</th><th>Total</th><th>Pass</th><th>Fail</th><th>Error</th><th>Skip</th><th>Thời gian</th></tr></thead>
 <tbody>{summary_rows}</tbody></table>
 <h2>Chi tiết Test Case</h2>
-<table><thead><tr><th>TC ID</th><th>Module</th><th>Tên case</th><th>Status</th><th>Expected</th><th>Actual</th><th>Message</th><th>Thời gian</th></tr></thead>
+<table><thead><tr><th>TC ID</th><th>Module</th><th>Tên case</th><th>Status</th><th colspan="2">Bảng so sánh Expected / Actual / Result</th><th>Message</th><th>Thời gian</th></tr></thead>
 <tbody>{result_rows}</tbody></table></body></html>"""
 
 
@@ -79,9 +134,24 @@ def export_excel(path: str, run: dict, results: list[dict], module_summary: list
         pd.DataFrame(module_summary).to_excel(writer, sheet_name="Module Summary", index=False)
         columns = [
             "case_id", "module", "title", "status", "expected", "actual", "message",
-            "error_message", "screenshot_path", "log_text", "started_at", "finished_at", "duration_ms",
+            "error_message", "screenshot_path", "log_text", "comparison_json",
+            "started_at", "finished_at", "duration_ms",
         ]
         pd.DataFrame(results, columns=columns).to_excel(writer, sheet_name="Results", index=False)
+        comparison = []
+        for result in results:
+            for item in _comparison_rows(result):
+                comparison.append(
+                    {
+                        "case_id": result.get("case_id", ""),
+                        "module": result.get("module", ""),
+                        "title": result.get("title", ""),
+                        "expected_result": item["expected"],
+                        "actual_result": item["actual"],
+                        "result": item["status"],
+                    }
+                )
+        pd.DataFrame(comparison).to_excel(writer, sheet_name="Comparison", index=False)
 
 
 def export_html(path: str, run: dict, results: list[dict], module_summary: list[dict]):
