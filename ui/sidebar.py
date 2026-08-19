@@ -237,6 +237,15 @@ class Sidebar(QWidget):
             "vehicle_catalog"
         )
 
+        # CRUD riêng - đặt ngay dưới Danh mục xe.
+        # Không thay đổi trang Danh mục xe hiện tại.
+        self.add_menu_item(
+            layout,
+            "C",
+            "CRUD",
+            "crud"
+        )
+
         self.add_menu_item(
             layout,
             "▥",

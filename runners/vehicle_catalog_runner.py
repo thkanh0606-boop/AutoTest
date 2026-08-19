@@ -83,48 +83,160 @@ def _first_visible(driver, candidates):
 
 
 def _submit_login_form(driver, email_text: str, password_text: str, timeout: int = 15) -> bool:
-    """Điền form login với nhiều locator fallback để tránh phụ thuộc 1 CSS selector."""
+    """Tự điền form login, hỗ trợ nhiều kiểu input/SPA và có fallback bằng JavaScript."""
     if not email_text or not password_text:
+        print("[LOGIN] Thiếu email hoặc password.")
         return False
+
+    wait = WebDriverWait(driver, timeout)
+
+    # Chờ DOM load xong để tránh tìm input quá sớm.
+    try:
+        wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
+    except Exception:
+        pass
+    time.sleep(0.8)
 
     email_candidates = [
         (By.CSS_SELECTOR, "input[type='email']"),
         (By.CSS_SELECTOR, "input[name='email']"),
+        (By.CSS_SELECTOR, "input[id='email']"),
         (By.CSS_SELECTOR, "input[autocomplete='email']"),
+        (By.CSS_SELECTOR, "input[placeholder*='plt.pro.vn']"),
+        (By.CSS_SELECTOR, "input[placeholder*='Email']"),
+        (By.CSS_SELECTOR, "input[placeholder*='email']"),
         (By.XPATH, "//label[contains(normalize-space(.),'Email')]/following::input[1]"),
+        (By.XPATH, "//input[contains(@placeholder,'plt.pro.vn')]"),
     ]
+
     password_candidates = [
         (By.CSS_SELECTOR, "input[type='password']"),
         (By.CSS_SELECTOR, "input[name='password']"),
+        (By.CSS_SELECTOR, "input[id='password']"),
         (By.CSS_SELECTOR, "input[autocomplete='current-password']"),
+        (By.CSS_SELECTOR, "input[placeholder*='mật khẩu']"),
+        (By.CSS_SELECTOR, "input[placeholder*='Mật khẩu']"),
         (By.XPATH, "//label[contains(normalize-space(.),'Mật khẩu')]/following::input[1]"),
+        (By.XPATH, "//input[@type='password']"),
     ]
+
     button_candidates = [
         (By.CSS_SELECTOR, "button[type='submit']"),
         (By.XPATH, "//button[contains(normalize-space(.),'Đăng nhập')]"),
+        (By.XPATH, "//*[@role='button' and contains(normalize-space(.),'Đăng nhập')]"),
         (By.XPATH, "//button[contains(normalize-space(.),'Login')]"),
     ]
 
     end = time.monotonic() + max(5, timeout)
     email_el = password_el = button_el = None
+
     while time.monotonic() < end:
         email_el = _first_visible(driver, email_candidates)
         password_el = _first_visible(driver, password_candidates)
         button_el = _first_visible(driver, button_candidates)
+
         if email_el and password_el and button_el:
             break
-        time.sleep(0.2)
+
+        time.sleep(0.25)
+
+    print(
+        "[LOGIN] Element:",
+        f"email={'OK' if email_el else 'MISS'}",
+        f"password={'OK' if password_el else 'MISS'}",
+        f"button={'OK' if button_el else 'MISS'}",
+    )
 
     if not (email_el and password_el and button_el):
         return False
 
-    email_el.click()
-    email_el.clear()
-    email_el.send_keys(email_text)
-    password_el.click()
-    password_el.clear()
-    password_el.send_keys(password_text)
-    _safe_click(driver, button_el)
+    def set_input_value(element, value: str) -> bool:
+        """Nhập bằng Selenium; nếu SPA/React không nhận thì fallback bằng JS native setter."""
+        try:
+            element.click()
+        except Exception:
+            try:
+                driver.execute_script("arguments[0].focus();", element)
+            except Exception:
+                pass
+
+        try:
+            element.send_keys(Keys.CONTROL, "a")
+            element.send_keys(Keys.DELETE)
+            element.send_keys(value)
+        except Exception:
+            try:
+                element.clear()
+                element.send_keys(value)
+            except Exception:
+                pass
+
+        current = element.get_attribute("value") or ""
+        if current == value:
+            return True
+
+        # React/Vue/SPA đôi khi bỏ qua clear()/send_keys(); dùng native setter + events.
+        try:
+            driver.execute_script(
+                """
+                const el = arguments[0];
+                const value = arguments[1];
+
+                const proto = Object.getPrototypeOf(el);
+                const descriptor =
+                    Object.getOwnPropertyDescriptor(proto, 'value') ||
+                    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
+                if (descriptor && descriptor.set) {
+                    descriptor.set.call(el, value);
+                } else {
+                    el.value = value;
+                }
+
+                el.dispatchEvent(new Event('input', { bubbles: true }));
+                el.dispatchEvent(new Event('change', { bubbles: true }));
+                el.dispatchEvent(new Event('blur', { bubbles: true }));
+                """,
+                element,
+                value,
+            )
+        except Exception:
+            return False
+
+        return (element.get_attribute("value") or "") == value
+
+    email_ok = set_input_value(email_el, email_text)
+    password_ok = set_input_value(password_el, password_text)
+
+    print(
+        "[LOGIN] Nhập dữ liệu:",
+        f"email={'OK' if email_ok else 'FAIL'}",
+        f"password={'OK' if password_ok else 'FAIL'}",
+    )
+
+    if not (email_ok and password_ok):
+        return False
+
+    # Cho SPA cập nhật state trước khi submit.
+    time.sleep(0.4)
+
+    try:
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center', inline:'center'});",
+            button_el,
+        )
+    except Exception:
+        pass
+
+    try:
+        _safe_click(driver, button_el)
+    except Exception:
+        try:
+            password_el.send_keys(Keys.ENTER)
+        except Exception:
+            return False
+
+    print("[LOGIN] Đã bấm Đăng nhập.")
     return True
 
 
@@ -158,8 +270,41 @@ def _login_if_needed(driver, target_url: str, worker=None, timeout: int = 25):
     _log(worker, f"[DANH MỤC XE] Mở {target_url}", 15)
     driver.get(target_url)
 
-    if not _is_login(driver):
+    # QUAN TRỌNG:
+    # Fleet Console là SPA nên sau driver.get(target_url), URL có thể vẫn tạm thời
+    # là /cars/catalog rồi vài nhịp sau mới redirect sang /login.
+    # Code cũ check quá sớm nên tưởng đã đăng nhập và return luôn -> không nhập email/password.
+    wait = WebDriverWait(driver, timeout)
+
+    def page_state(d):
+        if _is_login(d):
+            return "login"
+        try:
+            if d.find_elements(*CategoryPage.PAGE_TITLE):
+                return "catalog"
+        except Exception:
+            pass
+        return False
+
+    try:
+        state = wait.until(page_state)
+    except TimeoutException:
+        # Fallback: kiểm tra lại URL/form lần cuối.
+        state = "login" if _is_login(driver) else "unknown"
+
+    print(f"[LOGIN] Trạng thái sau khi mở trang: {state} | URL={driver.current_url}")
+
+    # Nếu đã có session và vào thẳng Danh mục xe thì không cần login.
+    if state == "catalog" and not _is_login(driver):
+        _log(worker, "[DANH MỤC XE] Session còn hiệu lực, không cần đăng nhập.", 30)
         return
+
+    # Nếu chưa nhận diện được nhưng URL đã về login thì vẫn chạy login.
+    if state != "login" and not _is_login(driver):
+        raise RuntimeError(
+            f"Không xác định được trạng thái trang sau khi mở {target_url}. "
+            f"URL hiện tại: {driver.current_url}"
+        )
 
     email_text, password_text = _load_catalog_credentials()
     if not email_text or not password_text:
@@ -169,16 +314,21 @@ def _login_if_needed(driver, target_url: str, worker=None, timeout: int = 25):
         )
 
     _log(worker, "[DANH MỤC XE] Chưa có session, đang tự đăng nhập...", 25)
+    print(f"[LOGIN] Bắt đầu auto-login với email: {email_text}")
 
     if not _submit_login_form(driver, email_text, password_text, timeout=timeout):
-        raise RuntimeError("Không tìm thấy đầy đủ ô Email/Mật khẩu/Nút Đăng nhập.")
+        raise RuntimeError(
+            "Không tự điền được form đăng nhập. "
+            "Xem các dòng [LOGIN] trong Terminal để biết element nào bị MISS/FAIL."
+        )
 
-    wait = WebDriverWait(driver, timeout)
+    # Chờ rời khỏi trang login sau khi đã bấm nút.
     try:
         wait.until(lambda d: not _is_login(d))
     except TimeoutException as exc:
         raise RuntimeError(
-            "Đăng nhập không thành công. Kiểm tra TEST_EMAIL/TEST_PASSWORD trong .autotest.env."
+            "Đã nhập Email/Mật khẩu và bấm Đăng nhập nhưng vẫn còn ở trang login. "
+            "Kiểm tra TEST_EMAIL/TEST_PASSWORD hoặc thông báo lỗi trên website."
         ) from exc
 
     # Firebase/SPA cần một nhịp để persist auth trước khi điều hướng lại.
