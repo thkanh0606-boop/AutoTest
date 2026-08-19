@@ -1,0 +1,2079 @@
+[2026-08-13 16:01:16,336] [INFO] - [LOGIN RUNNER] Mở trang đăng nhập: https://courses.plt.pro.vn/login
+[2026-08-13 16:01:17,432] [ERROR] - [LOGIN RUNNER FAIL] 'LoginPage' object has no attribute 'load' | Screenshot: E:\AutoTest\image\login_failed_20260813_160116.png
+[2026-08-13 16:01:18,677] [INFO] - [LOGIN RUNNER] Mở trang đăng nhập: https://courses.plt.pro.vn/login
+[2026-08-13 16:01:18,967] [INFO] - [LOGIN RUNNER] Mở trang đăng nhập: https://courses.plt.pro.vn/login
+[2026-08-13 16:01:19,229] [ERROR] - [LOGIN RUNNER FAIL] 'LoginPage' object has no attribute 'load' | Screenshot: E:\AutoTest\image\login_failed_20260813_160118.png
+[2026-08-13 16:01:19,230] [ERROR] - [LOGIN RUNNER FAIL] 'LoginPage' object has no attribute 'load' | Screenshot: E:\AutoTest\image\login_failed_20260813_160118.png
+[2026-08-13 16:01:21,863] [INFO] - [LOGIN RUNNER] Mở trang đăng nhập: https://courses.plt.pro.vn/login
+[2026-08-13 16:01:22,137] [ERROR] - [LOGIN RUNNER FAIL] 'LoginPage' object has no attribute 'load' | Screenshot: E:\AutoTest\image\login_failed_20260813_160121.png
+[2026-08-13 22:01:18,287] [INFO] - [TITLE] page=Trang tổng quan element=Tiêu đề trang trên header expected= actual=ERROR: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="//h3[normalize-space()='Bảng điều khiển vận hành']"]"}
+  (Session info: chrome=151.0.7922.110); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x1153353+fd93]
+	chromedriver!GetHandleVerifier [0x1153394+fdd4]
+	chromedriver!(No symbol) [0xf49220]
+	chromedriver!(No symbol) [0xf932fb]
+	chromedriver!(No symbol) [0xf9351b]
+	chromedriver!(No symbol) [0xfd5b82]
+	chromedriver!(No symbol) [0xfb58c4]
+	chromedriver!(No symbol) [0xfd34d9]
+	chromedriver!(No symbol) [0xfb5616]
+	chromedriver!(No symbol) [0xf887e9]
+	chromedriver!(No symbol) [0xf895b4]
+	chromedriver!GetHandleVerifier [0x13ef51a+2abf5a]
+	chromedriver!GetHandleVerifier [0x13eaa21+2a7461]
+	chromedriver!GetHandleVerifier [0x117f374+3bdb4]
+	chromedriver!GetHandleVerifier [0x116e036+2aa76]
+	chromedriver!GetHandleVerifier [0x1174efd+3193d]
+	chromedriver!GetHandleVerifier [0x115c8a8+192e8]
+	chromedriver!GetHandleVerifier [0x115ca55+19495]
+	chromedriver!GetHandleVerifier [0x11453ff+1e3f]
+	KERNEL32!BaseThreadInitThunk [0x76a15d49+19]
+	ntdll!RtlInitializeExceptionChain [0x7761e12b+6b]
+	ntdll!RtlGetAppContainerNamedObjectPath [0x7761e0b1+231]
+ status=ERROR
+[2026-08-13 22:50:42,337] [INFO] - [MENU] page=Trang tổng quan element=Menu sidebar expected= actual=Dashboard
+Đặt xe
+Xe
+Danh mục xe
+Tài chính
+Người dùng status=FAILED
+[2026-08-13 23:22:59,720] [INFO] - [DROPDOWN] page=Trang tổng quan element=Dropdown ngôn ngữ expected= actual=English
+Tiếng Việt status=FAILED
+[2026-08-13 23:25:44,292] [ERROR] - [SUITE BROWSER ERROR] driver unavailable
+[2026-08-13 23:26:06,780] [ERROR] - [SUITE BROWSER ERROR] driver unavailable
+[2026-08-13 23:30:01,595] [ERROR] - [SUITE BROWSER ERROR] Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=151.0.7922.110); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff683e5abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff683e5ac10+15210]
+	chromedriver!(No symbol) [0x7ff683985d6d]
+	chromedriver!(No symbol) [0x7ff6839715c2]
+	chromedriver!(No symbol) [0x7ff6839974a1]
+	chromedriver!(No symbol) [0x7ff683a11320]
+	chromedriver!(No symbol) [0x7ff683a2e4f2]
+	chromedriver!(No symbol) [0x7ff6839d37cc]
+	chromedriver!(No symbol) [0x7ff6839d46f3]
+	chromedriver!GetHandleVerifier [0x7ff68447b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff684475ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff68449bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff683e78ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff683e8147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff683e64d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff683e64ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff683e47d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:31:59,648] [ERROR] - [SUITE BROWSER ERROR] driver unavailable
+[2026-08-13 23:35:05,206] [ERROR] - [SUITE CASE ERROR] TC07
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 93, in run
+    status, message = self._run_case(index, case)
+                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 133, in _run_case
+    payload = run_label_text_test(
+        worker=None,
+    ...<17 lines>...
+        close_delay=_CLOSE_DELAY,
+    )
+  File "C:\AutoTest-AI\AutoTest\runners\text_dropdown_runner.py", line 364, in run_label_text_test
+    time.sleep(close_delay)
+    ^^^^
+NameError: name 'time' is not defined. Did you forget to import 'time'?
+[2026-08-13 23:35:07,944] [INFO] - [LABEL] page=Trang tổng quan element=Tiêu đề hero Dashboard expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:35:21,181] [ERROR] - [SUITE CASE ERROR] TC08
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 93, in run
+    status, message = self._run_case(index, case)
+                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 133, in _run_case
+    payload = run_label_text_test(
+        worker=None,
+    ...<17 lines>...
+        close_delay=_CLOSE_DELAY,
+    )
+  File "C:\AutoTest-AI\AutoTest\runners\text_dropdown_runner.py", line 364, in run_label_text_test
+    time.sleep(close_delay)
+    ^^^^
+NameError: name 'time' is not defined. Did you forget to import 'time'?
+[2026-08-13 23:35:28,576] [ERROR] - [SUITE CASE ERROR] TC09
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 93, in run
+    status, message = self._run_case(index, case)
+                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 133, in _run_case
+    payload = run_label_text_test(
+        worker=None,
+    ...<17 lines>...
+        close_delay=_CLOSE_DELAY,
+    )
+  File "C:\AutoTest-AI\AutoTest\runners\text_dropdown_runner.py", line 364, in run_label_text_test
+    time.sleep(close_delay)
+    ^^^^
+NameError: name 'time' is not defined. Did you forget to import 'time'?
+[2026-08-13 23:36:26,729] [INFO] - [TITLE] page=Trang tổng quan element=Tiêu đề trang trên header expected= actual=Bảng điều khiển vận hành status=FAILED
+[2026-08-13 23:43:50,637] [INFO] - [DROPDOWN] page=Trang tổng quan element=Dropdown ngôn ngữ expected= actual=English
+Tiếng Việt status=FAILED
+[2026-08-13 23:47:09,276] [ERROR] - [SUITE CASE ERROR] TC07
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 93, in run
+    status, message = self._run_case(index, case)
+                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 133, in _run_case
+    payload = run_label_text_test(
+        worker=None,
+    ...<17 lines>...
+        close_delay=_CLOSE_DELAY,
+    )
+  File "C:\AutoTest-AI\AutoTest\runners\text_dropdown_runner.py", line 364, in run_label_text_test
+    time.sleep(close_delay)
+    ^^^^
+NameError: name 'time' is not defined. Did you forget to import 'time'?
+[2026-08-13 23:47:12,481] [INFO] - [LABEL] page=Trang tổng quan element=Tiêu đề hero Dashboard expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:15,136] [INFO] - [LABEL] page=Trang tổng quan element=Tiêu đề header vận hành expected=Bảng điều khiển vận hành actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:17,801] [INFO] - [LABEL] page=Trang tổng quan element=KPI xe đang cho thuê expected=XE ĐANG CHO THUÊ
+Các xe hiện đang ở ngoài với khách. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:20,470] [INFO] - [LABEL] page=Trang tổng quan element=KPI xe sẵn sàng hôm nay expected=XE SẴN SÀNG HÔM NAY
+Có thể bàn giao ngay cho booking tiếp theo. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:23,195] [INFO] - [LABEL] page=Trang tổng quan element=KPI booking trễ hạn expected=BOOKING TRỄ HẠN
+Các booking đã quá thời gian trả xe dự kiến. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:25,848] [INFO] - [DROPDOWN] page=Trang tổng quan element=Dropdown ngôn ngữ expected=English
+Tiếng Việt actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:28,545] [INFO] - [TABLE] page=Trang tổng quan element=Danh sách bàn giao sắp tới expected=Các lượt bàn giao sắp tới actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:31,768] [INFO] - [TABLE] page=Trang tổng quan element=Dòng booking đầu tiên expected=BK-20260405-9228	Đang thực hiện	Phúc Trần Minh	Xem	NHẬN XE	19:00 05 thg 4	TRẢ XE	19:00 06 thg 4	60C2-77188	Vinfast VF3 actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:34,878] [INFO] - [RADIO] page=Trang tổng quan element=Trạng thái menu Dashboard đang chọn expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:37,535] [INFO] - [IMAGE] page=Trang tổng quan element=Logo PLT Solutions expected=PLT Solutions actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:40,229] [INFO] - [TITLE] page=Trang tổng quan element=Tiêu đề trang trên header expected=Bảng điều khiển vận hành actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:42,967] [INFO] - [UI] page=Trang tổng quan element=Hero tổng quan hiển thị expected=visible actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:45,686] [INFO] - [UI] page=Trang tổng quan element=Khối thao tác nhanh hiển thị expected=visible actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:48,401] [INFO] - [MENU] page=Trang tổng quan element=Menu sidebar expected=Dashboard Đặt xe Xe Danh mục xe Tài chính Người dùng actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:51,108] [INFO] - [MENU] page=Trang tổng quan element=Item menu Dashboard expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:53,849] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở danh sách booking expected=/bookings actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:56,643] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở đội xe expected=/cars actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:47:59,302] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở tài chính expected=/finance actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:02,004] [INFO] - [UI] page=Trang tổng quan element=Deep link mở Dashboard expected=/dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:04,698] [INFO] - [LABEL] page=Trang tổng quan element=Tiêu đề hero Dashboard expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:07,369] [INFO] - [LABEL] page=Trang tổng quan element=Tiêu đề header vận hành expected=Bảng điều khiển vận hành actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:10,510] [INFO] - [LABEL] page=Trang tổng quan element=KPI xe đang cho thuê expected=XE ĐANG CHO THUÊ
+Các xe hiện đang ở ngoài với khách. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:13,665] [INFO] - [LABEL] page=Trang tổng quan element=KPI xe sẵn sàng hôm nay expected=XE SẴN SÀNG HÔM NAY
+Có thể bàn giao ngay cho booking tiếp theo. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:16,322] [INFO] - [LABEL] page=Trang tổng quan element=KPI booking trễ hạn expected=BOOKING TRỄ HẠN
+Các booking đã quá thời gian trả xe dự kiến. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:18,981] [INFO] - [DROPDOWN] page=Trang tổng quan element=Dropdown ngôn ngữ expected=English
+Tiếng Việt actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:21,675] [INFO] - [TABLE] page=Trang tổng quan element=Danh sách bàn giao sắp tới expected=Các lượt bàn giao sắp tới actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:24,360] [INFO] - [TABLE] page=Trang tổng quan element=Dòng booking đầu tiên expected=BK-20260405-9228	Đang thực hiện	Phúc Trần Minh	Xem	NHẬN XE	19:00 05 thg 4	TRẢ XE	19:00 06 thg 4	60C2-77188	Vinfast VF3 actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:27,010] [INFO] - [RADIO] page=Trang tổng quan element=Trạng thái menu Dashboard đang chọn expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:29,660] [INFO] - [IMAGE] page=Trang tổng quan element=Logo PLT Solutions expected=PLT Solutions actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:32,788] [INFO] - [TITLE] page=Trang tổng quan element=Tiêu đề trang trên header expected=Bảng điều khiển vận hành actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:35,530] [INFO] - [UI] page=Trang tổng quan element=Hero tổng quan hiển thị expected=visible actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:38,655] [INFO] - [UI] page=Trang tổng quan element=Khối thao tác nhanh hiển thị expected=visible actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:41,792] [INFO] - [MENU] page=Trang tổng quan element=Menu sidebar expected=Dashboard Đặt xe Xe Danh mục xe Tài chính Người dùng actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:44,973] [INFO] - [MENU] page=Trang tổng quan element=Item menu Dashboard expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:48,084] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở danh sách booking expected=/bookings actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:51,236] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở đội xe expected=/cars actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:54,418] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở tài chính expected=/finance actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:48:57,565] [INFO] - [UI] page=Trang tổng quan element=Deep link mở Dashboard expected=/dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:00,764] [INFO] - [LABEL] page=Trang tổng quan element=Tiêu đề hero Dashboard expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:03,450] [INFO] - [LABEL] page=Trang tổng quan element=Tiêu đề header vận hành expected=Bảng điều khiển vận hành actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:06,153] [INFO] - [LABEL] page=Trang tổng quan element=KPI xe đang cho thuê expected=XE ĐANG CHO THUÊ
+Các xe hiện đang ở ngoài với khách. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:08,817] [INFO] - [LABEL] page=Trang tổng quan element=KPI xe sẵn sàng hôm nay expected=XE SẴN SÀNG HÔM NAY
+Có thể bàn giao ngay cho booking tiếp theo. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:11,479] [INFO] - [LABEL] page=Trang tổng quan element=KPI booking trễ hạn expected=BOOKING TRỄ HẠN
+Các booking đã quá thời gian trả xe dự kiến. actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:14,225] [INFO] - [DROPDOWN] page=Trang tổng quan element=Dropdown ngôn ngữ expected=English
+Tiếng Việt actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:16,995] [INFO] - [TABLE] page=Trang tổng quan element=Danh sách bàn giao sắp tới expected=Các lượt bàn giao sắp tới actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:20,166] [INFO] - [TABLE] page=Trang tổng quan element=Dòng booking đầu tiên expected=BK-20260405-9228	Đang thực hiện	Phúc Trần Minh	Xem	NHẬN XE	19:00 05 thg 4	TRẢ XE	19:00 06 thg 4	60C2-77188	Vinfast VF3 actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:23,353] [INFO] - [RADIO] page=Trang tổng quan element=Trạng thái menu Dashboard đang chọn expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:26,088] [INFO] - [IMAGE] page=Trang tổng quan element=Logo PLT Solutions expected=PLT Solutions actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:28,783] [INFO] - [TITLE] page=Trang tổng quan element=Tiêu đề trang trên header expected=Bảng điều khiển vận hành actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:31,948] [INFO] - [UI] page=Trang tổng quan element=Hero tổng quan hiển thị expected=visible actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:34,624] [INFO] - [UI] page=Trang tổng quan element=Khối thao tác nhanh hiển thị expected=visible actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:37,343] [INFO] - [MENU] page=Trang tổng quan element=Menu sidebar expected=Dashboard Đặt xe Xe Danh mục xe Tài chính Người dùng actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:40,072] [INFO] - [MENU] page=Trang tổng quan element=Item menu Dashboard expected=Dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:43,287] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở danh sách booking expected=/bookings actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:46,498] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở đội xe expected=/cars actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:49,197] [INFO] - [MENU] page=Trang tổng quan element=Menu nhanh mở tài chính expected=/finance actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:51,925] [INFO] - [UI] page=Trang tổng quan element=Deep link mở Dashboard expected=/dashboard actual=ERROR: Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+ status=ERROR
+[2026-08-13 23:49:54,647] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:49:57,921] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:01,179] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:04,423] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:07,103] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:09,751] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:12,423] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:15,088] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:17,782] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:20,490] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:23,148] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:26,396] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:29,563] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:32,238] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:34,932] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:37,654] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:40,336] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:43,006] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:45,652] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:48,491] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:50:51,216] [ERROR] - [SUITE BROWSER ERROR] Message: session not created: Chrome failed to start: crashed.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location C:\Program Files\Google\Chrome\Application\chrome.exe is no longer running, so ChromeDriver is assuming that Chrome has crashed.); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7afa7abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff7afa7ac10+15210]
+	chromedriver!(No symbol) [0x7ff7af5a5d6d]
+	chromedriver!(No symbol) [0x7ff7af5e89eb]
+	chromedriver!(No symbol) [0x7ff7af5e3e4f]
+	chromedriver!(No symbol) [0x7ff7af637e81]
+	chromedriver!(No symbol) [0x7ff7af6376e6]
+	chromedriver!(No symbol) [0x7ff7af5f37cc]
+	chromedriver!(No symbol) [0x7ff7af5f46f3]
+	chromedriver!GetHandleVerifier [0x7ff7b009b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff7b0095ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff7b00bbcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff7afa98ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff7afaa147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff7afa84d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff7afa84ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff7afa67d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ff8798eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ff87a86ad6c+2c]
+
+[2026-08-13 23:58:07,972] [ERROR] - [SUITE ROUTE ERROR] ROUTE-CHECK
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 69, in _run_route_smoke
+    driver = DriverFactory.create_driver(headless=False, keep_session=keep_session)
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+RuntimeError: driver unavailable
+[2026-08-13 23:58:43,392] [ERROR] - [SUITE ROUTE ERROR] ROUTE-CHECK
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 69, in _run_route_smoke
+    driver = DriverFactory.create_driver(headless=False, keep_session=keep_session)
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+RuntimeError: driver unavailable
+[2026-08-13 23:59:02,804] [ERROR] - [SUITE ROUTE ERROR] ROUTE-CHECK
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 69, in _run_route_smoke
+    driver = DriverFactory.create_driver(headless=False, keep_session=keep_session)
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+RuntimeError: driver unavailable

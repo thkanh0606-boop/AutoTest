@@ -1,0 +1,11 @@
+[22688:22596:0814/013639.137:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:241] No machine level policy manager exists.
+[16464:23144:0814/013639.320:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 12
+[23092:19996:0814/013639.368:VERBOSE1:components\viz\service\main\viz_main_impl.cc:87] VizNullHypothesis is disabled (not a warning)
+[23092:23436:0814/013639.368:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:180] No entry found for gpu-process/viz-compositor.
+[24464:18540:0814/013639.388:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 12
+[23640:19980:0814/013639.405:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 12
+[2740:14564:0814/013640.031:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 12
+[21896:20612:0814/013640.047:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 12
+[22688:15216:0814/013643.018:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[22688:22596:0814/013644.136:WARNING:chrome\browser\performance_manager\policies\page_discarding_helper.cc:158] Discarding multiple pages with target (kb): 0, discard_protected_tabs: 0
+[22688:22596:0814/013649.138:WARNING:chrome\browser\performance_manager\policies\page_discarding_helper.cc:158] Discarding multiple pages with target (kb): 0, discard_protected_tabs: 0

@@ -1,0 +1,60 @@
+[2026-08-20 00:23:27,478] [INFO] - [DRIVER] Chrome session created OK. browser=chrome browser_version=151.0.7922.169 chromedriver_version=151.0.7922.138 (41fa82442390a4d4456c78f2d69a832d5720cb27-refs/branch-heads/7922@{#2891}) session_id=dd1d13926de678a01470ac35da65967c
+[2026-08-20 00:23:27,521] [INFO] - [UI] Opening: https://courses.plt.pro.vn/login
+[2026-08-20 00:23:28,135] [INFO] - [LOGIN] Website yêu cầu đăng nhập.
+[2026-08-20 00:23:32,055] [INFO] - [UI] locator=xpath //header//h3[normalize-space()='Bảng điều khiển vận hành']
+[2026-08-20 00:23:32,056] [INFO] - [FIND] page=Login element=Đăng nhập thành công với Admin locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành'] timeout=15
+[2026-08-20 00:23:48,248] [ERROR] - [SELENIUM ERROR]
+page=Login
+element=Đăng nhập thành công với Admin
+locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành']
+url=https://courses.plt.pro.vn/dashboard
+exception_type=TimeoutException
+message=Không tìm thấy element sau 15 giây.
+[2026-08-20 00:23:48,249] [ERROR] - [UI] page=Login element=Đăng nhập thành công với Admin
+TimeoutException: Không tìm thấy element "Đăng nhập thành công với Admin"
+locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành']
+URL=https://courses.plt.pro.vn/dashboard
+page_title=PLT Solutions - Fleet Console
+login_page_visible=False
+[2026-08-20 00:23:48,346] [INFO] - [UI] page=Login element=Đăng nhập thành công với Admin expected= actual=ERROR: TimeoutException: Không tìm thấy element "Đăng nhập thành công với Admin"
+locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành']
+URL=https://courses.plt.pro.vn/dashboard
+page_title=PLT Solutions - Fleet Console
+login_page_visible=False status=ERROR
+[2026-08-20 00:23:57,457] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_02
+Traceback (most recent call last):
+  File "C:\AutoTest-AI\AutoTest\runners\suite_runner.py", line 97, in _run_route_smoke
+    actual_url = driver.current_url or ""
+                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 626, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 492, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Huynh Anh Tu\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=151.0.7922.169); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff718e3abb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff718e3ac10+15210]
+	chromedriver!(No symbol) [0x7ff718965d6d]
+	chromedriver!(No symbol) [0x7ff7189515c2]
+	chromedriver!(No symbol) [0x7ff7189774a1]
+	chromedriver!(No symbol) [0x7ff7189f1320]
+	chromedriver!(No symbol) [0x7ff718a0e4f2]
+	chromedriver!(No symbol) [0x7ff7189b37cc]
+	chromedriver!(No symbol) [0x7ff7189b46f3]
+	chromedriver!GetHandleVerifier [0x7ff71945b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff719455ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff71947bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff718e58ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff718e6147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff718e44d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff718e44ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff718e27d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffedf92ccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffee040ad6c+2c]
+
