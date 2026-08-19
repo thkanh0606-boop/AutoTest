@@ -1,0 +1,6 @@
+2026/08/15-17:55:35.542 9fc Reusing MANIFEST C:\AutoTest-Clean\chrome_profile\Default\shared_proto_db/MANIFEST-000001
+2026/08/15-17:55:35.545 9fc Recovering log #3
+2026/08/15-17:55:35.547 9fc Reusing old log C:\AutoTest-Clean\chrome_profile\Default\shared_proto_db/000003.log 
+2026/08/15-17:55:38.860 9fc Level-0 table #5: started
+2026/08/15-17:55:38.865 9fc Level-0 table #5: 117196 bytes OK
+2026/08/15-17:55:38.866 9fc Delete type=0 #3

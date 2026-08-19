@@ -230,6 +230,43 @@ class Sidebar(QWidget):
             "5"
         )
 
+        self.add_menu_item(
+            layout,
+            "▣",
+            "Danh mục xe",
+            "vehicle_catalog"
+        )
+
+        # CRUD riêng - đặt ngay dưới Danh mục xe.
+        # Không thay đổi trang Danh mục xe hiện tại.
+        self.add_menu_item(
+            layout,
+            "C",
+            "CRUD",
+            "crud"
+        )
+
+        self.add_menu_item(
+            layout,
+            "▥",
+            "Quản lý xe",
+            "car_management"
+        )
+
+        self.add_menu_item(
+            layout,
+            "▨",
+            "Quản lý đặt xe",
+            "booking_management"
+        )
+
+        self.add_menu_item(
+            layout,
+            "▧",
+            "Nhân sự",
+            "staff_management"
+        )
+
         # --- THÊM MỤC CẤU HÌNH TẠI ĐÂY ---
         self.add_menu_item(
             layout,
@@ -238,13 +275,6 @@ class Sidebar(QWidget):
             "config"
         )
 
-        # Linh - Module Owner: Danh mục xe
-        self.add_menu_item(
-            layout,
-            "▥",
-            "Danh mục xe",
-            "vehicle_catalog"
-        )
         # ---------------------------------
 
         layout.addSpacing(

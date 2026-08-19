@@ -1,5 +1,5 @@
-import os
 import json
+import os
 import sqlite3
 import uuid
 from contextlib import contextmanager
@@ -161,6 +161,7 @@ class TestResultRepository:
                 error_message TEXT NOT NULL DEFAULT '',
                 screenshot_path TEXT NOT NULL DEFAULT '',
                 log_text TEXT NOT NULL DEFAULT '',
+                comparison_json TEXT NOT NULL DEFAULT '',
                 started_at TEXT NOT NULL,
                 finished_at TEXT NOT NULL,
                 duration_ms INTEGER NOT NULL DEFAULT 0,
@@ -177,12 +178,20 @@ class TestResultRepository:
         connection.execute(
             "CREATE INDEX IF NOT EXISTS idx_suite_results_run ON suite_results(run_id, result_index)"
         )
+        self._add_column_if_missing(
+            connection,
+            "suite_results",
+            "comparison_json",
+            "TEXT NOT NULL DEFAULT ''",
+        )
 
     def _column_names(self, connection: sqlite3.Connection, table_name: str) -> set:
         rows = connection.execute(f"PRAGMA table_info({table_name})").fetchall()
         return {row[1] for row in rows}
 
-    def _add_column_if_missing(self, connection: sqlite3.Connection, table_name: str, column_name: str, definition: str):
+    def _add_column_if_missing(
+        self, connection: sqlite3.Connection, table_name: str, column_name: str, definition: str
+    ):
         if column_name not in self._column_names(connection, table_name):
             connection.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {definition}")
 
@@ -199,7 +208,6 @@ class TestResultRepository:
         self._add_column_if_missing(connection, "test_results", "actual_result", "TEXT")
         self._add_column_if_missing(connection, "test_results", "error_message", "TEXT")
         self._add_column_if_missing(connection, "test_results", "screenshot_path", "TEXT")
-
         connection.execute(
             """
             CREATE UNIQUE INDEX IF NOT EXISTS idx_test_cases_case_id_unique
@@ -259,7 +267,9 @@ class TestResultRepository:
         }
         self.create_test_run(run_id=run_id, module=payload["module"], total=1)
         self.save_test_result(result_payload)
-        self.finish_test_run(run_id, payload.get("status", "ERROR"), [result_payload], payload.get("message", ""))
+        self.finish_test_run(
+            run_id, payload.get("status", "ERROR"), [result_payload], payload.get("message", "")
+        )
         return case_db_id
 
     def latest_results(self, module: str, limit: int = 10):
@@ -322,7 +332,9 @@ class TestResultRepository:
             ).fetchone()
         return int(row[0])
 
-    def create_test_run(self, run_id: str, module: str, total: int, status: str = "RUNNING") -> str:
+    def create_test_run(
+        self, run_id: str, module: str, total: int, status: str = "RUNNING"
+    ) -> str:
         now = datetime.now().isoformat(timespec="seconds")
         with self.connect() as connection:
             connection.execute(
@@ -335,11 +347,15 @@ class TestResultRepository:
             )
         return run_id
 
-    def finish_test_run(self, run_id: str, status: str, results: List[Dict[str, str]], message: str = ""):
+    def finish_test_run(
+        self, run_id: str, status: str, results: List[Dict[str, str]], message: str = ""
+    ):
         now = datetime.now().isoformat(timespec="seconds")
         counts = {"PASSED": 0, "FAILED": 0, "ERROR": 0, "SKIPPED": 0}
         for result in results:
-            counts[result.get("status", "ERROR")] = counts.get(result.get("status", "ERROR"), 0) + 1
+            counts[result.get("status", "ERROR")] = (
+                counts.get(result.get("status", "ERROR"), 0) + 1
+            )
 
         with self.connect() as connection:
             connection.execute(
@@ -449,7 +465,9 @@ class TestResultRepository:
             )
             connection.execute("DELETE FROM suite_cases WHERE suite_id = ?", (suite_id,))
             for index, case in enumerate(cases):
-                module = case.get("module") or case.get("area") or case.get("page_key") or "General"
+                module = (
+                    case.get("module") or case.get("area") or case.get("page_key") or "General"
+                )
                 connection.execute(
                     """
                     INSERT INTO suite_cases
@@ -548,8 +566,8 @@ class TestResultRepository:
                 INSERT INTO suite_results
                     (run_id, result_index, case_id, title, module, page_key,
                      expected, actual, status, message, error_message,
-                     screenshot_path, log_text, started_at, finished_at, duration_ms)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     screenshot_path, log_text, comparison_json, started_at, finished_at, duration_ms)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     run_id,
@@ -565,6 +583,7 @@ class TestResultRepository:
                     payload.get("error_message", ""),
                     payload.get("screenshot_path", ""),
                     payload.get("log_text", ""),
+                    payload.get("comparison_json", ""),
                     started_at,
                     finished_at,
                     int(payload.get("duration_ms", 0)),
@@ -601,7 +620,17 @@ class TestResultRepository:
                     skipped = ?, finished_at = ?, duration_ms = ?, message = ?
                 WHERE run_id = ?
                 """,
-                (effective_status, passed, failed, error, skipped, now, duration_ms, message, run_id),
+                (
+                    effective_status,
+                    passed,
+                    failed,
+                    error,
+                    skipped,
+                    now,
+                    duration_ms,
+                    message,
+                    run_id,
+                ),
             )
             summary = connection.execute(
                 "SELECT * FROM suite_runs WHERE run_id = ?", (run_id,)
@@ -617,13 +646,13 @@ class TestResultRepository:
     ) -> List[dict]:
         conditions = []
         parameters: List[object] = []
-        if suite_name:
+        if suite_name and suite_name != "Tất cả":
             conditions.append("r.suite_name = ?")
             parameters.append(suite_name)
-        if status:
+        if status and status != "Tất cả":
             conditions.append("r.status = ?")
             parameters.append(status)
-        if module:
+        if module and module != "Tất cả":
             conditions.append(
                 "EXISTS (SELECT 1 FROM suite_results x WHERE x.run_id = r.run_id AND x.module = ?)"
             )
@@ -642,6 +671,21 @@ class TestResultRepository:
             ).fetchall()
         return [dict(row) for row in rows]
 
+    def list_runs(
+        self,
+        suite_name: str = None,
+        status: str = None,
+        module: str = None,
+        limit: int = 200,
+    ) -> List[dict]:
+        """Tương thích trực tiếp với gọi hàm list_runs(...) trên UI TestSuitePage."""
+        return self.list_suite_runs(
+            suite_name=suite_name or "",
+            status=status or "",
+            module=module or "",
+            limit=limit,
+        )
+
     def suite_run(self, run_id: str) -> Optional[dict]:
         with self.connect() as connection:
             connection.row_factory = sqlite3.Row
@@ -653,10 +697,10 @@ class TestResultRepository:
     def suite_run_results(self, run_id: str, status: str = "", module: str = "") -> List[dict]:
         conditions = ["run_id = ?"]
         parameters: List[object] = [run_id]
-        if status:
+        if status and status != "Tất cả":
             conditions.append("status = ?")
             parameters.append(status)
-        if module:
+        if module and module != "Tất cả":
             conditions.append("module = ?")
             parameters.append(module)
         with self.connect() as connection:

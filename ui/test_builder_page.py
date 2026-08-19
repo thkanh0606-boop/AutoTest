@@ -1,5 +1,6 @@
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
+    QAbstractItemView,
     QCheckBox,
     QComboBox,
     QFrame,
@@ -11,6 +12,9 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QPushButton,
     QScrollArea,
+    QHeaderView,
+    QTableWidget,
+    QTableWidgetItem,
     QTextEdit,
     QVBoxLayout,
     QWidget,
@@ -23,6 +27,10 @@ from runners.text_dropdown_runner import run_label_text_test
 
 
 class TestBuilderPage(QWidget):
+    # Phát ra mỗi khi trang PCM đang test bên trong màn này đổi (name, url) -
+    # để MainWindow đồng bộ lại thanh header "TRANG ĐANG KIỂM THỬ" cho khớp.
+    page_selected = Signal(str, str)
+
     def __init__(self, module_key: str, title: str):
         super().__init__()
         self.module_key = module_key
@@ -31,6 +39,7 @@ class TestBuilderPage(QWidget):
         self.page_by_index = []
         self.element_by_index = []
         self.table_file_path = ""
+        self.comparison_rows = []
 
         self.setObjectName("TestBuilderPage")
         self.setStyleSheet("""
@@ -182,9 +191,47 @@ class TestBuilderPage(QWidget):
         self.actual_value = QLabel("Chưa có Actual Result")
         self.actual_value.setWordWrap(True)
         self.actual_value.setStyleSheet("color: #102033; font-size: 14px; padding: 12px; background: #f8fafc; border: 1px solid #dfe5ec; border-radius: 8px;")
-        self.compare_value = QLabel("Expected - Actual sẽ hiển thị sau khi Run.")
-        self.compare_value.setWordWrap(True)
-        self.compare_value.setStyleSheet("color: #64748b; font-size: 12px;")
+        comparison_header = QHBoxLayout()
+        comparison_title = QLabel("Bảng so sánh")
+        comparison_title.setStyleSheet("font-size: 13px; font-weight: 700; color: #12365f;")
+        self.comparison_filter = QComboBox()
+        self.comparison_filter.addItem("Tất cả Result", "")
+        self.comparison_filter.addItem("PASS", "PASS")
+        self.comparison_filter.addItem("FAIL", "FAIL")
+        self.comparison_filter.currentIndexChanged.connect(self._refresh_comparison_table)
+        comparison_header.addWidget(comparison_title)
+        comparison_header.addStretch()
+        comparison_header.addWidget(self.comparison_filter)
+
+        self.comparison_table = QTableWidget(0, 3)
+        self.comparison_table.setHorizontalHeaderLabels(
+            ["Expected Result", "Actual Result", "Result"]
+        )
+        self.comparison_table.verticalHeader().setVisible(False)
+        self.comparison_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.comparison_table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        table_header = self.comparison_table.horizontalHeader()
+        table_header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        table_header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        table_header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        self.comparison_table.setMinimumHeight(150)
+        self.comparison_table.setStyleSheet("""
+            QTableWidget {
+                background: #ffffff;
+                border: 1px solid #dfe5ec;
+                border-radius: 8px;
+                gridline-color: #e2e8f0;
+                color: #102033;
+                font-size: 12px;
+            }
+            QHeaderView::section {
+                background: #eef4ff;
+                color: #12365f;
+                border: 1px solid #d6e4ff;
+                padding: 7px;
+                font-weight: 700;
+            }
+        """)
 
         action_row = QHBoxLayout()
         action_row.addStretch()
@@ -202,7 +249,8 @@ class TestBuilderPage(QWidget):
         result_layout.addWidget(self.status_label)
         result_layout.addWidget(self.progress)
         result_layout.addWidget(self.actual_value)
-        result_layout.addWidget(self.compare_value)
+        result_layout.addLayout(comparison_header)
+        result_layout.addWidget(self.comparison_table)
         result_layout.addLayout(action_row)
         root.addWidget(result_panel)
         root.addStretch()
@@ -217,11 +265,17 @@ class TestBuilderPage(QWidget):
         title.setStyleSheet("font-size: 18px; font-weight: 700;")
         layout.addWidget(title)
 
+        page_row = QHBoxLayout()
+        page_col = QVBoxLayout()
+        page_col.addWidget(QLabel("Trang PCM"))
         self.page_combo = QComboBox(panel)
         self.page_combo.currentIndexChanged.connect(self._on_page_changed)
-        self.page_combo.hide()
+        page_col.addWidget(self.page_combo)
+        page_row.addLayout(page_col)
+        layout.addLayout(page_row)
 
         self.url_input = QLineEdit(panel)
+        self.url_input.setReadOnly(True)
         self.url_input.hide()
 
         row = QHBoxLayout()
@@ -297,6 +351,21 @@ class TestBuilderPage(QWidget):
             self.page_combo.addItem(page.name)
         self._on_page_changed(0)
 
+    def set_active_page_by_name(self, name: str) -> bool:
+        """Chuyển combo 'Trang PCM' sang đúng trang có tên khớp `name` (nếu có).
+        Dùng để đồng bộ theo thanh header 'TRANG ĐANG KIỂM THỬ' khi điều hướng
+        vào màn Test Builder này. Trả về True nếu tìm thấy và đã chuyển."""
+        idx = self.page_combo.findText(name)
+        if idx < 0:
+            return False
+        if self.page_combo.currentIndex() != idx:
+            self.page_combo.setCurrentIndex(idx)
+        else:
+            # Cùng index rồi thì vẫn phát tín hiệu để header luôn khớp,
+            # phòng trường hợp header đang hiển thị tên khác do nơi khác ghi đè.
+            self._on_page_changed(idx)
+        return True
+
     def _on_page_changed(self, index):
         if index < 0 or index >= len(self.page_by_index):
             return
@@ -304,6 +373,7 @@ class TestBuilderPage(QWidget):
         page = self.page_by_index[index]
         self.context_label.setText(f"<b style='color:#2563eb'>PCM</b> &nbsp; {page.name} &nbsp; <span style='color:#64748b'>{page.path}</span>")
         self.url_input.setText(page.url)
+        self.page_selected.emit(page.name, page.url)
 
         elements = TestContract.elements_for(page.key, self.module_key)
         if not elements and self.module_key in ("title", "ui", "menu", "image", "radio"):
@@ -367,8 +437,11 @@ class TestBuilderPage(QWidget):
 
         self.run_button.setEnabled(False)
         self.progress.setValue(0)
+        self.status_label.setStyleSheet("color: #64748b; font-size: 12px;")
         self.actual_value.setText("Đang chạy Selenium...")
-        self.compare_value.setText("Đang lấy Actual Result từ PCM.")
+        self.comparison_rows = []
+        self.comparison_filter.setCurrentIndex(0)
+        self._refresh_comparison_table()
 
         self.worker = SeleniumWorker(
             run_label_text_test,
@@ -400,23 +473,68 @@ class TestBuilderPage(QWidget):
     def _handle_result(self, payload):
         self.actual_value.setText((payload.get("actual", "") or "").replace("\t", "\n"))
         status = payload.get("status", "FAILED")
-        pairs = payload.get("pairs") or []
-        if pairs:
-            pair_lines = [
-                f"{pair['index']}. {pair['expected']} - {pair['actual']} -> {pair['status']}"
-                for pair in pairs
-            ]
-            compare_text = "\n".join(pair_lines)
-            compare_text += f"\nResult: {status} - {payload.get('message', '')}"
-        else:
-            compare_text = (
-                f"Expected: {payload.get('expected', '')}\n"
-                f"Actual: {payload.get('actual', '')}\n"
-                f"Result: {status} - {payload.get('message', '')}"
-            )
-        self.compare_value.setText(compare_text)
+        self.comparison_rows = self._comparison_rows_from_payload(payload)
+        self.comparison_filter.setCurrentIndex(0)
+        self._refresh_comparison_table()
         color = "#16845b" if status == "PASSED" else "#b42318"
-        self.compare_value.setStyleSheet(f"color: {color}; font-size: 12px; font-weight: 700;")
+        self.status_label.setStyleSheet(f"color: {color}; font-size: 12px; font-weight: 700;")
+
+    def _comparison_rows_from_payload(self, payload):
+        rows = []
+        for pair in payload.get("pairs") or []:
+            rows.append(
+                {
+                    "expected": str(pair.get("expected", "")),
+                    "actual": str(pair.get("actual", "")),
+                    "status": str(pair.get("status", "")).upper(),
+                }
+            )
+        if rows:
+            return rows
+
+        status = str(payload.get("status", "")).upper()
+        if status == "PASSED":
+            result = "PASS"
+        elif status in {"FAILED", "ERROR"}:
+            result = "FAIL"
+        else:
+            result = status or "N/A"
+        return [
+            {
+                "expected": str(payload.get("expected", "")),
+                "actual": str(payload.get("actual", "")),
+                "status": result,
+            }
+        ]
+
+    def _refresh_comparison_table(self):
+        status_filter = self.comparison_filter.currentData() if hasattr(self, "comparison_filter") else ""
+        self.comparison_table.setRowCount(0)
+        for row_data in self.comparison_rows:
+            status = str(row_data.get("status", "")).upper()
+            if status_filter and status != status_filter:
+                continue
+            row = self.comparison_table.rowCount()
+            self.comparison_table.insertRow(row)
+            values = (
+                row_data.get("expected", ""),
+                row_data.get("actual", ""),
+                status,
+            )
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(str(value))
+                if column == 2:
+                    if value == "PASS":
+                        item.setForeground(Qt.GlobalColor.darkGreen)
+                        item.setBackground(Qt.GlobalColor.white)
+                    elif value == "FAIL":
+                        item.setForeground(Qt.GlobalColor.red)
+                        item.setBackground(Qt.GlobalColor.white)
+                    font = item.font()
+                    font.setBold(True)
+                    item.setFont(font)
+                self.comparison_table.setItem(row, column, item)
+        self.comparison_table.resizeRowsToContents()
 
     def _handle_finished(self, _finished):
         self.run_button.setEnabled(True)
@@ -424,6 +542,8 @@ class TestBuilderPage(QWidget):
     def _reset_result(self):
         self.progress.setValue(0)
         self.status_label.setText("Sẵn sàng chạy kiểm thử")
+        self.status_label.setStyleSheet("color: #64748b; font-size: 12px;")
         self.actual_value.setText("Chưa có Actual Result")
-        self.compare_value.setText("Expected - Actual sẽ hiển thị sau khi Run.")
-        self.compare_value.setStyleSheet("color: #64748b; font-size: 12px;")
+        self.comparison_rows = []
+        self.comparison_filter.setCurrentIndex(0)
+        self._refresh_comparison_table()

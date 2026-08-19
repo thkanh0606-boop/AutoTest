@@ -1,5 +1,6 @@
 import threading
 from core.config import Config
+from core.test_contract import TestContract
 
 from PySide6.QtWidgets import (
     QMainWindow,
@@ -22,7 +23,12 @@ from ui.sidebar import Sidebar
 from ui.header import Header
 from ui.test_builder_page import TestBuilderPage
 from ui.vehicle_catalog_page import VehicleCatalogPage
+from ui.crud_page import CrudPage
 from ui.test_suite_page import TestSuitePage
+from ui.page_management_page import PageManagementPage
+from ui.booking_management_page import BookingManagementPage
+from ui.car_management_page import CarManagementPage
+from ui.staff_management_page import StaffManagementPage
 
 
 # --- MÃ SVG VECTOR ICON MẮT ---
@@ -144,6 +150,15 @@ class MainWindow(QMainWindow):
 
         self.create_pages()
 
+        self.header.page_changed.connect(
+            self.sync_shared_test_page
+        )
+
+        self.sync_shared_test_page(
+            self.header.current_page_key(),
+            self.header.url_input.text()
+        )
+
         # =====================================================
         # SIDEBAR ROUTING
         # =====================================================
@@ -189,6 +204,10 @@ class MainWindow(QMainWindow):
             "pages": "Quản lý trang",
             "config": "Cấu hình hệ thống",
             "vehicle_catalog": "Danh mục xe",
+            "crud": "CRUD",
+            "car_management": "Quản lý xe",
+            "booking_management": "Quản lý đặt xe",
+            "staff_management": "Nhân sự",
             "test_suite": "Chạy Test Suite",
             "dropdown": "Kiểm tra Dropdown List",
             "label": "Kiểm tra Label / Text",
@@ -201,6 +220,7 @@ class MainWindow(QMainWindow):
         }
 
         self.page_indexes = {}
+        self.builder_pages = {}
 
         for page_name, title in pages.items():
 
@@ -210,10 +230,29 @@ class MainWindow(QMainWindow):
                     page_name,
                     title
                 )
+                self.builder_pages[page_name] = page
+                page.page_selected.connect(self._sync_header_from_builder)
             elif page_name == "config":
                 page = self.create_config_page(title)
+            elif page_name == "pages":
+                page = PageManagementPage(header_widget=self.header)
+                self.page_management = page
+                page.open_test_builder_signal.connect(
+                    self.on_open_test_builder_from_management
+                )
+                page.navigate_to_module_signal.connect(
+                    self.handle_navigate_to_builder
+                )
             elif page_name == "vehicle_catalog":
                 page = VehicleCatalogPage()
+            elif page_name == "crud":
+                page = CrudPage()
+            elif page_name == "car_management":
+                page = CarManagementPage()
+            elif page_name == "booking_management":
+                page = BookingManagementPage()
+            elif page_name == "staff_management":
+                page = StaffManagementPage()
             elif page_name == "test_suite":
                 page = TestSuitePage()
             else:
@@ -221,6 +260,57 @@ class MainWindow(QMainWindow):
 
             index = self.content.addWidget(page)
             self.page_indexes[page_name] = index
+
+    # =========================================================
+    # PAGE MANAGEMENT -> TEST BUILDER
+    # =========================================================
+
+    def handle_navigate_to_builder(
+        self,
+        module_key,
+        page_name,
+        element_key_or_name
+    ):
+        builder = self.builder_pages.get(module_key)
+        if builder is None:
+            return
+
+        self.open_module_from_quick_menu(module_key)
+
+        if hasattr(builder, "set_active_page_by_name"):
+            builder.set_active_page_by_name(page_name)
+
+        if hasattr(builder, "select_page_and_element"):
+            builder.select_page_and_element(page_name, element_key_or_name)
+
+    def on_open_test_builder_from_management(
+        self,
+        module_key,
+        page_url,
+        element_data
+    ):
+        builder = self.builder_pages.get(module_key)
+        if builder is None:
+            return
+
+        if hasattr(builder, "url_input"):
+            builder.url_input.setText(page_url)
+
+        locator_type = element_data.get("locator_type", "")
+        if locator_type and hasattr(builder, "locator_type_combo"):
+            builder.locator_type_combo.setCurrentText(locator_type)
+
+        if hasattr(builder, "locator_input"):
+            builder.locator_input.setText(element_data.get("locator_value", ""))
+
+        if hasattr(builder, "expected_input"):
+            expected_result = element_data.get("expected_result", "")
+            if hasattr(builder.expected_input, "setPlainText"):
+                builder.expected_input.setPlainText(expected_result)
+            else:
+                builder.expected_input.setText(expected_result)
+
+        self.open_module_from_quick_menu(module_key)
 
     # =========================================================
     # PLACEHOLDER PAGE
@@ -420,6 +510,96 @@ class MainWindow(QMainWindow):
                 self.header.page_combo.addItem("Danh mục xe")
             self.header.page_combo.setCurrentText("Danh mục xe")
             self.header.url_input.setText("https://courses.plt.pro.vn/cars/catalog")
+            self._sync_test_builders_to_page_name("Danh mục xe")
+        elif page_name == "crud":
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("CRUD") < 0:
+                self.header.page_combo.addItem("CRUD")
+            self.header.page_combo.setCurrentText("CRUD")
+            self.header.url_input.setText("https://courses.plt.pro.vn/cars/catalog")
+        elif page_name == "car_management":
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("Quản lý xe") < 0:
+                self.header.page_combo.addItem("Quản lý xe")
+            self.header.page_combo.setCurrentText("Quản lý xe")
+            self.header.url_input.setText("https://courses.plt.pro.vn/cars")
+            self._sync_test_builders_to_page_name("Quản lý xe")
+        elif page_name == "booking_management":
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("Quản lý đặt xe") < 0:
+                self.header.page_combo.addItem("Quản lý đặt xe")
+            self.header.page_combo.setCurrentText("Quản lý đặt xe")
+            self.header.url_input.setText("https://courses.plt.pro.vn/bookings")
+            self._sync_test_builders_to_page_name("Quản lý đặt xe")
+        elif page_name == "staff_management":
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("Nhân sự") < 0:
+                self.header.page_combo.addItem("Nhân sự")
+            self.header.page_combo.setCurrentText("Nhân sự")
+            self.header.url_input.setText("https://courses.plt.pro.vn/users")
+            self._sync_test_builders_to_page_name("Nhân sự")
+        # --- ĐỒNG BỘ HEADER <-> COMBO PCM THẬT BÊN TRONG MÀN TEST BUILDER ---
+        # Trước đây header bị ép cứng luôn hiển thị "Quản lý xe" cho mọi màn
+        # KIỂM THỬ, trong khi combo "Trang PCM" thật sự bên trong từng màn lại
+        # không đọc theo header đó -> 2 bên hiển thị lệch nhau (vd: header ghi
+        # "Quản lý xe" nhưng PCM vẫn kẹt ở "Trang tổng quan /dashboard").
+        # Nay: mở màn Test Builder nào thì đồng bộ combo PCM của màn đó theo
+        # đúng tên đang hiển thị trên header hiện tại; nếu trang đó không có
+        # trong TestContract của module này thì giữ nguyên lựa chọn hiện có
+        # của màn (không ép về Quản lý xe nữa) và đồng bộ ngược lại header cho
+        # khớp với PCM thật sự đang hiển thị.
+        elif page_name in (
+            "dropdown", "label", "table", "radio", "image", "title", "ui", "menu"
+        ):
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            widget = self.content.widget(index)
+            header_page_name = self.header.page_combo.currentText()
+            if not (widget is not None and widget.set_active_page_by_name(header_page_name)):
+                # Header đang chỉ trang không tồn tại trong module test này ->
+                # đồng bộ ngược lại header theo PCM hiện tại của màn đó.
+                if widget is not None:
+                    idx = widget.page_combo.currentIndex()
+                    if idx >= 0:
+                        self._sync_header_from_builder(
+                            widget.page_combo.itemText(idx), widget.url_input.text()
+                        )
+        elif page_name == "test_suite":
+            self.header.website_combo.setCurrentText("PLT Fleet Console")
+            if self.header.page_combo.findText("Quản lý xe") < 0:
+                self.header.page_combo.addItem("Quản lý xe")
+            self.header.page_combo.setCurrentText("Quản lý xe")
+            self.header.url_input.setText("https://courses.plt.pro.vn/cars")
+        # ---------------------------------------------------------------------
+
+    def _sync_header_from_builder(self, name: str, url: str):
+        """Khi combo 'Trang PCM' bên trong 1 màn Test Builder đổi (do người
+        dùng tự chọn), đồng bộ ngược lại thanh header 'TRANG ĐANG KIỂM THỬ'
+        cho khớp, để header luôn phản ánh đúng PCM thật sự đang được test."""
+        self.header.website_combo.setCurrentText("PLT Fleet Console")
+        if self.header.page_combo.findText(name) < 0:
+            self.header.page_combo.addItem(name)
+        self.header.page_combo.setCurrentText(name)
+        self.header.url_input.setText(url)
+
+    def _sync_test_builders_to_page_name(self, name: str):
+        for builder_page in getattr(self, "builder_pages", {}).values():
+            if hasattr(builder_page, "set_active_page_by_name"):
+                builder_page.set_active_page_by_name(name)
+
+    def sync_shared_test_page(self, page_key: str, url: str = ""):
+        target_page = next(
+            (page for page in TestContract.pages if page.key == page_key),
+            None
+        )
+
+        if target_page is not None:
+            self._sync_test_builders_to_page_name(target_page.name)
+            return
+
+        if url:
+            for builder_page in getattr(self, "builder_pages", {}).values():
+                if hasattr(builder_page, "url_input"):
+                    builder_page.url_input.setText(url)
 
     def open_module_from_quick_menu(
         self,

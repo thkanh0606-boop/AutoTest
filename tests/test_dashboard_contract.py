@@ -30,6 +30,32 @@ def test_dashboard_contract_covers_card_menu_and_deep_link():
     assert any(case.action_type == "deep_link_url_contains" and case.target_path == "/dashboard" for case in cases)
 
 
+def test_dashboard_contract_covers_current_date_and_all_sidebar_routes():
+    cases = _dashboard_cases()
+    route_targets = {
+        case.target_path
+        for case in cases
+        if case.action_type == "click_url_contains"
+    }
+
+    assert any(case.action_type == "today_vi_date" for case in cases)
+    assert {
+        "/dashboard",
+        "/bookings",
+        "/bookings/new",
+        "/customers",
+        "/cars",
+        "/cars/catalog",
+        "/finance",
+        "/users",
+    } <= route_targets
+    assert any(
+        case.key == "dashboard_sidebar_menu"
+        and case.action_type == "contains_all"
+        for case in cases
+    )
+
+
 def test_dropdown_and_menu_compare_by_position():
     status, pairs = _compare_line_pairs("English\nTiếng Việt", "English\nTiếng Anh")
 

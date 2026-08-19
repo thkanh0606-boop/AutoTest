@@ -15,8 +15,5 @@ __pycache__/
 
 # Chrome profile/session local
 chrome_profile/
-data/selenium_profile_linh/
-
 logs/
-image/
-*.sqlite3
+image/*.png

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 
@@ -70,6 +71,7 @@ class TestSuitePage(QWidget):
         self.case_results: dict[str, dict] = {}
         self.report_results: list[dict] = []
         self.report_run: dict = {}
+        self.comparison_rows: list[dict] = []
         self.current_screenshot_path = ""
 
         self._set_styles()
@@ -262,6 +264,7 @@ class TestSuitePage(QWidget):
         self.module_filter = QComboBox()
         self.module_filter.addItem("Tất cả module", "")
         self.module_filter.currentIndexChanged.connect(self._refresh_case_table)
+        self.module_filter.currentIndexChanged.connect(self._auto_set_run_mode_for_filter)
         filter_row.addWidget(self.module_filter)
         self.case_search = QLineEdit()
         self.case_search.setPlaceholderText("Tìm TC ID hoặc tên case...")
@@ -500,17 +503,48 @@ class TestSuitePage(QWidget):
         result_header.setSectionResizeMode(5, QHeaderView.ResizeMode.Stretch)
         result_layout.addWidget(self.report_result_table, 1)
 
-        detail_row = QHBoxLayout()
-        self.result_detail = QTextEdit()
-        self.result_detail.setReadOnly(True)
-        self.result_detail.setPlaceholderText("Chọn một kết quả để xem log, expected, actual và lỗi.")
+        detail_panel = QWidget()
+        detail_layout = QVBoxLayout(detail_panel)
+        detail_layout.setContentsMargins(0, 0, 0, 0)
+        detail_layout.setSpacing(8)
+
+        detail_header = QHBoxLayout()
+        self.result_detail_title = QLabel("Chọn một kết quả để xem bảng so sánh.")
+        self.result_detail_title.setWordWrap(True)
+        self.result_detail_title.setStyleSheet("font-weight:700;color:#1e3a5f")
+        self.comparison_status_filter = QComboBox()
+        self.comparison_status_filter.addItem("Tất cả Result", "")
+        self.comparison_status_filter.addItem("PASS", "PASS")
+        self.comparison_status_filter.addItem("FAIL", "FAIL")
+        self.comparison_status_filter.currentIndexChanged.connect(self._refresh_comparison_table)
         self.screenshot_button = QPushButton("Mở screenshot lỗi")
         self.screenshot_button.setObjectName("Secondary")
         self.screenshot_button.setEnabled(False)
         self.screenshot_button.clicked.connect(self._open_screenshot)
-        detail_row.addWidget(self.result_detail, 1)
-        detail_row.addWidget(self.screenshot_button)
-        result_layout.addLayout(detail_row)
+        detail_header.addWidget(self.result_detail_title, 1)
+        detail_header.addWidget(self.comparison_status_filter)
+        detail_header.addWidget(self.screenshot_button)
+        detail_layout.addLayout(detail_header)
+
+        self.comparison_table = QTableWidget(0, 3)
+        self.comparison_table.setHorizontalHeaderLabels(
+            ["Expected Result", "Actual Result", "Result"]
+        )
+        self.comparison_table.verticalHeader().setVisible(False)
+        self.comparison_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.comparison_table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        comparison_header = self.comparison_table.horizontalHeader()
+        comparison_header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        comparison_header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        comparison_header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        detail_layout.addWidget(self.comparison_table, 1)
+
+        self.result_detail = QTextEdit()
+        self.result_detail.setReadOnly(True)
+        self.result_detail.setMaximumHeight(120)
+        self.result_detail.setPlaceholderText("Log, message và lỗi của test case.")
+        detail_layout.addWidget(self.result_detail)
+        result_layout.addWidget(detail_panel)
         splitter.addWidget(result_panel)
         splitter.setSizes([180, 520])
         layout.addWidget(splitter, 1)
@@ -638,6 +672,20 @@ class TestSuitePage(QWidget):
     def _case_module(self, case: dict) -> str:
         return str(case.get("module") or case.get("area") or case.get("page_key") or "General")
 
+    def _auto_set_run_mode_for_filter(self, _index=None):
+        """Khi người dùng lọc theo 1 Module cụ thể (không phải 'Tất cả module'),
+        tự chuyển 'Chế độ chạy' sang 'Current Page (module đang lọc)' để nút
+        Chạy chạy đúng module đang lọc - tránh trường hợp Module đã lọc là 'Xe'
+        nhưng Chế độ chạy vẫn còn ở 'Full Website' từ lần trước (khiến bấm
+        Chạy lại chạy toàn bộ 31 case thay vì đúng các case của module đang
+        chọn)."""
+        module = self.module_filter.currentData() or ""
+        if not module:
+            return
+        idx = self.run_mode_combo.findData("current_module")
+        if idx >= 0 and self.run_mode_combo.currentIndex() != idx:
+            self.run_mode_combo.setCurrentIndex(idx)
+
     def _is_executable(self, case: dict) -> bool:
         return bool(
             case.get("action_type") in {"route_smoke", "pcm_scenario"}
@@ -744,6 +792,24 @@ class TestSuitePage(QWidget):
     def _run_tests(self):
         if self.worker and self.worker.isRunning():
             return
+        module = self.module_filter.currentData() or ""
+        run_mode = self.run_mode_combo.currentData()
+        if module and run_mode == "full_website":
+            answer = QMessageBox.question(
+                self,
+                "Module đang lọc khác với Chế độ chạy",
+                f"Bạn đang lọc theo module '{module}' nhưng Chế độ chạy đang là "
+                "'Full Website' - bấm Chạy sẽ chạy TOÀN BỘ test case, không chỉ "
+                f"module '{module}' đang lọc.\n\n"
+                f"Bấm Yes để chỉ chạy module '{module}' đang lọc, "
+                "hoặc No để vẫn chạy Full Website.",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.Yes,
+            )
+            if answer == QMessageBox.StandardButton.Yes:
+                idx = self.run_mode_combo.findData("current_module")
+                if idx >= 0:
+                    self.run_mode_combo.setCurrentIndex(idx)
         try:
             cases, mode_label = self._cases_for_run()
         except ValueError as error:
@@ -865,6 +931,8 @@ class TestSuitePage(QWidget):
             "FAILED": "#c92a2a",
             "ERROR": "#9c1c1c",
             "SKIPPED": "#b26a00",
+            "PASS": "#087f5b",
+            "FAIL": "#c92a2a",
             "Pending": "#64748b",
         }
         item.setForeground(QColor(colors.get(status, "#334155")))
@@ -972,20 +1040,93 @@ class TestSuitePage(QWidget):
                 if column == 3:
                     self._style_status_item(item, str(value))
                 self.report_result_table.setItem(row, column, item)
+        self.result_detail_title.setText("Chọn một kết quả để xem bảng so sánh.")
+        self.comparison_rows = []
+        self._refresh_comparison_table()
         self.result_detail.clear()
         self.screenshot_button.setEnabled(False)
+
+    def _comparison_rows_for_result(self, result: dict) -> list[dict]:
+        raw_json = result.get("comparison_json") or ""
+        rows: list[dict] = []
+        if raw_json:
+            try:
+                parsed = json.loads(raw_json)
+                if isinstance(parsed, list):
+                    rows = [
+                        {
+                            "expected": str(item.get("expected", "")),
+                            "actual": str(item.get("actual", "")),
+                            "status": str(item.get("status", "")).upper(),
+                        }
+                        for item in parsed
+                        if isinstance(item, dict)
+                    ]
+            except Exception:
+                rows = []
+
+        if rows:
+            return rows
+
+        status = str(result.get("status", "")).upper()
+        if status == "PASSED":
+            row_status = "PASS"
+        elif status in {"FAILED", "ERROR"}:
+            row_status = "FAIL"
+        else:
+            row_status = status or "N/A"
+        return [
+            {
+                "expected": str(result.get("expected", "")),
+                "actual": str(result.get("actual", "")),
+                "status": row_status,
+            }
+        ]
+
+    def _refresh_comparison_table(self):
+        rows = getattr(self, "comparison_rows", [])
+        status_filter = self.comparison_status_filter.currentData() if hasattr(self, "comparison_status_filter") else ""
+        self.comparison_table.setRowCount(0)
+        for item in rows:
+            status = str(item.get("status", "")).upper()
+            if status_filter and status != status_filter:
+                continue
+            row = self.comparison_table.rowCount()
+            self.comparison_table.insertRow(row)
+            values = (
+                item.get("expected", ""),
+                item.get("actual", ""),
+                status,
+            )
+            for column, value in enumerate(values):
+                cell = QTableWidgetItem(str(value))
+                if column == 2:
+                    self._style_status_item(cell, str(value))
+                    if value == "PASS":
+                        cell.setBackground(QColor("#e6fcf5"))
+                    elif value == "FAIL":
+                        cell.setBackground(QColor("#fff5f5"))
+                self.comparison_table.setItem(row, column, cell)
+        self.comparison_table.resizeRowsToContents()
 
     def _show_result_detail(self):
         row = self.report_result_table.currentRow()
         if row < 0 or row >= len(getattr(self, "visible_report_results", [])):
             return
         result = self.visible_report_results[row]
+        self.result_detail_title.setText(
+            f"{result['case_id']} · {result['title']} · {result['status']}"
+        )
+        self.comparison_rows = self._comparison_rows_for_result(result)
+        self.comparison_status_filter.setCurrentIndex(0)
+        self._refresh_comparison_table()
         detail = (
-            f"TC ID: {result['case_id']}\nModule: {result['module']}\nStatus: {result['status']}\n"
-            f"Started: {result['started_at']}\nFinished: {result['finished_at']}\n\n"
-            f"EXPECTED\n{result['expected']}\n\nACTUAL\n{result['actual']}\n\n"
-            f"MESSAGE\n{result['message']}\n\nERROR\n{result['error_message']}\n\n"
-            f"LOG\n{result['log_text']}\n\nSCREENSHOT\n{result['screenshot_path']}"
+            f"Module: {result['module']}\n"
+            f"Started: {result['started_at']} | Finished: {result['finished_at']}\n"
+            f"Message: {result['message']}\n"
+            f"Error: {result['error_message']}\n"
+            f"Log:\n{result['log_text']}\n"
+            f"Screenshot: {result['screenshot_path']}"
         )
         self.result_detail.setPlainText(detail)
         self.current_screenshot_path = result.get("screenshot_path", "")

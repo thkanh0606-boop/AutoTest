@@ -198,7 +198,7 @@ def _dashboard_scenario(driver, key: str) -> str:
     if key == "dashboard_title":
         element = _visible(
             driver,
-            "//main//*[self::h1 or self::h2 or self::h3][contains(.,'Dashboard') or contains(.,'Bảng điều khiển')]",
+            "//header//h3[normalize-space()='Tổng quan']",
         )
         _highlight(driver, element)
         return element.text
@@ -206,8 +206,8 @@ def _dashboard_scenario(driver, key: str) -> str:
     if key == "dashboard_cards":
         body = _body_text(driver)
         labels = [
-            "XE ĐANG CHO THUÊ", "XE SẴN SÀNG HÔM NAY", "NHẬN XE", "TRẢ XE",
-            "BOOKING TRỄ HẠN", "BẢO DƯỠNG", "NHÂN SỰ",
+            "NHẬN XE HÔM NAY", "TRẢ XE HÔM NAY", "QUÁ HẠN TRẢ",
+            "XE SẴN SÀNG", "Nháp", "Đã xác nhận", "Đang thuê", "Hoàn tất",
         ]
         matches = [label for label in labels if _normal(label) in _normal(body)]
         number_elements = driver.find_elements(By.XPATH, "//main//*[self::span or self::div or self::p]")
@@ -224,22 +224,22 @@ def _dashboard_scenario(driver, key: str) -> str:
     if key == "dashboard_sidebar":
         sidebar = _visible(driver, "//aside | //ul[@role='menu']")
         text = sidebar.text
-        _assert_contains(text, ["Dashboard", "Đặt xe", "Xe", "Danh mục xe", "Tài chính", "Người dùng"])
-        links = sidebar.find_elements(By.XPATH, ".//a[@href]")
-        hrefs = [link.get_attribute("href") for link in links]
-        if len([href for href in hrefs if href]) < 6:
-            raise ScenarioFailure("Menu chưa có đủ href điều hướng")
+        _assert_contains(text, ["Tổng quan", "Đơn thuê", "Khách hàng", "Xe", "Danh mục xe", "Tài chính", "Nhân sự"])
+        items = sidebar.find_elements(By.XPATH, ".//li[@role='menuitem' and @data-menu-id]")
+        route_ids = [item.get_attribute("data-menu-id") for item in items]
+        if len([route_id for route_id in route_ids if route_id]) < 7:
+            raise ScenarioFailure("Menu chưa có đủ item điều hướng")
         _highlight(driver, sidebar)
-        return " | ".join(hrefs)
+        return " | ".join(route_ids)
 
     button = _clickable(
         driver,
-        "//main//button[contains(.,'Tạo booking')] | //main//a[contains(.,'Tạo booking')]",
+        "//main//button[normalize-space()='Tạo đơn thuê'] | //main//a[normalize-space()='Tạo đơn thuê']",
     )
     _highlight(driver, button)
     button.click()
     WebDriverWait(driver, 12).until(
-        lambda d: "booking" in d.current_url.lower()
+        lambda d: "booking" in d.current_url.lower() or "bookings" in d.current_url.lower()
     )
     return driver.current_url
 
@@ -319,11 +319,11 @@ def _booking_scenario(driver, key: str) -> str:
 def _fleet_scenario(driver, key: str) -> str:
     if key == "fleet_table_headers":
         actual = _table_headers(driver)
-        _assert_contains(actual, ["Ảnh", "Xe", "Thông số", "Trạng thái", "Mã booking", "Thao tác"])
+        _assert_contains(actual, ["Ảnh", "Xe", "Thông số", "Trạng thái", "Đơn đang thuê", "Thao tác"])
         return actual
 
     if key == "fleet_dependent_model":
-        add = _clickable(driver, "//button[contains(.,'Thêm xe mới')]")
+        add = _clickable(driver, "//button[contains(normalize-space(.),'Thêm xe')]")
         _highlight(driver, add); add.click(); time.sleep(1.5)
         form = _visible(driver, "//form | //div[contains(@class,'ant-modal') and not(contains(@style,'display: none'))]")
         combos = form.find_elements(By.XPATH, ".//*[@role='combobox']")
@@ -352,7 +352,7 @@ def _fleet_scenario(driver, key: str) -> str:
         edit = _clickable(driver, "(//tbody//button[contains(@aria-label,'Chỉnh sửa') or contains(@title,'Sửa')])[1]")
         _highlight(driver, edit); edit.click(); time.sleep(1.5)
         form_text = _visible(driver, "//form | //div[contains(@class,'ant-modal') and not(contains(@style,'display: none'))]").text
-        _assert_contains(form_text, ["Đời", "Màu", "Nhiên liệu"])
+        _assert_contains(form_text, ["Năm", "Màu", "Nhiên liệu"])
         _cancel_dialog(driver)
         return form_text
 
@@ -367,7 +367,7 @@ def _fleet_scenario(driver, key: str) -> str:
     if key == "fleet_stats":
         body = _body_text(driver)
         values = []
-        for label in ("Tổng số xe", "Sẵn sàng hôm nay", "Đang bảo dưỡng"):
+        for label in ("Tất cả xe", "Sẵn sàng hôm nay", "Đang bảo dưỡng"):
             label_element = _visible(driver, f"//*[contains(normalize-space(.),'{label}')][1]")
             candidates = label_element.find_elements(By.XPATH, "following::*[position() <= 12]")
             number = next(
@@ -392,7 +392,11 @@ def _fleet_scenario(driver, key: str) -> str:
         if "đang thuê" in _normal(text) and re.search(r"BK-[A-Z0-9-]+", text, re.I):
             _highlight(driver, row)
             return text
-    raise ScenarioFailure("Không thấy xe Đang thuê có mã BK-")
+    raise ScenarioFailure(
+        "Không thấy xe nào ở trạng thái 'Đang thuê' có mã booking (BK-...) trong "
+        "dữ liệu hiện tại. Đây là assertion phụ thuộc dữ liệu: cần có ít nhất 1 xe "
+        "đang được thuê (tạo qua module Đặt xe) tại thời điểm chạy để kiểm tra được."
+    )
 
 
 def _catalog_scenario(case: dict) -> dict | None:
