@@ -26,6 +26,12 @@ _EXPECTED_COLUMNS = {
 }
 _PCM_COLUMNS = {"ma pcm", "pcm", "pcm id"}
 
+_ACTION_COLUMNS = {"action", "hanh dong", "thao tac"}
+_LOCATOR_TYPE_COLUMNS = {"locator type", "loai locator"}
+_LOCATOR_VALUE_COLUMNS = {"locator value", "locator", "gia tri locator"}
+_TEST_DATA_COLUMNS = {"data", "du lieu", "test data", "input"}
+_TARGET_URL_COLUMNS = {"url", "target url", "duong dan", "link"}
+
 _PCM_PAGE_KEYS = {
     "PCM-01": "plt_login",
     "PCM-02": "plt_dashboard",
@@ -120,6 +126,19 @@ def _infer_page_key(*values: str) -> str:
     return ""
 
 
+def _resolve_pom_locator(loc_value: str) -> tuple[str, str]:
+    if "." not in loc_value:
+        return "", loc_value
+    try:
+        class_name, attr_name = loc_value.split(".", 1)
+        if class_name == "DashboardLocators":
+            from locators.dashboard_locators import DashboardLocators
+            if hasattr(DashboardLocators, attr_name):
+                return getattr(DashboardLocators, attr_name)
+    except Exception as e:
+        pass
+    return "", loc_value
+
 def _cases_from_frame(frame: pd.DataFrame, sheet_name: str) -> list[dict]:
     frame = _promote_header_if_needed(frame)
     if frame.empty:
@@ -135,6 +154,12 @@ def _cases_from_frame(frame: pd.DataFrame, sheet_name: str) -> list[dict]:
     area_column = _find_column(columns, _AREA_COLUMNS)
     expected_column = _find_column(columns, _EXPECTED_COLUMNS)
     pcm_column = _find_column(columns, _PCM_COLUMNS)
+    
+    action_column = _find_column(columns, _ACTION_COLUMNS)
+    loc_type_column = _find_column(columns, _LOCATOR_TYPE_COLUMNS)
+    loc_value_column = _find_column(columns, _LOCATOR_VALUE_COLUMNS)
+    data_column = _find_column(columns, _TEST_DATA_COLUMNS)
+    url_column = _find_column(columns, _TARGET_URL_COLUMNS)
 
     cases = []
     for _, row in frame.iterrows():
@@ -150,17 +175,37 @@ def _cases_from_frame(frame: pd.DataFrame, sheet_name: str) -> list[dict]:
         # the header.  It has no usable case data and must not appear in the UI.
         if not any((title, area, expected, pcm_code)):
             continue
+            
+        action = _clean_cell(row.get(action_column)) if action_column is not None else ""
+        loc_type = _clean_cell(row.get(loc_type_column)) if loc_type_column is not None else ""
+        loc_value = _clean_cell(row.get(loc_value_column)) if loc_value_column is not None else ""
+        test_data = _clean_cell(row.get(data_column)) if data_column is not None else ""
+        target_url = _clean_cell(row.get(url_column)) if url_column is not None else ""
 
-        cases.append(
-            {
-                "tc_id": tc_id,
-                "title": title,
-                "area": area,
-                "expected": expected,
-                "page_key": _infer_page_key(pcm_code, tc_id, area, title, sheet_name),
-                "source_sheet": sheet_name,
-            }
-        )
+        if loc_type.lower() == "pom":
+            loc_type, loc_value = _resolve_pom_locator(loc_value)
+
+        case_dict = {
+            "tc_id": tc_id,
+            "title": title,
+            "area": area,
+            "expected": expected,
+            "page_key": _infer_page_key(pcm_code, tc_id, area, title, sheet_name),
+            "source_sheet": sheet_name,
+        }
+        
+        if action:
+            case_dict["action_type"] = action
+        if loc_type:
+            case_dict["locator_type"] = loc_type
+        if loc_value:
+            case_dict["locator_value"] = loc_value
+        if test_data:
+            case_dict["expected_result"] = test_data
+        if target_url:
+            case_dict["url"] = target_url
+
+        cases.append(case_dict)
     return cases
 
 

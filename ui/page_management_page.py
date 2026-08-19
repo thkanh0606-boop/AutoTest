@@ -1,6 +1,5 @@
 import copy
 import re
-from html import escape
 from PySide6.QtCore import QByteArray, QObject, Qt, Signal
 from PySide6.QtGui import QIcon, QPainter, QPixmap
 from PySide6.QtSvg import QSvgRenderer
@@ -207,6 +206,10 @@ class AddElementDialog(QDialog):
         self.setStyleSheet("""
             QDialog { background-color: #ffffff; }
             QLabel { font-weight: bold; color: #334155; }
+            QMessageBox { background: white; }
+            QMessageBox QLabel { color: #334155; font-weight: normal; }
+            QMessageBox QPushButton { background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; min-width: 60px; padding: 5px 12px; }
+            QMessageBox QPushButton:hover { background: #cbd5e1; }
             QLineEdit, QComboBox, QTextEdit {
                 border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px; font-size: 13px;
                 color: #0f172a; width: 100%;
@@ -939,33 +942,8 @@ class PageManagementPage(QWidget):
 
         badge_color = '#16a34a' if is_passed else '#dc2626'
 
-        comparison_rows = payload.get('pairs') or []
-        if not comparison_rows:
-            comparison_rows = [
-                {
-                    'expected': payload.get('expected', ''),
-                    'actual': payload.get('actual', ''),
-                    'status': 'PASS' if is_passed else 'FAIL',
-                }
-            ]
-
-        comparison_html = ''
-        for item in comparison_rows:
-            result_value = str(item.get('status', '')).upper()
-            result_color = '#16a34a' if result_value == 'PASS' else '#dc2626'
-            comparison_html += f"""
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #e2e8f0; vertical-align: top; color:#0284c7;">
-                        {self._format_plt_value(escape(str(item.get('expected', ''))))}
-                    </td>
-                    <td style="padding: 8px; border: 1px solid #e2e8f0; vertical-align: top; color:#0f172a;">
-                        {self._format_plt_value(escape(str(item.get('actual', ''))))}
-                    </td>
-                    <td style="padding: 8px; border: 1px solid #e2e8f0; vertical-align: top; font-weight: 800; color:{result_color};">
-                        {escape(result_value)}
-                    </td>
-                </tr>
-            """
+        exp_formatted = self._format_plt_value(payload.get('expected', ''))
+        act_formatted = self._format_plt_value(payload.get('actual', ''))
 
         html = f"""
         <div style="font-size: 13px; line-height: 1.6; color: #0f172a;">
@@ -990,16 +968,14 @@ class PageManagementPage(QWidget):
                     <td style="color: #475569; font-weight: bold;">Locator Value:</td>
                     <td style="font-weight: normal;"><code>{payload.get('locator_value', '-')}</code></td>
                 </tr>
-            </table>
-            <table border="0" style="width: 100%; border-collapse: collapse; margin-top: 10px; background: #ffffff;">
-                <thead>
-                    <tr>
-                        <th style="padding: 8px; border: 1px solid #cbd5e1; background:#f1f5f9; text-align:left;">Expected Result</th>
-                        <th style="padding: 8px; border: 1px solid #cbd5e1; background:#f1f5f9; text-align:left;">Actual Result</th>
-                        <th style="padding: 8px; border: 1px solid #cbd5e1; background:#f1f5f9; text-align:left;">Result</th>
-                    </tr>
-                </thead>
-                <tbody>{comparison_html}</tbody>
+                <tr>
+                    <td style="color: #475569; font-weight: bold; vertical-align: top;">PLT Expected:</td>
+                    <td style="font-weight: normal; color: #0284c7;">{exp_formatted}</td>
+                </tr>
+                <tr>
+                    <td style="color: #475569; font-weight: bold; vertical-align: top;">PLT Actual:</td>
+                    <td style="font-weight: normal; color: #0f172a;">{act_formatted}</td>
+                </tr>
             </table>
         """
 

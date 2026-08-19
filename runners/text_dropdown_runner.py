@@ -5,7 +5,6 @@ import os
 import re
 import sys
 import time
-from datetime import datetime
 from io import StringIO
 
 from selenium.common.exceptions import (
@@ -718,78 +717,6 @@ def _compare_contains_all_has_number(
 
 
 # =========================================================
-# DATE
-# =========================================================
-
-def _vietnamese_today_text(now: datetime | None = None) -> str:
-
-    current = now or datetime.now()
-
-    return (
-        f"{current.day} thg "
-        f"{current.month}, "
-        f"{current.year}"
-    )
-
-
-def _compare_today_vi_date(
-    actual: str,
-    trim: bool = True,
-    case_sensitive: bool = True,
-):
-
-    expected_parts = [
-        "Hôm nay",
-        _vietnamese_today_text(),
-    ]
-
-    actual_compare = _normalize_text(
-        actual,
-        trim=trim,
-        case_sensitive=case_sensitive,
-    )
-
-    pairs = []
-
-    for index, expected_part in enumerate(
-        expected_parts,
-        start=1,
-    ):
-
-        expected_compare = _normalize_text(
-            expected_part,
-            trim=trim,
-            case_sensitive=case_sensitive,
-        )
-
-        matched = expected_compare in actual_compare
-
-        pairs.append(
-            {
-                "index": index,
-                "expected": expected_part,
-                "actual": actual,
-                "status": (
-                    "PASS"
-                    if matched
-                    else "FAIL"
-                ),
-            }
-        )
-
-    status = (
-        "PASSED"
-        if all(
-            pair["status"] == "PASS"
-            for pair in pairs
-        )
-        else "FAILED"
-    )
-
-    return status, pairs
-
-
-# =========================================================
 # NAVIGATION
 # =========================================================
 
@@ -1188,7 +1115,6 @@ def _wait_find_element(
     page_key: str = "",
     timeout: float = None,
     require_visible: bool = True,
-    allow_booking_form_fallback: bool = False,
     _retried_after_form_open: bool = False,
 ):
     """
@@ -1196,10 +1122,10 @@ def _wait_find_element(
     fail luôn ném SeleniumTestError với message sạch, kèm URL/title/
     login-state để debug - thay vì để lộ stacktrace chromedriver.
 
-    Booking Form self-healing chỉ được phép khi caller explicitly
-    truyền allow_booking_form_fallback=True. Không suy luận fallback
-    chỉ từ page_key="plt_booking", vì finder này được dùng chung cho
-    MENU/LABEL/IMAGE/TABLE và các test trang danh sách.
+    Với page_key="plt_booking": nếu lần tìm đầu tiên timeout, tự
+    động thử mở form "Tạo đơn thuê" (các field booking chỉ tồn tại
+    trên route con /bookings/new) rồi thử lại một lần trước khi báo
+    lỗi thật.
     """
 
     timeout = timeout or Config.EXPLICIT_WAIT
@@ -1232,7 +1158,7 @@ def _wait_find_element(
         # ---------------------------------------------------
 
         if (
-            allow_booking_form_fallback
+            page_key == "plt_booking"
             and not _retried_after_form_open
         ):
 
@@ -1250,7 +1176,6 @@ def _wait_find_element(
                     page_key=page_key,
                     timeout=timeout,
                     require_visible=require_visible,
-                    allow_booking_form_fallback=allow_booking_form_fallback,
                     _retried_after_form_open=True,
                 )
 
@@ -1483,38 +1408,6 @@ def _is_booking_page(
     )
 
 
-def _is_booking_form_fallback_allowed(
-    module: str,
-    page_key: str,
-    element_key: str,
-) -> bool:
-    """
-    Booking Form fallback must be opt-in.
-
-    The generic element finder is shared by MENU/LABEL/IMAGE/TABLE/etc.
-    It must never infer that a missing element means the Booking Form
-    should be opened just because page_key == "plt_booking".
-
-    Only elements explicitly belonging to the booking create form may
-    use the fallback:
-      - booking_create_* labels
-      - booking_* input fields
-      - booking_* dropdowns
-    """
-    if page_key != "plt_booking":
-        return False
-
-    key = (element_key or "").strip().lower()
-
-    if module == "label":
-        return key.startswith("booking_create_")
-
-    if module in ("input", "dropdown"):
-        return key.startswith("booking_")
-
-    return False
-
-
 def _is_booking_dropdown(
     module: str,
     page_key: str,
@@ -1545,349 +1438,79 @@ def _booking_dropdown_log_name(
 # WAIT ANT DESIGN OPTIONS
 # =========================================================
 
-def _is_really_visible(element):
-    """Kiểm tra element có thực sự hiển thị trên màn hình."""
-
-    try:
-        if not element.is_displayed():
-            return False
-
-        return bool(
-            element.parent.execute_script(
-                """
-                const el = arguments[0];
-                const rect = el.getBoundingClientRect();
-                const style = window.getComputedStyle(el);
-
-                return (
-                    rect.width > 0 &&
-                    rect.height > 0 &&
-                    style.display !== 'none' &&
-                    style.visibility !== 'hidden' &&
-                    style.opacity !== '0'
-                );
-                """,
-                element,
-            )
-        )
-
-    except Exception:
-        try:
-            return bool(element.is_displayed())
-        except Exception:
-            return False
-
-
-def _get_visible_booking_options(driver):
+def _get_visible_booking_options(
+    driver
+):
     """
-    Đọc option của Ant Design Select trên trang Quản lý đặt xe.
-
-    HTML thực tế của PLT booking có dạng:
-
-        <input id="carId"
-               role="combobox"
-               aria-expanded="true" />
-
-        <div class="ant-select-item ant-select-item-option">
-            <div class="ant-select-item-option-content">
-                ...
-            </div>
-        </div>
-
-    Ant Design render dropdown bằng portal nên option KHÔNG nằm trong
-    element input. Vì vậy phải tìm từ driver trên toàn document.
-
-    Không phụ thuộc vào class:
-        .ant-select-dropdown-hidden
-
-    vì class wrapper của Ant Design có thể thay đổi giữa phiên bản.
+    Ant Design render dropdown ở portal (thường append vào cuối
+    <body>), KHÔNG nằm trong DOM con của input. Vì vậy luôn tìm bằng
+    driver.find_elements(...) (toàn document), không dùng
+    element.find_elements(...).
     """
 
     selectors = [
-        # -----------------------------------------------------
-        # 1. Selector chính xác theo HTML thực tế của booking
-        # -----------------------------------------------------
-        ".ant-select-item.ant-select-item-option",
 
-        # -----------------------------------------------------
-        # 2. Fallback theo content
-        # -----------------------------------------------------
-        ".ant-select-item-option-content",
+        # Ant Design
+        (
+            ".ant-select-dropdown:not("
+            ".ant-select-dropdown-hidden"
+            ") "
+            ".ant-select-item-option-content"
+        ),
 
-        # -----------------------------------------------------
-        # 3. rc-select
-        # -----------------------------------------------------
-        ".rc-select-item-option",
-        ".rc-virtual-list-holder-inner .ant-select-item-option",
+        # Ant Design role option
+        (
+            ".ant-select-dropdown:not("
+            ".ant-select-dropdown-hidden"
+            ") "
+            "[role='option']"
+        ),
 
-        # -----------------------------------------------------
-        # 4. Generic role
-        # -----------------------------------------------------
-        "[role='listbox'] [role='option']",
-        "[role='option']",
+        # Generic listbox
+        (
+            "[role='listbox']:not("
+            "[aria-hidden='true'"
+            "]) "
+            "[role='option']"
+        ),
+
+        # Generic option
+        (
+            "[role='option']"
+        ),
     ]
 
     for selector in selectors:
 
-        try:
-            elements = driver.find_elements(
-                By.CSS_SELECTOR,
-                selector,
-            )
-        except Exception:
-            continue
+        elements = driver.find_elements(
+            By.CSS_SELECTOR,
+            selector,
+        )
 
         visible = []
-        seen_text = set()
 
         for element in elements:
 
             try:
-                if not _is_really_visible(element):
-                    continue
 
-                # Không lấy option bị disabled nếu có.
-                aria_disabled = (
-                    element.get_attribute("aria-disabled")
-                    or ""
-                ).strip().lower()
+                if element.is_displayed():
 
-                if aria_disabled == "true":
-                    continue
+                    text = (
+                        element.text or ""
+                    ).strip()
 
-                text = (
-                    element.text or ""
-                ).strip()
+                    if text:
+                        visible.append(
+                            element
+                        )
 
-                if not text:
-                    continue
-
-                # Nếu selector bắt cả parent và content thì loại duplicate.
-                normalized = " ".join(text.split())
-
-                if normalized in seen_text:
-                    continue
-
-                seen_text.add(normalized)
-                visible.append(element)
-
-            except (
-                StaleElementReferenceException,
-                WebDriverException,
-            ):
-                continue
             except Exception:
                 continue
 
         if visible:
-            logger.info(
-                "[BOOKING DROPDOWN] Found %s visible options using selector=%s",
-                len(visible),
-                selector,
-            )
-
-            for index, option in enumerate(
-                visible,
-                start=1,
-            ):
-                try:
-                    logger.info(
-                        "[BOOKING DROPDOWN] option[%s]=%s",
-                        index,
-                        (option.text or "").strip(),
-                    )
-                except Exception:
-                    pass
-
             return visible
 
     return []
-
-
-def _get_booking_combobox_state(driver, target):
-    """Lấy trạng thái aria-expanded của combobox."""
-
-    try:
-        expanded = (
-            target.get_attribute("aria-expanded")
-            or ""
-        ).strip().lower()
-
-        return expanded
-
-    except (
-        StaleElementReferenceException,
-        WebDriverException,
-    ):
-        return ""
-
-
-def _find_ant_select_container(target):
-    """
-    Từ input[role=combobox] tìm wrapper .ant-select gần nhất.
-
-    HTML thực tế:
-        .ant-select
-          -> .ant-select-content
-             -> input[role=combobox]
-    """
-
-    try:
-        return target.find_element(
-            By.XPATH,
-            "ancestor::div[contains(concat(' ', normalize-space(@class), ' '), ' ant-select ')][1]",
-        )
-    except Exception:
-        return None
-
-
-def _click_booking_ant_select(driver, target, wait):
-    """
-    Mở Ant Design Select theo nhiều lớp fallback:
-
-    1. Click input role=combobox.
-    2. Kiểm tra aria-expanded.
-    3. Nếu chưa mở -> click wrapper .ant-select.
-    4. Nếu vẫn chưa mở -> JavaScript click wrapper/input.
-    5. Sau mỗi bước kiểm tra option thực tế.
-
-    Trả về True nếu dropdown đã mở hoặc option đã xuất hiện.
-    """
-
-    def opened(browser):
-        state = _get_booking_combobox_state(
-            browser,
-            target,
-        )
-
-        if state == "true":
-            return True
-
-        return bool(
-            _get_visible_booking_options(browser)
-        )
-
-    # -----------------------------------------------------
-    # 1. Click input
-    # -----------------------------------------------------
-
-    try:
-        wait.until(
-            lambda browser: (
-                target.is_displayed()
-                and target.is_enabled()
-            )
-        )
-
-        target.click()
-
-        try:
-            WebDriverWait(
-                driver,
-                min(3, Config.EXPLICIT_WAIT),
-            ).until(opened)
-
-            logger.info(
-                "[BOOKING DROPDOWN] Input click mở dropdown thành công."
-            )
-            return True
-
-        except TimeoutException:
-            logger.warning(
-                "[BOOKING DROPDOWN] Input click không làm dropdown mở."
-            )
-
-    except Exception as error:
-        logger.warning(
-            "[BOOKING DROPDOWN] Input click failed: %s",
-            _clean_exception_message(error),
-        )
-
-    # -----------------------------------------------------
-    # 2. Click wrapper .ant-select
-    # -----------------------------------------------------
-
-    container = _find_ant_select_container(target)
-
-    if container is not None:
-        try:
-            wait.until(
-                lambda browser: container.is_displayed()
-            )
-
-            container.click()
-
-            try:
-                WebDriverWait(
-                    driver,
-                    min(3, Config.EXPLICIT_WAIT),
-                ).until(opened)
-
-                logger.info(
-                    "[BOOKING DROPDOWN] Wrapper .ant-select mở dropdown thành công."
-                )
-                return True
-
-            except TimeoutException:
-                logger.warning(
-                    "[BOOKING DROPDOWN] Wrapper click chưa mở dropdown."
-                )
-
-        except Exception as error:
-            logger.warning(
-                "[BOOKING DROPDOWN] Wrapper click failed: %s",
-                _clean_exception_message(error),
-            )
-
-    # -----------------------------------------------------
-    # 3. JavaScript click wrapper
-    # -----------------------------------------------------
-
-    js_targets = []
-
-    if container is not None:
-        js_targets.append(
-            ("wrapper", container)
-        )
-
-    js_targets.append(
-        ("input", target)
-    )
-
-    for name, candidate in js_targets:
-
-        try:
-            driver.execute_script(
-                "arguments[0].click();",
-                candidate,
-            )
-
-            try:
-                WebDriverWait(
-                    driver,
-                    min(3, Config.EXPLICIT_WAIT),
-                ).until(opened)
-
-                logger.info(
-                    "[BOOKING DROPDOWN] JS click %s mở dropdown thành công.",
-                    name,
-                )
-                return True
-
-            except TimeoutException:
-                logger.warning(
-                    "[BOOKING DROPDOWN] JS click %s chưa mở dropdown.",
-                    name,
-                )
-
-        except Exception as error:
-            logger.warning(
-                "[BOOKING DROPDOWN] JS click %s failed: %s",
-                name,
-                _clean_exception_message(error),
-            )
-
-    return False
 
 
 # =========================================================
@@ -1910,7 +1533,8 @@ def _read_booking_dropdown(
     )
 
     logger.info(
-        "[BOOKING DROPDOWN] Reading id=%s",
+        "[BOOKING DROPDOWN] "
+        "Reading id=%s",
         element_id,
     )
 
@@ -1919,6 +1543,7 @@ def _read_booking_dropdown(
     # -----------------------------------------------------
 
     try:
+
         driver.execute_script(
             """
             arguments[0].scrollIntoView({
@@ -1928,29 +1553,22 @@ def _read_booking_dropdown(
             """,
             element,
         )
+
     except Exception:
         pass
 
     # -----------------------------------------------------
-    # Lấy đúng input[role=combobox]
+    # Nếu element là input
     # -----------------------------------------------------
 
     target = element
 
     try:
-        tag_name = (
+
+        if (
             element.tag_name or ""
-        ).lower()
+        ).lower() != "input":
 
-        role = (
-            element.get_attribute("role")
-            or ""
-        ).strip().lower()
-
-        if not (
-            tag_name == "input"
-            and role == "combobox"
-        ):
             nested = element.find_elements(
                 By.CSS_SELECTOR,
                 "input[role='combobox']",
@@ -1963,34 +1581,82 @@ def _read_booking_dropdown(
         pass
 
     # -----------------------------------------------------
-    # Thông tin debug
+    # Click
     # -----------------------------------------------------
 
+    clicked = False
+
     try:
-        logger.info(
-            "[BOOKING DROPDOWN] target tag=%s role=%s aria-expanded=%s",
-            target.tag_name,
-            target.get_attribute("role"),
-            target.get_attribute("aria-expanded"),
+
+        wait.until(
+            EC.visibility_of(target)
         )
-    except Exception:
-        pass
+
+        wait.until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    ".",
+                )
+            )
+        )
+
+        target.click()
+
+        clicked = True
+
+    except (
+        ElementClickInterceptedException,
+        StaleElementReferenceException,
+        TimeoutException,
+        WebDriverException,
+    ) as error:
+
+        logger.warning(
+            "[BOOKING DROPDOWN] "
+            "Normal click failed (%s): %s",
+            type(error).__name__,
+            _clean_exception_message(error),
+        )
 
     # -----------------------------------------------------
-    # MỞ DROPDOWN
+    # JS click fallback
     # -----------------------------------------------------
 
-    opened = _click_booking_ant_select(
-        driver,
-        target,
-        wait,
-    )
+    if not clicked:
+
+        try:
+
+            driver.execute_script(
+                "arguments[0].click();",
+                target,
+            )
+
+            clicked = True
+
+        except Exception as error:
+
+            logger.warning(
+                "[BOOKING DROPDOWN] "
+                "JS click failed: %s",
+                _clean_exception_message(error),
+            )
+
+    if not clicked:
+
+        raise SeleniumTestError(
+            "ElementClickInterceptedException: "
+            "Không click được dropdown "
+            f"id={element_id}\n"
+            f"URL={_safe_current_url(driver)}"
+        )
 
     # -----------------------------------------------------
-    # Chờ option lần cuối
+    # Chờ option (KHÔNG dùng sleep)
     # -----------------------------------------------------
 
     try:
+
         options = wait.until(
             lambda browser:
                 _get_visible_booking_options(
@@ -2001,25 +1667,6 @@ def _read_booking_dropdown(
 
     except TimeoutException as error:
 
-        # Debug DOM ngay tại thời điểm timeout.
-        try:
-            aria_expanded = (
-                target.get_attribute(
-                    "aria-expanded"
-                )
-            )
-        except Exception:
-            aria_expanded = "?"
-
-        try:
-            all_options = driver.find_elements(
-                By.CSS_SELECTOR,
-                ".ant-select-item.ant-select-item-option",
-            )
-            all_option_count = len(all_options)
-        except Exception:
-            all_option_count = -1
-
         try:
             capture_screenshot(
                 driver,
@@ -2028,24 +1675,14 @@ def _read_booking_dropdown(
         except Exception:
             pass
 
-        logger.error(
-            "[BOOKING DROPDOWN] Timeout debug: "
-            "opened=%s aria-expanded=%s option_count=%s URL=%s",
-            opened,
-            aria_expanded,
-            all_option_count,
-            _safe_current_url(driver),
-        )
-
         raise SeleniumTestError(
             "TimeoutException: "
-            "Dropdown đã được click nhưng Selenium không đọc được option.\n"
+            "Dropdown đã được click nhưng không thấy option xuất hiện "
+            f"sau {Config.EXPLICIT_WAIT} giây.\n"
             f"id={element_id}\n"
             f"URL={_safe_current_url(driver)}\n"
-            f"aria-expanded={aria_expanded}\n"
-            f"ant-select-option-count={all_option_count}\n"
-            "Kiểm tra log [BOOKING DROPDOWN] để biết dropdown đã mở "
-            "hay option chỉ tồn tại trong DOM nhưng không visible."
+            "Gợi ý: option có thể được load bằng API - kiểm tra "
+            "Network tab xem API có trả dữ liệu không."
         ) from error
 
     # -----------------------------------------------------
@@ -2057,13 +1694,10 @@ def _read_booking_dropdown(
     for option in options:
 
         try:
+
             text = (
                 option.text or ""
             ).strip()
-
-            text = " ".join(
-                text.split()
-            )
 
             if (
                 text
@@ -2081,31 +1715,33 @@ def _read_booking_dropdown(
     # -----------------------------------------------------
 
     if not values:
+
         raise SeleniumTestError(
             "NoSuchElementException: "
-            "Dropdown mở nhưng không đọc được option nào.\n"
+            "Dropdown mở nhưng không đọc được option nào (option "
+            "rỗng hoặc chỉ có khoảng trắng).\n"
             f"id={element_id}"
         )
 
     logger.info(
-        "[BOOKING DROPDOWN] id=%s -> %s options",
+        "[BOOKING DROPDOWN] "
+        "id=%s -> %s options",
         element_id,
         len(values),
     )
 
     # -----------------------------------------------------
-    # Close dropdown an toàn
+    # Close dropdown
     # -----------------------------------------------------
 
     try:
+
         driver.execute_script(
             """
-            const active = document.activeElement;
-            if (active && active.blur) {
-                active.blur();
-            }
+            document.body.click();
             """
         )
+
     except Exception:
         pass
 
@@ -2137,7 +1773,15 @@ def _read_actual(
             driver,
             Config.EXPLICIT_WAIT,
         ).until(
-            EC.element_to_be_clickable(element)
+            EC.element_to_be_clickable(
+                (
+                    _by("css"),
+                    element.get_attribute(
+                        "data-testid"
+                    )
+                    or "#"
+                )
+            )
         )
 
         element.click()
@@ -2359,9 +2003,12 @@ def run_label_text_test(
     persist: bool = True,
     step_delay: float = 0,
     close_delay: float = 0,
+    driver=None,
 ):
 
-    driver = None
+    own_driver = False
+    if driver is None:
+        own_driver = True
 
     repository = TestResultRepository()
 
@@ -2401,10 +2048,11 @@ def run_label_text_test(
         # CREATE DRIVER
         # =================================================
 
-        driver = DriverFactory.create_driver(
-            headless=headless,
-            keep_session=True,
-        )
+        if driver is None:
+            driver = DriverFactory.create_driver(
+                headless=headless,
+                keep_session=True,
+            )
 
         if worker:
 
@@ -2420,7 +2068,9 @@ def run_label_text_test(
         # OPEN URL
         # =================================================
 
-        driver.get(url)
+        current_url = driver.current_url or ""
+        if current_url.rstrip("/") != url.rstrip("/"):
+            driver.get(url)
 
         # Chờ document + app render (React/Ant Design hydration)
         _wait_app_rendered(driver)
@@ -2487,19 +2137,6 @@ def run_label_text_test(
         # exception rõ ràng nếu fail)
         # =================================================
 
-        allow_booking_form_fallback = _is_booking_form_fallback_allowed(
-            module=module,
-            page_key=page_key,
-            element_key=element_key,
-        )
-
-        if module == "menu":
-            logger.info(
-                "[MENU] Booking Form fallback disabled "
-                "for menu test (element_key=%s).",
-                element_key or "",
-            )
-
         element = _wait_find_element(
             driver=driver,
             locator_type=locator_type,
@@ -2509,7 +2146,6 @@ def run_label_text_test(
             element_key=element_key,
             page_key=page_key,
             timeout=Config.EXPLICIT_WAIT,
-            allow_booking_form_fallback=allow_booking_form_fallback,
         )
 
         # =================================================
@@ -2643,34 +2279,6 @@ def run_label_text_test(
                 )
             )
 
-        elif module == "menu" and _normalize_text(
-            expected,
-            trim=trim,
-            case_sensitive=False,
-        ) in (
-            "menu tồn tại",
-            "tồn tại",
-            "exists",
-            "visible",
-        ):
-            # MENU existence checks are structural checks. "Menu tồn tại"
-            # must not be compared literally with the menu item's label.
-            status = (
-                "PASSED"
-                if actual.strip()
-                and _element_is_visible(element)
-                else "FAILED"
-            )
-
-            pairs = [
-                {
-                    "index": 1,
-                    "expected": expected or "Menu tồn tại",
-                    "actual": actual,
-                    "status": "PASS" if status == "PASSED" else "FAIL",
-                }
-            ]
-
         elif action_type in (
             "click_url_contains",
             "deep_link_url_contains",
@@ -2701,16 +2309,6 @@ def run_label_text_test(
             status, pairs = (
                 _compare_contains_all_has_number(
                     expected,
-                    actual,
-                    trim=trim,
-                    case_sensitive=case_sensitive,
-                )
-            )
-
-        elif action_type == "today_vi_date":
-
-            status, pairs = (
-                _compare_today_vi_date(
                     actual,
                     trim=trim,
                     case_sensitive=case_sensitive,
@@ -2985,7 +2583,7 @@ def run_label_text_test(
 
     finally:
 
-        if driver:
+        if driver and own_driver:
 
             if close_delay > 0:
 

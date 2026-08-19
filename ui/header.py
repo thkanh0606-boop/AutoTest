@@ -331,44 +331,16 @@ class Header(QWidget):
         main_layout.addLayout(status_layout)
 
         # Chọn trang chỉ đổi context test + URL, không đổi sang giao diện riêng.
-
-        # ĐANG THEO DÕI current_page_key hợp lệ gần nhất, để KHÔNG BAO
-        # GIỜ phải fallback ngầm về TestContract.pages[0] (plt_dashboard)
-        # khi gặp một tên trang không xác định (vd: do nơi khác lỡ
-        # addItem() một tên trang không có thật vào page_combo).
-        #
-        # Trang mặc định lúc khởi động vẫn là page_combo item đầu
-        # tiên (Trang tổng quan) - đây là default hợp lệ, có chủ đích,
-        # không phải fallback ẩn.
-        first_page = TestContract.pages[0]
-        self._current_page_key = first_page.key
-
         self.page_combo.currentTextChanged.connect(
             self._on_test_page_changed
         )
 
     def _page_context(self, page_name: str):
-        page = self.page_contexts.get(page_name)
-
-        if page is None:
-            # QUAN TRỌNG: KHÔNG được tự động fallback về Dashboard
-            # (hay bất kỳ page nào khác) khi page_name không hợp lệ.
-            # Giữ nguyên page context hợp lệ gần nhất để tránh việc
-            # một tên trang giả/không tồn tại âm thầm kéo toàn bộ
-            # Test Builder về lại Dashboard.
-            page = TestContract.get_page(self._current_page_key)
-
+        page = self.page_contexts.get(page_name) or TestContract.pages[0]
         return page.key, page.url
 
     def _on_test_page_changed(self, page_name: str):
         page_key, url = self._page_context(page_name)
-
-        # Chỉ cập nhật current_page_key khi page_name là một trang
-        # THẬT SỰ tồn tại trong TestContract - không cập nhật theo
-        # kết quả fallback ở trên.
-        if page_name in self.page_contexts:
-            self._current_page_key = page_key
-
         self.url_input.setText(url)
         self.page_changed.emit(page_key, url)
 
