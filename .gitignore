@@ -1,0 +1,19 @@
+venv/
+.venv/
+ENV/
+
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+.vscode/
+.idea/
+
+# File local chứa tài khoản test - KHÔNG push GitHub
+.autotest.env
+
+# Chrome profile/session local
+chrome_profile/
+logs/
+image/*.png

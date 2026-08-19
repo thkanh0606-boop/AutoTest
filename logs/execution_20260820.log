@@ -58,3 +58,3332 @@ Stacktrace:
 	KERNEL32!BaseThreadInitThunk [0x7ffedf92ccb7+17]
 	ntdll!RtlUserThreadStart [0x7ffee040ad6c+2c]
 
+[2026-08-20 00:59:27,516] [INFO] - [DRIVER] Chrome session created OK. browser=chrome browser_version=151.0.7922.138 chromedriver_version=151.0.7922.138 (41fa82442390a4d4456c78f2d69a832d5720cb27-refs/branch-heads/7922@{#2891}) session_id=55ddc6ab0cb69c6cd61539373c1ba988
+[2026-08-20 00:59:27,605] [INFO] - [UI] Opening: https://courses.plt.pro.vn/login
+[2026-08-20 00:59:32,257] [INFO] - [LOGIN] Website yêu cầu đăng nhập.
+[2026-08-20 00:59:39,232] [INFO] - [UI] locator=xpath //header//h3[normalize-space()='Bảng điều khiển vận hành']
+[2026-08-20 00:59:39,257] [INFO] - [FIND] page=Login element=Đăng nhập thành công với Admin locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành'] timeout=15
+[2026-08-20 00:59:43,593] [ERROR] - [SELENIUM ERROR]
+page=Login
+element=Đăng nhập thành công với Admin
+locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:43,596] [ERROR] - [UI] page=Login element=Đăng nhập thành công với Admin
+WebDriverException: Lỗi khi tìm element "Đăng nhập thành công với Admin"
+locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành']
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title)
+chi_tiet=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:43,677] [INFO] - [UI] page=Login element=Đăng nhập thành công với Admin expected= actual=ERROR: WebDriverException: Lỗi khi tìm element "Đăng nhập thành công với Admin"
+locator=xpath://header//h3[normalize-space()='Bảng điều khiển vận hành']
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title)
+chi_tiet=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138) status=ERROR
+[2026-08-20 00:59:43,834] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_01
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:44,048] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_02
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:44,244] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_03
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:44,516] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_04
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:44,742] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_05
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:44,957] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_06
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,153] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_07
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,345] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_08
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,520] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_09
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,781] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_10
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,806] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_11
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,846] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_12
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,894] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_13
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:45,945] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_14
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,027] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_15
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,076] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_16
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,154] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_17
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,211] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_18
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,264] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_19
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,328] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_20
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,399] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_21
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,477] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_22
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,550] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_23
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,627] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_24
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,702] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_25
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,784] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_26
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,887] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_27
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:46,980] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_28
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,073] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_29
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,169] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_30
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,298] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_31
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,446] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_32
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,569] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_33
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,700] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_34
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,820] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_35
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:47,979] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_36
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:48,149] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_37
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:48,341] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_38
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:48,472] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_39
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:48,612] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_40
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:48,737] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_41
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:48,883] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_42
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,016] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_43
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,160] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_44
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,303] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_45
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,520] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_46
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,565] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_47
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,609] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_48
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,659] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_49
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,720] [ERROR] - [SUITE ROUTE ERROR] TC_NAV_50
+Traceback (most recent call last):
+  File "E:\AutoTest\runners\suite_runner.py", line 84, in _run_route_smoke
+    current = driver.current_url or ""
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\lktle\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff75a2fabb5+151b5]
+	chromedriver!GetHandleVerifier [0x7ff75a2fac10+15210]
+	chromedriver!(No symbol) [0x7ff759e25d6d]
+	chromedriver!(No symbol) [0x7ff759dfcc52]
+	chromedriver!(No symbol) [0x7ff759eb10c6]
+	chromedriver!(No symbol) [0x7ff759ece4f2]
+	chromedriver!(No symbol) [0x7ff759e737cc]
+	chromedriver!(No symbol) [0x7ff759e746f3]
+	chromedriver!GetHandleVerifier [0x7ff75a91b79b+635d9b]
+	chromedriver!GetHandleVerifier [0x7ff75a915ac6+6300c6]
+	chromedriver!GetHandleVerifier [0x7ff75a93bcee+6562ee]
+	chromedriver!GetHandleVerifier [0x7ff75a318ffe+335fe]
+	chromedriver!GetHandleVerifier [0x7ff75a32147c+3ba7c]
+	chromedriver!GetHandleVerifier [0x7ff75a304d64+1f364]
+	chromedriver!GetHandleVerifier [0x7ff75a304ef4+1f4f4]
+	chromedriver!GetHandleVerifier [0x7ff75a2e7d97+2397]
+	KERNEL32!BaseThreadInitThunk [0x7ffab51eccb7+17]
+	ntdll!RtlUserThreadStart [0x7ffab65ead6c+2c]
+
+[2026-08-20 00:59:49,844] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:49,895] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 1
+locator=xpath://input[@id='filter-1']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:49,928] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 1 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:50,029] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:50,072] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 1
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:50,091] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 1 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:50,188] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:50,233] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 2
+locator=xpath://input[@id='filter-2']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:50,252] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 2 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:50,359] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:50,410] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 2
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:50,442] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 2 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:50,602] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:50,665] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 3
+locator=xpath://input[@id='filter-3']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:50,691] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 3 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:50,758] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:50,815] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 3
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:50,837] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 3 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:50,978] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:51,022] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 4
+locator=xpath://input[@id='filter-4']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:51,066] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 4 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:51,213] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:51,277] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 4
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:51,325] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 4 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:51,533] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:51,602] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 5
+locator=xpath://input[@id='filter-5']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:51,639] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 5 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:51,850] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:51,961] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 5
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:52,017] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 5 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:52,230] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:52,304] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 6
+locator=xpath://input[@id='filter-6']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:52,390] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 6 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:52,450] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:52,479] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 6
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:52,487] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 6 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:52,551] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:52,605] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 7
+locator=xpath://input[@id='filter-7']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:52,614] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 7 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:52,703] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:52,745] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 7
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:52,775] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 7 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:52,924] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:52,976] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 8
+locator=xpath://input[@id='filter-8']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:52,991] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 8 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:53,147] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:53,192] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 8
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:53,209] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 8 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:53,375] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:53,437] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 9
+locator=xpath://input[@id='filter-9']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:53,453] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 9 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:53,612] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:53,700] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 9
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:53,726] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 9 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:53,867] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:53,916] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 10
+locator=xpath://input[@id='filter-10']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:53,935] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 10 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:54,103] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:54,128] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 10
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:54,190] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 10 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:54,367] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:54,412] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 11
+locator=xpath://input[@id='filter-11']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:54,444] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 11 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:54,661] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:54,742] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 11
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:54,792] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 11 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:55,035] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:55,134] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 12
+locator=xpath://input[@id='filter-12']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:55,143] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 12 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:55,193] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:55,213] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 12
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:55,225] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 12 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:55,272] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:55,304] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 13
+locator=xpath://input[@id='filter-13']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:55,323] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 13 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:55,410] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:55,452] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 13
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:55,464] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 13 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:55,545] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:55,580] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 14
+locator=xpath://input[@id='filter-14']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:55,610] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 14 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:55,724] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:55,768] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 14
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:55,781] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 14 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:55,888] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:55,918] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 15
+locator=xpath://input[@id='filter-15']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:55,923] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 15 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:56,075] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:56,107] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 15
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:56,143] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 15 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:56,271] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:56,324] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 16
+locator=xpath://input[@id='filter-16']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:56,342] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 16 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:56,472] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:56,515] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 16
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:56,548] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 16 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:56,710] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:56,771] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 17
+locator=xpath://input[@id='filter-17']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:56,807] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 17 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:56,958] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:57,003] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 17
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:57,026] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 17 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:57,215] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:57,281] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 18
+locator=xpath://input[@id='filter-18']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:57,313] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 18 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:57,451] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:57,468] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 18
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:57,477] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 18 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:57,532] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:57,549] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 19
+locator=xpath://input[@id='filter-19']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:57,564] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 19 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:57,623] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:57,652] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 19
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:57,664] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 19 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:57,742] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:57,767] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 20
+locator=xpath://input[@id='filter-20']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:57,781] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 20 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:57,875] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:57,910] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 20
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:57,922] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 20 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:58,010] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:58,044] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 21
+locator=xpath://input[@id='filter-21']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:58,073] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 21 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:58,178] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:58,221] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 21
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:58,250] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 21 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:58,350] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:58,390] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 22
+locator=xpath://input[@id='filter-22']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:58,407] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 22 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:58,538] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:58,578] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 22
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:58,593] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 22 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:58,725] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:58,778] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 23
+locator=xpath://input[@id='filter-23']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:58,801] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 23 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:58,943] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:58,984] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 23
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:59,008] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 23 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:59,119] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:59,166] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 24
+locator=xpath://input[@id='filter-24']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:59,203] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 24 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:59,334] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:59,383] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 24
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:59,433] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 24 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:59,624] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:59,643] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 25
+locator=xpath://input[@id='filter-25']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:59,648] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 25 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:59,700] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:59,722] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 25
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:59,731] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 25 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:59,804] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:59,831] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 26
+locator=xpath://input[@id='filter-26']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:59,846] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 26 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 00:59:59,957] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 00:59:59,978] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 26
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 00:59:59,990] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 26 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:00,085] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:00,134] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 27
+locator=xpath://input[@id='filter-27']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:00,147] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 27 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:00,311] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:00,365] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 27
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:00,371] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 27 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:00,564] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:00,607] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 28
+locator=xpath://input[@id='filter-28']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:00,624] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 28 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:00,794] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:00,873] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 28
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:00,897] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 28 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:01,039] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:01,132] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 29
+locator=xpath://input[@id='filter-29']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:01,163] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 29 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:01,324] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:01,406] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 29
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:01,430] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 29 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:01,669] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:01,765] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 30
+locator=xpath://input[@id='filter-30']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:01,788] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 30 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:02,003] [INFO] - [UI] Opening: https://courses.plt.pro.vn/bookings
+[2026-08-20 01:00:02,117] [ERROR] - [SELENIUM ERROR]
+page=Booking
+element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 30
+locator=xpath://button[@id='btn-search']
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:02,123] [INFO] - [UI] page=Booking element=Kiểm tra lọc danh sách chuyến đi - Bộ lọc 30 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:02,192] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:02,221] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-1
+locator=css selector:.car-status-1
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:02,247] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-1 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:02,346] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:02,388] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-2
+locator=css selector:.car-status-2
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:02,405] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-2 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:02,497] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:02,527] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-3
+locator=css selector:.car-status-3
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:02,546] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-3 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:02,682] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:02,740] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-4
+locator=css selector:.car-status-4
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:02,755] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-4 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:02,882] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:02,914] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-5
+locator=css selector:.car-status-5
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:02,943] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-5 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:03,112] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:03,220] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-6
+locator=css selector:.car-status-6
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:03,243] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-6 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:03,390] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:03,440] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-7
+locator=css selector:.car-status-7
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:03,480] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-7 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:03,668] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:03,717] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-8
+locator=css selector:.car-status-8
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:03,742] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-8 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:03,902] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:03,978] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-9
+locator=css selector:.car-status-9
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:04,026] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-9 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:04,190] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:04,262] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-10
+locator=css selector:.car-status-10
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:04,284] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-10 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:04,464] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:04,537] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-11
+locator=css selector:.car-status-11
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:04,608] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-11 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:04,647] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:04,674] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-12
+locator=css selector:.car-status-12
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:04,679] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-12 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:04,723] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:04,753] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-13
+locator=css selector:.car-status-13
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:04,785] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-13 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:04,876] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:04,918] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-14
+locator=css selector:.car-status-14
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:04,939] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-14 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:05,026] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:05,055] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-15
+locator=css selector:.car-status-15
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:05,069] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-15 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:05,179] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:05,224] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-16
+locator=css selector:.car-status-16
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:05,239] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-16 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:05,398] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:05,451] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-17
+locator=css selector:.car-status-17
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:05,472] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-17 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:05,574] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:05,625] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-18
+locator=css selector:.car-status-18
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:05,642] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-18 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:05,769] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:05,822] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-19
+locator=css selector:.car-status-19
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:05,843] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-19 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:06,009] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:06,052] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-20
+locator=css selector:.car-status-20
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:06,101] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-20 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:06,315] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:06,366] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-21
+locator=css selector:.car-status-21
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:06,386] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-21 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:06,607] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:06,776] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-22
+locator=css selector:.car-status-22
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:06,836] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-22 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:07,173] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:07,269] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-23
+locator=css selector:.car-status-23
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:07,316] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-23 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:07,732] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:07,747] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-24
+locator=css selector:.car-status-24
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:07,759] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-24 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:07,846] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:07,885] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-25
+locator=css selector:.car-status-25
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:07,897] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-25 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:08,011] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:08,063] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-26
+locator=css selector:.car-status-26
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:08,071] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-26 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:08,202] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:08,247] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-27
+locator=css selector:.car-status-27
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:08,264] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-27 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:08,403] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:08,462] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-28
+locator=css selector:.car-status-28
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:08,483] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-28 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:08,619] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:08,671] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-29
+locator=css selector:.car-status-29
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:08,700] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-29 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:08,877] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:08,913] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-30
+locator=css selector:.car-status-30
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:08,945] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-30 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:09,163] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:09,235] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-31
+locator=css selector:.car-status-31
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:09,265] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-31 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:09,473] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:09,554] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-32
+locator=css selector:.car-status-32
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:09,589] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-32 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:09,849] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:09,920] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-33
+locator=css selector:.car-status-33
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:09,927] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-33 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:10,279] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:10,371] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-34
+locator=css selector:.car-status-34
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:10,470] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-34 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:10,796] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:11,047] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-35
+locator=css selector:.car-status-35
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:11,168] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-35 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:11,614] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:11,681] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-36
+locator=css selector:.car-status-36
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:11,795] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-36 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:12,166] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:12,295] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-37
+locator=css selector:.car-status-37
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:12,367] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-37 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:12,862] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:12,987] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-38
+locator=css selector:.car-status-38
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:13,048] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-38 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:13,532] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:13,722] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-39
+locator=css selector:.car-status-39
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:13,801] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-39 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
+[2026-08-20 01:00:14,241] [INFO] - [UI] Opening: https://courses.plt.pro.vn/cars
+[2026-08-20 01:00:14,407] [ERROR] - [SELENIUM ERROR]
+page=Fleet
+element=Kiểm tra trạng thái xe ID-40
+locator=css selector:.car-status-40
+url=(không lấy được URL - session có thể đã chết)
+exception_type=WebDriverException
+message=no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+[2026-08-20 01:00:14,502] [INFO] - [UI] page=Fleet element=Kiểm tra trạng thái xe ID-40 expected= actual=ERROR: WebDriverException: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=151.0.7922.138)
+URL=(không lấy được URL - session có thể đã chết)
+page_title=(không lấy được title) status=ERROR
