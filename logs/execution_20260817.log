@@ -1,8 +1,0 @@
-[2026-08-17 08:10:45,863] [INFO] - [DROPDOWN] Opening: https://courses.plt.pro.vn/dashboard
-[2026-08-17 08:10:54,005] [INFO] - [DRIVER] Chrome session created OK. browser=chrome browser_version=151.0.7922.138 chromedriver_version=151.0.7922.138 (41fa82442390a4d4456c78f2d69a832d5720cb27-refs/branch-heads/7922@{#2891}) session_id=cae2bd2f74b49fe1e8beb874cf6a35fa
-[2026-08-17 08:10:55,561] [INFO] - [LOGIN] Website yêu cầu đăng nhập.
-[2026-08-17 08:11:00,196] [INFO] - [DROPDOWN] locator=css .ant-select
-[2026-08-17 08:11:00,200] [INFO] - [FIND] page=Dashboard element=Dropdown ngôn ngữ locator=css:.ant-select timeout=15
-[2026-08-17 08:11:11,841] [INFO] - [DROPDOWN] page=Dashboard element=Dropdown ngôn ngữ expected=English
-Tiếng Việt actual=English
-Tiếng Việt status=PASSED
