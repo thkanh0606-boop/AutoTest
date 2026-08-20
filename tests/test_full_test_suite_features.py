@@ -1,7 +1,6 @@
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from openpyxl import load_workbook
 import pytest
 
 from core.suite_loader import dashboard_regression_cases, demo_7_module_cases
@@ -167,9 +166,6 @@ def test_excel_and_html_reports_contain_summary_and_details():
             "case_id": "DEMO-01", "title": "Login", "module": "Đăng nhập",
             "page_key": "plt_login", "expected": "/login", "actual": "/login",
             "status": "PASSED", "message": "OK", "log_text": "OPEN /login",
-            "comparison_json": (
-                '[{"expected":"/login","actual":"/login","status":"PASS"}]'
-            ),
         },
     )
     run = repository.finish_suite_run(run_id)
@@ -183,8 +179,4 @@ def test_excel_and_html_reports_contain_summary_and_details():
 
     assert "TEST SUITE REPORT" in html_path.read_text(encoding="utf-8")
     assert "DEMO-01" in html_path.read_text(encoding="utf-8")
-    assert "Expected Result" in html_path.read_text(encoding="utf-8")
-    assert "Actual Result" in html_path.read_text(encoding="utf-8")
     assert excel_path.stat().st_size > 1000
-    workbook = load_workbook(excel_path)
-    assert "Comparison" in workbook.sheetnames

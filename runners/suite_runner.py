@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import time
 from datetime import datetime
 from pathlib import Path
@@ -50,26 +49,44 @@ def _run_page_open_check(page_key: str) -> tuple[bool, str]:
     return payload["status"] == "PASSED", payload["message"]
 
 
-def _run_route_smoke(case: dict, stop_requested=None) -> dict:
+def _run_route_smoke(case: dict, stop_requested=None, driver=None) -> dict:
     """Validate route and visible DOM; opening Chrome alone is never a PASS."""
     from core.driver_factory import DriverFactory
 
     started = datetime.now()
     started_at = started.isoformat(timespec="seconds")
-    driver = None
+
+    own_driver = False
+    if driver is None:
+        own_driver = True
+
     screenshot_path = ""
     actual = ""
     error_message = ""
     status = "ERROR"
     message = "Không thể khởi chạy kiểm tra trang"
-    target_url = case.get("url") or _page_url(case.get("page_key", ""))
+    raw_url = case.get("url")
+    if raw_url and raw_url.startswith("/"):
+        parsed = urlparse(Config.BASE_URL)
+        base = f"{parsed.scheme}://{parsed.netloc}"
+        target_url = base + raw_url
+    else:
+        target_url = raw_url or _page_url(case.get("page_key", ""))
+        
     target_path = case.get("target_path") or urlparse(target_url).path
 
     try:
         keep_session = case.get("page_key") != "plt_login"
-        driver = DriverFactory.create_driver(headless=False, keep_session=keep_session)
-        driver.get(target_url)
-        time.sleep(_PAGE_LOAD_DELAY)
+        if driver is None:
+            driver = DriverFactory.create_driver(headless=False, keep_session=keep_session)
+        
+        # Check if already at target URL to save time
+        current = driver.current_url or ""
+        if current.rstrip("/") != target_url.rstrip("/"):
+            driver.get(target_url)
+            time.sleep(_PAGE_LOAD_DELAY)
+        else:
+            time.sleep(_ACTION_DELAY)
         if stop_requested and stop_requested():
             status = "SKIPPED"
             message = "Đã dừng trước khi assertion"
@@ -102,7 +119,7 @@ def _run_route_smoke(case: dict, stop_requested=None) -> dict:
         if driver:
             screenshot_path = capture_screenshot(driver, case.get("tc_id", "route_smoke"))
     finally:
-        if driver:
+        if driver and own_driver:
             time.sleep(_CLOSE_DELAY)
             driver.quit()
 
@@ -154,6 +171,8 @@ class SuiteWorker(QThread):
         self._is_stopped = False
 
     def run(self):
+        from core.driver_factory import DriverFactory
+        shared_driver = None
         repository = TestResultRepository(self.db_path)
         total = len(self.cases)
         self.run_id = repository.start_suite_run(
@@ -163,6 +182,11 @@ class SuiteWorker(QThread):
         self.progress_signal.emit(0, total, "[SUITE] Bắt đầu chạy...")
 
         try:
+            try:
+                shared_driver = DriverFactory.create_driver(headless=False, keep_session=True)
+            except Exception as e:
+                logger.warning(f"Shared driver init failed, fallback to per-case driver: {e}")
+
             for index, case in enumerate(self.cases):
                 if self._is_stopped:
                     break
@@ -170,7 +194,7 @@ class SuiteWorker(QThread):
                 tc_id = case.get("tc_id", f"Case-{index + 1}")
                 self.progress_signal.emit(index, total, f"Đang chạy {tc_id}...")
                 try:
-                    payload = self._run_case(case)
+                    payload = self._run_case(case, driver=shared_driver)
                 except Exception as error:
                     logger.exception("[SUITE CASE ERROR] %s", tc_id)
                     now = datetime.now().isoformat(timespec="seconds")
@@ -207,6 +231,11 @@ class SuiteWorker(QThread):
             self.summary_signal.emit(summary)
             self.progress_signal.emit(0, total, f"[LỖI] {error}")
         finally:
+            if shared_driver:
+                try:
+                    shared_driver.quit()
+                except Exception:
+                    pass
             self.finished_signal.emit()
 
     def _base_payload(self, case: dict, **updates) -> dict:
@@ -222,7 +251,6 @@ class SuiteWorker(QThread):
             "error_message": "",
             "screenshot_path": "",
             "log_text": "",
-            "comparison_json": "",
             "started_at": datetime.now().isoformat(timespec="seconds"),
             "finished_at": datetime.now().isoformat(timespec="seconds"),
             "duration_ms": 0,
@@ -230,14 +258,14 @@ class SuiteWorker(QThread):
         payload.update(updates)
         return payload
 
-    def _run_case(self, case: dict) -> dict:
+    def _run_case(self, case: dict, driver=None) -> dict:
         if case.get("action_type") == "pcm_scenario":
             from runners.pcm_suite_runner import run_pcm_scenario
 
-            return run_pcm_scenario(case, stop_requested=lambda: self._is_stopped)
+            return run_pcm_scenario(case, stop_requested=lambda: self._is_stopped, driver=driver)
 
         if case.get("action_type") == "route_smoke":
-            return _run_route_smoke(case, stop_requested=lambda: self._is_stopped)
+            return _run_route_smoke(case, stop_requested=lambda: self._is_stopped, driver=driver)
 
         locator_value = case.get("locator_value", "")
         locator_type = case.get("locator_type", "")
@@ -255,10 +283,20 @@ class SuiteWorker(QThread):
         started = datetime.now()
         module = case.get("test_type") or case.get("module_type") or "ui"
         page_key = case.get("page_key", "")
+        
+        raw_url = case.get("url")
+        if raw_url and raw_url.startswith("/"):
+            from urllib.parse import urlparse
+            parsed = urlparse(Config.BASE_URL)
+            base = f"{parsed.scheme}://{parsed.netloc}"
+            safe_url = base + raw_url
+        else:
+            safe_url = raw_url or _page_url(page_key)
+            
         payload = run_label_text_test(
             worker=None,
             module=module,
-            url=case.get("url") or _page_url(page_key),
+            url=safe_url,
             page_key=page_key,
             page_name=case.get("module") or case.get("area", ""),
             element_key=case.get("element_key") or case.get("tc_id", ""),
@@ -275,6 +313,7 @@ class SuiteWorker(QThread):
             persist=False,
             step_delay=_ACTION_DELAY,
             close_delay=_CLOSE_DELAY,
+            driver=driver,
         )
         finished = datetime.now()
         status = payload.get("status", "ERROR")
@@ -287,10 +326,6 @@ class SuiteWorker(QThread):
             message=payload.get("message", ""),
             error_message=payload.get("error_message", ""),
             screenshot_path=payload.get("screenshot_path", ""),
-            comparison_json=json.dumps(
-                payload.get("pairs", []),
-                ensure_ascii=False,
-            ),
             log_text=(
                 f"OPEN {case.get('url') or _page_url(page_key)}\n"
                 f"LOCATOR {locator_type}={locator_value}\n"

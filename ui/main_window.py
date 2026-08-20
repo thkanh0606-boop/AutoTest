@@ -23,7 +23,6 @@ from ui.sidebar import Sidebar
 from ui.header import Header
 from ui.test_builder_page import TestBuilderPage
 from ui.vehicle_catalog_page import VehicleCatalogPage
-from ui.crud_page import CrudPage
 from ui.test_suite_page import TestSuitePage
 from ui.page_management_page import PageManagementPage
 from ui.booking_management_page import BookingManagementPage
@@ -204,7 +203,6 @@ class MainWindow(QMainWindow):
             "pages": "Quản lý trang",
             "config": "Cấu hình hệ thống",
             "vehicle_catalog": "Danh mục xe",
-            "crud": "CRUD",
             "car_management": "Quản lý xe",
             "booking_management": "Quản lý đặt xe",
             "staff_management": "Nhân sự",
@@ -245,8 +243,6 @@ class MainWindow(QMainWindow):
                 )
             elif page_name == "vehicle_catalog":
                 page = VehicleCatalogPage()
-            elif page_name == "crud":
-                page = CrudPage()
             elif page_name == "car_management":
                 page = CarManagementPage()
             elif page_name == "booking_management":
@@ -511,12 +507,6 @@ class MainWindow(QMainWindow):
             self.header.page_combo.setCurrentText("Danh mục xe")
             self.header.url_input.setText("https://courses.plt.pro.vn/cars/catalog")
             self._sync_test_builders_to_page_name("Danh mục xe")
-        elif page_name == "crud":
-            self.header.website_combo.setCurrentText("PLT Fleet Console")
-            if self.header.page_combo.findText("CRUD") < 0:
-                self.header.page_combo.addItem("CRUD")
-            self.header.page_combo.setCurrentText("CRUD")
-            self.header.url_input.setText("https://courses.plt.pro.vn/cars/catalog")
         elif page_name == "car_management":
             self.header.website_combo.setCurrentText("PLT Fleet Console")
             if self.header.page_combo.findText("Quản lý xe") < 0:

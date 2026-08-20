@@ -1,0 +1,13 @@
+2026/08/14-01:36:40.416 205c Reusing MANIFEST E:\AutoTest\chrome_profile\Default\IndexedDB\https_courses.plt.pro.vn_0.indexeddb.leveldb/MANIFEST-000001
+2026/08/14-01:36:40.417 205c Recovering log #162
+2026/08/14-01:36:40.418 205c Reusing old log E:\AutoTest\chrome_profile\Default\IndexedDB\https_courses.plt.pro.vn_0.indexeddb.leveldb/000162.log 
+2026/08/14-01:36:40.418 205c Delete type=2 #160
+2026/08/14-01:36:40.516 3008 Level-0 table #167: started
+2026/08/14-01:36:40.519 3008 Level-0 table #167: 3214 bytes OK
+2026/08/14-01:36:40.522 3008 Delete type=0 #162
+2026/08/14-01:36:40.524 205c Manual compaction at level-0 from '\x00-\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00.\x00\x00\x00' @ 0 : 0; will stop at '\x00-\x00\x00\x05' @ 1989 : 1
+2026/08/14-01:36:40.524 205c Compacting 1@0 + 1@1 files
+2026/08/14-01:36:40.529 205c Generated table #168@0: 24 keys, 2562 bytes
+2026/08/14-01:36:40.530 205c Compacted 1@0 + 1@1 files => 2562 bytes
+2026/08/14-01:36:40.531 205c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/08/14-01:36:40.532 205c Manual compaction at level-0 from '\x00-\x00\x00\x05' @ 1989 : 1 .. '\x00.\x00\x00\x00' @ 0 : 0; will stop at (end)
