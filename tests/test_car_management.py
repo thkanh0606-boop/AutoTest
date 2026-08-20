@@ -35,6 +35,8 @@ from core.driver_factory import DriverFactory
 from core.helpers import antd_ui
 from core.helpers.asserts import CustomAsserts
 from locators.car_management_locators import CarManagementLocators as L
+from selenium.webdriver.common.keys import Keys
+import time
 
 PLATE_PATTERN = re.compile(r"\d{2}[A-Z]-\d{3}\.\d{2}")
 
@@ -457,3 +459,76 @@ class TestCarManagement:
         back_candidates = driver.find_elements(*L.BACK_TO_LIST_LINK)
         if back_candidates:
             antd_ui.safe_click(driver, back_candidates[0])
+
+    # -- TC9 -----------------------------------------------------------
+    def test_09_basic_dropdown_scenarios(self, driver):
+        """
+        Procedure step:
+        1. Access the website và điều hướng đến danh sách xe.
+        2. Mở form Thêm xe mới.
+        3. Kiểm tra các thao tác cơ bản trên Dropdown Hãng xe (Placeholder, Search, Click Outside).
+        """
+        wait = WebDriverWait(driver, 15)
+        antd_ui.login_if_needed(driver, L.LIST_URL, page_ready_locator=L.PAGE_READY_MARKER)
+        
+        # Mở form thêm xe
+        _open_add_car_form(driver, wait)
+
+        brand_item = antd_ui.form_item_by_label(driver, L.LABEL_BRAND)
+        brand_combo = antd_ui.select_trigger_in_item(brand_item)
+        assert brand_combo is not None, "Không tìm thấy combobox Hãng xe."
+
+        # Kịch bản 1: Default State
+        placeholder = brand_combo.find_elements(By.CSS_SELECTOR, ".ant-select-selection-placeholder")
+        assert len(placeholder) > 0 and placeholder[0].is_displayed(), "Dropdown không hiển thị Placeholder"
+
+        # Kịch bản 2: Tìm kiếm hợp lệ
+        antd_ui.safe_click(driver, brand_combo)
+        search_input = brand_combo.find_element(By.CSS_SELECTOR, "input")
+        search_input.send_keys("vin")
+        time.sleep(1)
+        
+        options = driver.find_elements(By.CSS_SELECTOR, ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option")
+        assert len(options) > 0, "Tìm kiếm không trả về kết quả"
+        
+        # Kịch bản 3: Đóng danh sách khi click ra ngoài
+        driver.execute_script("document.body.click();")
+        time.sleep(0.5)
+        hidden_panel = driver.find_elements(By.CSS_SELECTOR, ".ant-select-dropdown:not(.ant-select-dropdown-hidden)")
+        assert len(hidden_panel) == 0, "Danh sách không tự đóng lại khi click ra ngoài"
+
+        back_btn = wait.until(EC.element_to_be_clickable(L.BACK_TO_LIST_LINK))
+        antd_ui.safe_click(driver, back_btn)
+
+    # -- TC10 ----------------------------------------------------------
+    def test_10_dropdown_search_injection(self, driver):
+        """
+        Procedure step:
+        1. Access the website và điều hướng đến danh sách xe.
+        2. Mở form Thêm xe mới.
+        3. Bơm mã độc XSS/SQL Injection vào ô tìm kiếm của Dropdown Hãng xe.
+        4. Xác minh hệ thống từ chối an toàn và hiển thị 'Không có dữ liệu'.
+        """
+        wait = WebDriverWait(driver, 15)
+        antd_ui.login_if_needed(driver, L.LIST_URL, page_ready_locator=L.PAGE_READY_MARKER)
+        
+        _open_add_car_form(driver, wait)
+        
+        brand_item = antd_ui.form_item_by_label(driver, L.LABEL_BRAND)
+        brand_combo = antd_ui.select_trigger_in_item(brand_item)
+        antd_ui.safe_click(driver, brand_combo)
+        
+        search_input = brand_combo.find_element(By.CSS_SELECTOR, "input")
+        malicious_payload = "<script>alert('Hack')</script>' OR 1=1--"
+        search_input.send_keys(malicious_payload)
+        time.sleep(1)
+        
+        # Kiểm tra phản ứng giao diện (kỳ vọng hiển thị Empty State)
+        empty_state = wait.until(EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, ".ant-select-item-empty, .ant-empty-description")
+        ))
+        assert empty_state.is_displayed(), "Không chặn được mã độc hoặc giao diện phản hồi sai"
+        
+        search_input.send_keys(Keys.ESCAPE)
+        back_btn = wait.until(EC.element_to_be_clickable(L.BACK_TO_LIST_LINK))
+        antd_ui.safe_click(driver, back_btn)

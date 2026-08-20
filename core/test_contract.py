@@ -82,6 +82,17 @@ class TestContract:
         ),
 
         # -------------------------------------------------
+        # CAR MANAGEMENT (QUẢN LÝ XE)
+        # -------------------------------------------------
+
+        PageUnderTest(
+            key="plt_fleet",
+            name="Quản lý xe",
+            path="/cars",
+            url="https://courses.plt.pro.vn/cars",
+        ),
+
+        # -------------------------------------------------
         # BOOKING MANAGEMENT
         # -------------------------------------------------
 
@@ -115,6 +126,7 @@ class TestContract:
         # DASHBOARD
         #
         # =================================================
+
 
         ElementUnderTest(
             key="dashboard_main_title",
@@ -648,6 +660,157 @@ class TestContract:
             target_path="/users",
         ),
 
+        # -------------------------------------------------
+        # QUẢN LÝ XE - LABEL & THỐNG KÊ
+        # -------------------------------------------------
+        
+        ElementUnderTest(
+            key="fleet_stat_ready_today",
+            page_key="plt_fleet",
+            test_type="label",
+            name="Thống kê Sẵn sàng hôm nay",
+            locator_type="xpath",
+            locator_value="//*[contains(normalize-space(.), 'Sẵn sàng hôm nay')]/following::div[1]",
+            sample_expected="0",
+            case_id="FLEET-010",
+            action_type="exists",
+        ),
+        
+        ElementUnderTest(
+            key="fleet_stat_maintenance",
+            page_key="plt_fleet",
+            test_type="label",
+            name="Thống kê Đang bảo dưỡng",
+            locator_type="xpath",
+            locator_value="//*[contains(normalize-space(.), 'Đang bảo dưỡng')]/following::div[1]",
+            sample_expected="0",
+            case_id="FLEET-011",
+            action_type="exists",
+        ),
+
+        # -------------------------------------------------
+        # QUẢN LÝ XE - NÚT BẤM (BUTTON)
+        # -------------------------------------------------
+        
+        ElementUnderTest(
+            key="fleet_btn_save",
+            page_key="plt_fleet",
+            test_type="button",
+            name="Nút Lưu / Tạo xe (Form Thêm)",
+            locator_type="xpath",
+            locator_value="//button[@type='submit' or contains(normalize-space(.), 'Lưu') or contains(normalize-space(.), 'Tạo xe')]",
+            sample_expected="Lưu",
+            case_id="FLEET-012",
+            action_type="exists",
+        ),
+        
+        ElementUnderTest(
+            key="fleet_btn_back_to_list",
+            page_key="plt_fleet",
+            test_type="button",
+            name="Nút Quay lại danh sách xe",
+            locator_type="xpath",
+            locator_value="//*[self::a or self::button or self::span][contains(normalize-space(.), 'Quay lại danh sách xe')]",
+            sample_expected="Quay lại danh sách xe",
+            case_id="FLEET-013",
+            action_type="exists",
+        ),
+        
+        ElementUnderTest(
+            key="fleet_btn_delete_row",
+            page_key="plt_fleet",
+            test_type="button",
+            name="Nút Xóa trên từng dòng xe",
+            locator_type="css",
+            locator_value="button[aria-label='Xóa'], button[aria-label='Xoá'], button[title='Xóa']",
+            sample_expected="",
+            case_id="FLEET-014",
+            action_type="exists",
+        ),
+
+        # -------------------------------------------------
+        # QUẢN LÝ XE - NHẬP LIỆU (INPUT)
+        # -------------------------------------------------
+        
+        ElementUnderTest(
+            key="fleet_input_search",
+            page_key="plt_fleet",
+            test_type="input",
+            name="Ô tìm kiếm xe (Search)",
+            locator_type="css",
+            locator_value="input[placeholder*='Tìm kiếm'], input[type='search']",
+            sample_expected="",
+            case_id="FLEET-015",
+            action_type="exists",
+        ),
+        
+        ElementUnderTest(
+            key="fleet_input_license_plate",
+            page_key="plt_fleet",
+            test_type="input",
+            name="Ô nhập Biển số xe (Form Thêm)",
+            locator_type="xpath",
+            locator_value="//*[self::label or contains(@class,'ant-form-item-label')][contains(normalize-space(.), 'Biển số')]/ancestor::*[contains(@class,'ant-form-item')][1]//input",
+            sample_expected="",
+            case_id="FLEET-016",
+            action_type="exists",
+        ),
+
+        # -------------------------------------------------
+        # QUẢN LÝ XE - BẢNG (TABLE) VÀ GIAO DIỆN (UI)
+        # -------------------------------------------------
+        
+        ElementUnderTest(
+            key="fleet_table_first_row",
+            page_key="plt_fleet",
+            test_type="table",
+            name="Dòng dữ liệu xe đầu tiên",
+            locator_type="css",
+            locator_value="div.ant-table-wrapper table tbody tr:nth-child(1)",
+            sample_expected="",
+            case_id="FLEET-017",
+            action_type="not_empty",
+        ),
+        
+        ElementUnderTest(
+            key="fleet_ui_confirm_delete_modal",
+            page_key="plt_fleet",
+            test_type="ui",
+            name="Modal xác nhận Xóa xe hiển thị",
+            locator_type="xpath",
+            locator_value="//*[contains(@class,'ant-popover') or contains(@class,'ant-modal')][not(contains(@style,'display: none'))]",
+            sample_expected="visible",
+            case_id="FLEET-018",
+            action_type="visible",
+        ),
+
+        # -------------------------------------------------
+        # QUẢN LÝ XE - DROPDOWN TRONG FORM THÊM
+        # -------------------------------------------------
+        
+        ElementUnderTest(
+            key="fleet_dropdown_brand_form",
+            page_key="plt_fleet",
+            test_type="dropdown",
+            name="Dropdown Hãng xe (Form Thêm)",
+            locator_type="xpath",
+            locator_value="//*[self::label or contains(@class,'ant-form-item-label')][contains(normalize-space(.), 'Hãng xe')]/ancestor::*[contains(@class,'ant-form-item')][1]//*[@role='combobox']",
+            sample_expected="Toyota\nVinFast\nHonda",
+            case_id="FLEET-019",
+            action_type="dropdown_has_options",
+        ),
+        
+        ElementUnderTest(
+            key="fleet_dropdown_fuel_form",
+            page_key="plt_fleet",
+            test_type="dropdown",
+            name="Dropdown Nhiên liệu (Form Thêm)",
+            locator_type="xpath",
+            locator_value="//*[self::label or contains(@class,'ant-form-item-label')][contains(normalize-space(.), 'Nhiên liệu')]/ancestor::*[contains(@class,'ant-form-item')][1]//*[@role='combobox']",
+            sample_expected="Xăng\nĐiện\nDầu Diesel",
+            case_id="FLEET-020",
+            action_type="dropdown_has_options",
+        ),
         # =================================================
         #
         # VEHICLE CATALOG
