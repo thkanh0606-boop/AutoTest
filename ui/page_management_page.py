@@ -21,6 +21,7 @@ from PySide6.QtWidgets import (
     QTextEdit,
     QVBoxLayout,
     QWidget,
+    QScrollArea,  # đã có, nhưng thêm vào để rõ
 )
 
 
@@ -89,7 +90,6 @@ MODULE_SCREEN_MAP = {
 
 
 def get_module_key(module_str: str) -> str:
-    """Hàm chuẩn hóa chuỗi tên Module về key màn hình Builder chuẩn"""
     if not module_str:
         return 'label'
     clean_key = str(module_str).strip().lower()
@@ -105,6 +105,19 @@ class ElementRegistry(QObject):
 
     DEFAULT_STORE = {
         'Trang tổng quan': [
+            # 1. Dropdown List
+            {
+                'key': 'lang_dropdown',
+                'name': 'Dropdown ngôn ngữ',
+                'module': 'Dropdown List',
+                'locator_type': 'css',
+                'locator_value': '.ant-select',
+                'expected_result': 'Tiếng Việt\nEnglish',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 2. Label / Text
             {
                 'key': 'hero_title',
                 'name': 'Tiêu đề hero Dashboard',
@@ -117,21 +130,999 @@ class ElementRegistry(QObject):
                 'reason': '',
             },
             {
-                'key': 'lang_dropdown',
-                'name': 'Dropdown ngôn ngữ',
-                'module': 'Dropdown List',
+                'key': 'header_title',
+                'name': 'Tiêu đề header vận hành',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//h3[normalize-space()='Bảng điều khiển vận hành']",
+                'expected_result': 'Bảng điều khiển vận hành',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'kpi_renting',
+                'name': 'KPI xe đang cho thuê',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(), 'Xe đang cho thuê')]",
+                'expected_result': 'Xe đang cho thuê',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'kpi_ready_today',
+                'name': 'KPI xe sẵn sàng hôm nay',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(.), 'Sẵn sàng hôm nay')]/following::div[1]",
+                'expected_result': 'Sẵn sàng hôm nay',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'kpi_overdue_booking',
+                'name': 'KPI booking trễ hạn',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(), 'Booking trễ hạn')]",
+                'expected_result': 'Booking trễ hạn',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'hero_section',
+                'name': 'Hero tổng quan hiển thị',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "(//main//section)[1]",
+                'expected_result': 'Hero tổng quan',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'quick_actions',
+                'name': 'Khối thao tác nhanh hiển thị',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "(//main//section)[2]",
+                'expected_result': 'Thao tác nhanh',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 3. Table
+            {
+                'key': 'dashboard_stats_table',
+                'name': 'Bảng thống kê tổng quan',
+                'module': 'Table',
+                'locator_type': 'xpath',
+                'locator_value': "(/main//div[contains(@class,'grid')])[6]/*[1]",
+                'expected_result': 'Danh sách bàn giao sắp tới',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 4. Radio / Checkbox
+            {
+                'key': 'menu_dashboard_selected',
+                'name': 'Trạng thái menu Dashboard đang chọn',
+                'module': 'Radio / Checkbox',
+                'locator_type': 'xpath',
+                'locator_value': "//li[@role='menuitem' and contains(@class, 'ant-menu-item-selected')]",
+                'expected_result': 'Dashboard',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 5. Hình ảnh
+            {
+                'key': 'logo_image',
+                'name': 'Logo PLT Solutions',
+                'module': 'Hình ảnh',
                 'locator_type': 'css',
-                'locator_value': '.ant-select',
-                'expected_result': 'Tiếng Việt\nEnglish',
+                'locator_value': "aside img[alt='PLT Solutions']",
+                'expected_result': 'logo.png',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 6. Tiêu đề
+            {
+                'key': 'page_title',
+                'name': 'Tiêu đề trang chủ',
+                'module': 'Tiêu đề',
+                'locator_type': 'xpath',
+                'locator_value': "//title",
+                'expected_result': 'PLT Fleet Console',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 7. Giao diện
+            {
+                'key': 'dark_mode_toggle',
+                'name': 'Chế độ giao diện (sáng/tối)',
+                'module': 'Giao diện',
+                'locator_type': 'id',
+                'locator_value': 'themeToggle',
+                'expected_result': 'light',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 8. Menu website
+            {
+                'key': 'sidebar_menu',
+                'name': 'Menu sidebar',
+                'module': 'Menu website',
+                'locator_type': 'css',
+                'locator_value': "ul[role='menu']",
+                'expected_result': 'Dashboard\nXe\nĐặt xe\nNhân sự',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'menu_item_dashboard',
+                'name': 'Item menu Dashboard',
+                'module': 'Menu website',
+                'locator_type': 'xpath',
+                'locator_value': "//li[@role='menuitem'][./span[normalize-space()='Dashboard']]",
+                'expected_result': 'Dashboard',
                 'actual_result': '-',
                 'status': 'Sẵn sàng',
                 'reason': '',
             },
         ],
-        'Đặt xe': [],
-        'Xe': [],
-        'Danh mục xe': [],
-        'Người dùng': [],
+        'Danh mục xe': [
+            # 1. Dropdown List
+            {
+                'key': 'catalog_filter_brand',
+                'name': 'Dropdown lọc Hãng ở bảng Mẫu',
+                'module': 'Dropdown List',
+                'locator_type': 'xpath',
+                'locator_value': "//h4[normalize-space()='Danh sách mẫu xe']/ancestor::section[1]//*[@role='combobox'][1]",
+                'expected_result': 'Hãng xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 2. Label / Text
+            {
+                'key': 'catalog_title',
+                'name': 'Tiêu đề Danh mục xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "(//*[normalize-space()='Danh mục xe' and not(ancestor::aside)])[1]",
+                'expected_result': 'Danh mục xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'total_brands_label',
+                'name': 'Nhãn Tổng số hãng',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(), 'Tổng số hãng')]",
+                'expected_result': 'Tổng số hãng',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'active_brands_label',
+                'name': 'Nhãn Hãng đang hoạt động',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(), 'Hãng đang hoạt động')]",
+                'expected_result': 'Hãng đang hoạt động',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'total_models_label',
+                'name': 'Nhãn Tổng số mẫu xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(), 'Tổng số mẫu xe')]",
+                'expected_result': 'Tổng số mẫu xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'brand_list_title',
+                'name': 'Tiêu đề Danh sách hãng xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//h4[normalize-space()='Danh sách hãng xe']",
+                'expected_result': 'Danh sách hãng xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'model_list_title',
+                'name': 'Tiêu đề Danh sách mẫu xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//h4[normalize-space()='Danh sách mẫu xe']",
+                'expected_result': 'Danh sách mẫu xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'add_brand_btn',
+                'name': 'Nút Thêm hãng xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//button[contains(text(), 'Thêm hãng')]",
+                'expected_result': 'Thêm hãng',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'add_model_btn',
+                'name': 'Nút Thêm mẫu xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//button[contains(text(), 'Thêm mẫu')]",
+                'expected_result': 'Thêm mẫu',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'brand_section_visible',
+                'name': 'Khu Danh sách hãng xe hiển thị',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//h4[normalize-space()='Danh sách hãng xe']/ancestor::section[1]",
+                'expected_result': 'Danh sách hãng xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'model_section_visible',
+                'name': 'Khu Danh sách mẫu xe hiển thị',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//h4[normalize-space()='Danh sách mẫu xe']/ancestor::section[1]",
+                'expected_result': 'Danh sách mẫu xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 3. Table
+            {
+                'key': 'brand_table',
+                'name': 'Bảng danh sách hãng xe',
+                'module': 'Table',
+                'locator_type': 'xpath',
+                'locator_value': "//h4[normalize-space()='Danh sách hãng xe']/ancestor::section[1]//table",
+                'expected_result': 'STT, Tên hãng, Số lượng mẫu',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'model_table',
+                'name': 'Bảng danh sách mẫu xe',
+                'module': 'Table',
+                'locator_type': 'xpath',
+                'locator_value': "//h4[normalize-space()='Danh sách mẫu xe']/ancestor::section[1]//table",
+                'expected_result': 'STT, Tên mẫu, Hãng',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 4. Radio / Checkbox
+            {
+                'key': 'catalog_active_checkbox',
+                'name': 'Hiển thị hoạt động',
+                'module': 'Radio / Checkbox',
+                'locator_type': 'id',
+                'locator_value': 'activeOnly',
+                'expected_result': 'True',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'active_status_tag',
+                'name': 'Trạng thái Đang hoạt động',
+                'module': 'Radio / Checkbox',
+                'locator_type': 'xpath',
+                'locator_value': "(//span[contains(@class,'ant-tag') and normalize-space()='Đang hoạt động'])[1]",
+                'expected_result': 'Đang hoạt động',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 5. Hình ảnh
+            {
+                'key': 'catalog_logo',
+                'name': 'Logo PLT Solutions',
+                'module': 'Hình ảnh',
+                'locator_type': 'css',
+                'locator_value': "aside img[alt='PLT Solutions']",
+                'expected_result': 'logo.png',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 6. Tiêu đề
+            {
+                'key': 'catalog_page_title',
+                'name': 'Tiêu đề trang Danh mục xe',
+                'module': 'Tiêu đề',
+                'locator_type': 'xpath',
+                'locator_value': "//title",
+                'expected_result': 'Danh mục xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 7. Giao diện
+            {
+                'key': 'catalog_theme_toggle',
+                'name': 'Chế độ giao diện (sáng/tối)',
+                'module': 'Giao diện',
+                'locator_type': 'id',
+                'locator_value': 'themeToggle',
+                'expected_result': 'light',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 8. Menu website
+            {
+                'key': 'catalog_menu_item',
+                'name': 'Item menu Danh mục xe',
+                'module': 'Menu website',
+                'locator_type': 'xpath',
+                'locator_value': "//li[@role='menuitem'][./span[normalize-space()='Danh mục xe']]",
+                'expected_result': 'Danh mục xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+        ],
+        'Quản lý xe': [
+            # 1. Dropdown List
+            {
+                'key': 'car_brand_form_dropdown',
+                'name': 'Dropdown Hãng xe (Form Thêm)',
+                'module': 'Dropdown List',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(.), 'Hãng xe')]/ancestor::*[contains(@class,'ant-form-item')][1]//*[@role='combobox']",
+                'expected_result': 'Toyota, Honda, Ford',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'car_fuel_dropdown',
+                'name': 'Dropdown Nhiên liệu (Form Thêm)',
+                'module': 'Dropdown List',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(.), 'Nhiên liệu')]/ancestor::*[contains(@class,'ant-form-item')][1]//*[@role='combobox']",
+                'expected_result': 'Xăng, Dầu, Điện',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'car_brand_filter',
+                'name': 'Filter hãng xe',
+                'module': 'Dropdown List',
+                'locator_type': 'id',
+                'locator_value': 'brandFilter',
+                'expected_result': 'Toyota, Honda, Ford',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 2. Label / Text
+            {
+                'key': 'add_car_btn',
+                'name': 'Nút Thêm xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//button[contains(text(),'Thêm xe')]",
+                'expected_result': 'Thêm xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'stat_ready_today',
+                'name': 'Thống kê Sẵn sàng hôm nay',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(.), 'Sẵn sàng hôm nay')]/following::div[1]",
+                'expected_result': 'Sẵn sàng hôm nay',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'stat_maintenance',
+                'name': 'Thống kê Đang bảo dưỡng',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(.), 'Đang bảo dưỡng')]/following::div[1]",
+                'expected_result': 'Đang bảo dưỡng',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'delete_modal',
+                'name': 'Modal xác nhận Xóa xe hiển thị',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(@class,'ant-popover') or contains(@class,'ant-modal')][not(contains(@style,'display: none'))]",
+                'expected_result': 'Xác nhận xóa',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 3. Table
+            {
+                'key': 'car_table',
+                'name': 'Bảng danh sách xe',
+                'module': 'Table',
+                'locator_type': 'css',
+                'locator_value': 'table.ant-table',
+                'expected_result': 'ID, Biển số, Hãng, Mẫu, Năm sản xuất',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'first_car_row',
+                'name': 'Dòng dữ liệu xe đầu tiên',
+                'module': 'Table',
+                'locator_type': 'css',
+                'locator_value': 'div.ant-table-wrapper table tbody tr:nth-child(1)',
+                'expected_result': 'Dòng xe đầu tiên',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 4. Radio / Checkbox
+            {
+                'key': 'car_status_checkbox',
+                'name': 'Hiển thị xe đang hoạt động',
+                'module': 'Radio / Checkbox',
+                'locator_type': 'id',
+                'locator_value': 'showActiveOnly',
+                'expected_result': 'True',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 5. Hình ảnh
+            {
+                'key': 'car_image',
+                'name': 'Ảnh xe',
+                'module': 'Hình ảnh',
+                'locator_type': 'css',
+                'locator_value': '.car-image img',
+                'expected_result': 'car.jpg',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 6. Tiêu đề
+            {
+                'key': 'car_page_title',
+                'name': 'Tiêu đề trang Quản lý xe',
+                'module': 'Tiêu đề',
+                'locator_type': 'xpath',
+                'locator_value': "//title",
+                'expected_result': 'Quản lý xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 7. Giao diện
+            {
+                'key': 'car_theme_toggle',
+                'name': 'Chế độ giao diện (sáng/tối)',
+                'module': 'Giao diện',
+                'locator_type': 'id',
+                'locator_value': 'themeToggle',
+                'expected_result': 'light',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 8. Menu website
+            {
+                'key': 'car_menu',
+                'name': 'Menu điều hướng',
+                'module': 'Menu website',
+                'locator_type': 'css',
+                'locator_value': '.ant-menu',
+                'expected_result': 'Dashboard\nXe\nĐặt xe\nNhân sự',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+        ],
+        'Quản lý đặt xe': [
+            # 1. Dropdown List
+            {
+                'key': 'car_dropdown',
+                'name': 'Chọn xe',
+                'module': 'Dropdown List',
+                'locator_type': 'id',
+                'locator_value': 'carId',
+                'expected_result': 'Xe 1, Xe 2',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'customer_dropdown',
+                'name': 'Chọn khách',
+                'module': 'Dropdown List',
+                'locator_type': 'id',
+                'locator_value': 'customerId',
+                'expected_result': 'KH A, KH B',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'booking_status_dropdown',
+                'name': 'Trạng thái đơn thuê',
+                'module': 'Dropdown List',
+                'locator_type': 'id',
+                'locator_value': 'status',
+                'expected_result': 'Chờ duyệt, Đã duyệt, Hủy',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'payment_method_dropdown',
+                'name': 'Phương thức thanh toán',
+                'module': 'Dropdown List',
+                'locator_type': 'id',
+                'locator_value': 'paymentMethod',
+                'expected_result': 'Tiền mặt, Chuyển khoản',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 2. Label / Text
+            {
+                'key': 'booking_title',
+                'name': 'Tiêu đề Quản lý đặt xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[normalize-space()='Quản lý đặt xe' and not(ancestor::aside)]",
+                'expected_result': 'Quản lý đặt xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'booking_list_label',
+                'name': 'Nhãn khu vực danh sách booking',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[contains(normalize-space(), 'Danh sách booking')]",
+                'expected_result': 'Danh sách booking',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'car_label',
+                'name': 'Nhãn Xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='carId']",
+                'expected_result': 'Xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'customer_label',
+                'name': 'Nhãn Khách có sẵn',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='customerId']",
+                'expected_result': 'Khách có sẵn',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'customer_name_label',
+                'name': 'Nhãn Tên khách',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='customerName']",
+                'expected_result': 'Tên khách',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'phone_label',
+                'name': 'Nhãn Số điện thoại',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='customerPhoneNumber']",
+                'expected_result': 'Số điện thoại',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'email_label',
+                'name': 'Nhãn Email',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='customerEmail']",
+                'expected_result': 'Email',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'start_date_label',
+                'name': 'Nhãn Ngày nhận xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='startDate']",
+                'expected_result': 'Ngày nhận xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'end_date_label',
+                'name': 'Nhãn Ngày trả xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='endDate']",
+                'expected_result': 'Ngày trả xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'pickup_label',
+                'name': 'Nhãn Điểm nhận xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='pickupLocation']",
+                'expected_result': 'Điểm nhận xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'return_label',
+                'name': 'Nhãn Điểm trả xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='returnLocation']",
+                'expected_result': 'Điểm trả xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'rental_amount_label',
+                'name': 'Nhãn Tiền thuê xe',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//label[@for='rentalAmount']",
+                'expected_result': 'Tiền thuê xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'create_booking_btn',
+                'name': 'Nút Tạo đơn thuê',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//button[@aria-label='Tạo đơn thuê']",
+                'expected_result': 'Tạo đơn thuê',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'save_btn',
+                'name': 'Nút Lưu (Tạo/Cập nhật)',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//button[@type='submit' and (.//span[contains(normalize-space(.),'Lưu')] or .//span[contains(normalize-space(.),'Tạo đơn thuê')] or .//span[contains(normalize-space(.),'Cập nhật')])]",
+                'expected_result': 'Lưu',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'search_input',
+                'name': 'Ô tìm kiếm',
+                'module': 'Label / Text',
+                'locator_type': 'id',
+                'locator_value': 'search',
+                'expected_result': 'Tìm kiếm booking...',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'booking_section_visible',
+                'name': 'Khu vực quản lý booking hiển thị',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//main",
+                'expected_result': 'Quản lý booking',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'booking_table_section_visible',
+                'name': 'Khu vực bảng booking hiển thị',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//main//table",
+                'expected_result': 'Bảng booking',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 3. Table
+            {
+                'key': 'booking_table',
+                'name': 'Bảng danh sách booking',
+                'module': 'Table',
+                'locator_type': 'css',
+                'locator_value': 'table',
+                'expected_result': 'ID, Xe, Khách hàng, Ngày bắt đầu, Ngày kết thúc, Trạng thái, Tiền thuê',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'first_booking_row',
+                'name': 'Dòng booking đầu tiên',
+                'module': 'Table',
+                'locator_type': 'xpath',
+                'locator_value': "(//main//table//tbody//tr)[1]",
+                'expected_result': 'Dòng booking đầu tiên',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 4. Radio / Checkbox
+            {
+                'key': 'booking_checkbox',
+                'name': 'Checkbox trong bảng Booking',
+                'module': 'Radio / Checkbox',
+                'locator_type': 'xpath',
+                'locator_value': "(//main//table//input[@type='checkbox'])[1]",
+                'expected_result': 'True',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 5. Hình ảnh
+            {
+                'key': 'booking_logo',
+                'name': 'Logo PLT Solutions',
+                'module': 'Hình ảnh',
+                'locator_type': 'css',
+                'locator_value': "aside img[alt='PLT Solutions']",
+                'expected_result': 'logo.png',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 6. Tiêu đề
+            {
+                'key': 'booking_page_title',
+                'name': 'Tiêu đề trang Booking',
+                'module': 'Tiêu đề',
+                'locator_type': 'xpath',
+                'locator_value': "//title",
+                'expected_result': 'Quản lý đặt xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 7. Giao diện
+            {
+                'key': 'booking_theme_toggle',
+                'name': 'Chế độ giao diện (sáng/tối)',
+                'module': 'Giao diện',
+                'locator_type': 'id',
+                'locator_value': 'themeToggle',
+                'expected_result': 'light',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 8. Menu website
+            {
+                'key': 'booking_menu',
+                'name': 'Menu sidebar Booking',
+                'module': 'Menu website',
+                'locator_type': 'css',
+                'locator_value': "ul[role='menu']",
+                'expected_result': 'Dashboard\nXe\nĐặt xe\nNhân sự',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'booking_menu_item',
+                'name': 'Item menu Đặt xe',
+                'module': 'Menu website',
+                'locator_type': 'xpath',
+                'locator_value': "//li[@role='menuitem'][./span[normalize-space()='Đặt xe']]",
+                'expected_result': 'Đặt xe',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+        ],
+        'Nhân sự': [
+            # 1. Dropdown List
+            {
+                'key': 'staff_role_filter',
+                'name': 'Filter vai trò',
+                'module': 'Dropdown List',
+                'locator_type': 'id',
+                'locator_value': 'roleFilter',
+                'expected_result': 'Tất cả\nAdmin\nNhân viên',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 2. Label / Text
+            {
+                'key': 'staff_title',
+                'name': 'Tiêu đề Nhân sự',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//*[normalize-space()='Nhân sự' and not(ancestor::aside)]",
+                'expected_result': 'Nhân sự',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'add_staff_btn',
+                'name': 'Nút Thêm nhân sự',
+                'module': 'Label / Text',
+                'locator_type': 'xpath',
+                'locator_value': "//button[contains(text(),'Thêm nhân sự')]",
+                'expected_result': 'Thêm nhân sự',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'staff_pagination',
+                'name': 'Phân trang Nhân sự',
+                'module': 'Label / Text',
+                'locator_type': 'css',
+                'locator_value': '.ant-pagination',
+                'expected_result': 'Phân trang',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 3. Table
+            {
+                'key': 'staff_table',
+                'name': 'Bảng danh sách Nhân sự',
+                'module': 'Table',
+                'locator_type': 'css',
+                'locator_value': 'table.ant-table',
+                'expected_result': 'ID, Tên, Email, Vai trò',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 4. Radio / Checkbox
+            {
+                'key': 'staff_active_checkbox',
+                'name': 'Hiển thị nhân viên đang hoạt động',
+                'module': 'Radio / Checkbox',
+                'locator_type': 'id',
+                'locator_value': 'activeOnly',
+                'expected_result': 'True',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 5. Hình ảnh
+            {
+                'key': 'staff_avatar',
+                'name': 'Avatar nhân viên',
+                'module': 'Hình ảnh',
+                'locator_type': 'css',
+                'locator_value': '.staff-avatar img',
+                'expected_result': 'avatar.png',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            {
+                'key': 'staff_logo',
+                'name': 'Logo PLT Solutions',
+                'module': 'Hình ảnh',
+                'locator_type': 'css',
+                'locator_value': "aside img[alt='PLT Solutions']",
+                'expected_result': 'logo.png',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 6. Tiêu đề
+            {
+                'key': 'staff_page_title',
+                'name': 'Tiêu đề trang Nhân sự',
+                'module': 'Tiêu đề',
+                'locator_type': 'xpath',
+                'locator_value': "//title",
+                'expected_result': 'Nhân sự',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 7. Giao diện
+            {
+                'key': 'staff_theme_toggle',
+                'name': 'Chế độ giao diện (sáng/tối)',
+                'module': 'Giao diện',
+                'locator_type': 'id',
+                'locator_value': 'themeToggle',
+                'expected_result': 'light',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+            # 8. Menu website
+            {
+                'key': 'staff_menu_item',
+                'name': 'Item menu Nhân sự',
+                'module': 'Menu website',
+                'locator_type': 'xpath',
+                'locator_value': "//button][.//*[contains(normalize-space(), 'Nhân sự') or contains(normalize-space(), 'Người dùng')]]",
+                'expected_result': 'Nhân sự',
+                'actual_result': '-',
+                'status': 'Sẵn sàng',
+                'reason': '',
+            },
+        ],
+        'Tài chính': [],
     }
 
     def __init__(self):
@@ -187,7 +1178,6 @@ class ElementRegistry(QObject):
         self.data_changed.emit()
 
     def reset_to_default(self):
-        """Reset danh sách về ban đầu hoàn toàn"""
         self._store = copy.deepcopy(self.DEFAULT_STORE)
         self.data_changed.emit()
 
@@ -250,7 +1240,9 @@ class AddElementDialog(QDialog):
             'Table',
             'Radio / Checkbox',
             'Hình ảnh',
-            'Title',
+            'Tiêu đề',
+            'Giao diện',
+            'Menu website',
         ])
 
         self.locator_type_combo = QComboBox()
@@ -311,7 +1303,7 @@ class AddElementDialog(QDialog):
 # ==============================================================================
 class PageManagementPage(QWidget):
     open_test_builder_signal = Signal(str, str, dict)
-    navigate_to_module_signal = Signal(str, str, str)
+    navigate_to_module_signal = Signal(str, str, dict)
 
     def __init__(self, header_widget=None):
         super().__init__()
@@ -334,7 +1326,17 @@ class PageManagementPage(QWidget):
         self._refresh_tables()
 
     def _build_ui(self):
-        main_layout = QVBoxLayout(self)
+        # Tạo ScrollArea để bọc toàn bộ nội dung, cho phép cuộn
+        scroll = QScrollArea(self)
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        scroll.setStyleSheet("QScrollArea { background: #f4f7fb; border: none; }")
+
+        # Container chứa toàn bộ giao diện
+        container = QWidget()
+        container.setStyleSheet("background: transparent;")
+        main_layout = QVBoxLayout(container)
         main_layout.setContentsMargins(28, 20, 28, 20)
         main_layout.setSpacing(16)
 
@@ -342,12 +1344,8 @@ class PageManagementPage(QWidget):
         top_bar = QHBoxLayout()
         title_box = QVBoxLayout()
         title_label = QLabel('Quản lý trang')
-        title_label.setStyleSheet(
-            'font-size: 22px; font-weight: 800; color: #0f172a;'
-        )
-        subtitle_label = QLabel(
-            'Mỗi trang có URL, quyền truy cập, element và bộ test riêng.'
-        )
+        title_label.setStyleSheet('font-size: 22px; font-weight: 800; color: #0f172a;')
+        subtitle_label = QLabel('Mỗi trang có URL, quyền truy cập, element và bộ test riêng.')
         subtitle_label.setStyleSheet('color: #64748b; font-size: 12px;')
         title_box.addWidget(title_label)
         title_box.addWidget(subtitle_label)
@@ -436,7 +1434,8 @@ class PageManagementPage(QWidget):
         self.page_table.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
-        # Sửa CSS giữ chữ rõ ràng không đổi màu trắng khi chọn
+        self.page_table.setMinimumHeight(200)
+        self.page_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.page_table.setStyleSheet("""
             QTableWidget { 
                 background: white; 
@@ -451,7 +1450,6 @@ class PageManagementPage(QWidget):
                 color: #0f172a; 
             }
         """)
-        self.page_table.setFixedHeight(180)
         self.page_table.cellClicked.connect(self._on_page_row_clicked)
         main_layout.addWidget(self.page_table)
 
@@ -471,6 +1469,9 @@ class PageManagementPage(QWidget):
             'Table',
             'Radio / Checkbox',
             'Hình ảnh',
+            'Tiêu đề',
+            'Giao diện',
+            'Menu website',
         ])
         self.module_filter_combo.setStyleSheet("""
             QComboBox {
@@ -491,10 +1492,17 @@ class PageManagementPage(QWidget):
             self._refresh_element_table
         )
 
+        # Nút "Hiển thị tất cả"
+        btn_show_all = QPushButton("Hiển thị tất cả")
+        btn_show_all.setObjectName("Secondary")
+        btn_show_all.setFixedHeight(32)
+        btn_show_all.clicked.connect(self._show_all_elements)
+
         elem_header_layout.addWidget(self.elem_title)
         elem_header_layout.addStretch()
         elem_header_layout.addWidget(filter_label)
         elem_header_layout.addWidget(self.module_filter_combo)
+        elem_header_layout.addWidget(btn_show_all)
         main_layout.addLayout(elem_header_layout)
 
         self.elem_table = QTableWidget()
@@ -512,7 +1520,8 @@ class PageManagementPage(QWidget):
         self.elem_table.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
-        # Sửa CSS bảng Element giữ chữ đen/rõ nét không biến thành chữ trắng
+        self.elem_table.setMinimumHeight(400)
+        self.elem_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.elem_table.setStyleSheet("""
             QTableWidget { 
                 background: white; 
@@ -527,17 +1536,19 @@ class PageManagementPage(QWidget):
                 color: #0f172a; 
             }
         """)
-        self.elem_table.setFixedHeight(210)
         self.elem_table.itemChanged.connect(self._on_table_item_changed)
         self.elem_table.cellClicked.connect(self._on_elem_row_clicked)
         main_layout.addWidget(self.elem_table)
 
-        # 5. CHI TIẾT KẾT QUẢ KIỂM THỬ
+        # 5. CHI TIẾT KẾT QUẢ KIỂM THỬ - CHIỀU CAO VỪA PHẢI
         self.result_detail_panel = QFrame()
         self.result_detail_panel.setStyleSheet(
             'QFrame { background-color: #ffffff; border: 1px solid #cbd5e1;'
             ' border-radius: 10px; padding: 12px; }'
         )
+        self.result_detail_panel.setMinimumHeight(350)
+        self.result_detail_panel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
         result_panel_layout = QVBoxLayout(self.result_detail_panel)
         result_panel_layout.setSpacing(8)
 
@@ -556,6 +1567,7 @@ class PageManagementPage(QWidget):
         self.result_detail_text = QTextEdit()
         self.result_detail_text.setReadOnly(True)
         self.result_detail_text.setMinimumHeight(200)
+        self.result_detail_text.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.result_detail_text.setStyleSheet(
             'QTextEdit { background: #f8fafc; border: 1px solid #e2e8f0;'
             ' border-radius: 6px; font-family: -apple-system, BlinkMacSystemFont,'
@@ -567,6 +1579,24 @@ class PageManagementPage(QWidget):
         result_panel_layout.addWidget(self.result_detail_text)
 
         main_layout.addWidget(self.result_detail_panel)
+
+        # Đặt container vào scroll area
+        scroll.setWidget(container)
+
+        # Gán scroll là layout chính của page
+        page_layout = QVBoxLayout(self)
+        page_layout.setContentsMargins(0, 0, 0, 0)
+        page_layout.addWidget(scroll)
+
+    # ===== PHƯƠNG THỨC HIỂN THỊ TẤT CẢ =====
+    def _show_all_elements(self):
+        """Reset bộ lọc trang và module, hiển thị toàn bộ element của tất cả các trang."""
+        self.selected_page_filter = None
+        self.module_filter_combo.setCurrentIndex(0)
+        self.elem_title.setText("Danh sách Elements (Hiển thị tất cả)")
+        self._refresh_element_table()
+
+    # =====================================
 
     def _create_compact_stat_card(self, title):
         card = QFrame()
@@ -623,7 +1653,6 @@ class PageManagementPage(QWidget):
         """)
 
     def action_reset(self):
-        """Khôi phục toàn bộ danh sách dữ liệu về ban đầu"""
         self.selected_page_filter = None
         element_registry.reset_to_default()
         self.result_detail_text.clear()
@@ -644,11 +1673,16 @@ class PageManagementPage(QWidget):
     def _on_page_row_clicked(self, row, col):
         page_name_item = self.page_table.item(row, 1)
         if page_name_item:
-            self.selected_page_filter = page_name_item.text()
+            page_name = page_name_item.text()
+            self.selected_page_filter = page_name
             self._refresh_element_table()
 
+            if self.header and hasattr(self.header, 'page_combo'):
+                if self.header.page_combo.findText(page_name) < 0:
+                    self.header.page_combo.addItem(page_name)
+                self.header.page_combo.setCurrentText(page_name)
+
     def _on_elem_row_clicked(self, row, col):
-        """Khi bấm vào một hàng element, chỉ hiển thị kết quả nếu là PASSED hoặc FAILED"""
         page_item = self.elem_table.item(row, 0)
         name_item = self.elem_table.item(row, 1)
         if not page_item or not name_item:
@@ -669,7 +1703,6 @@ class PageManagementPage(QWidget):
 
         status_str = str(selected_elem.get('status', 'Sẵn sàng')).upper()
 
-        # CHỈ hiển thị chi tiết khi có trạng thái PASSED hoặc FAILED
         if 'PASS' in status_str or 'FAIL' in status_str:
             if 'last_result_payload' in selected_elem:
                 self._display_detailed_test_result(selected_elem['last_result_payload'])
@@ -687,7 +1720,6 @@ class PageManagementPage(QWidget):
                 }
                 self._display_detailed_test_result(payload)
         else:
-            # Nếu ở trạng thái "Sẵn sàng" -> xóa trắng kết quả chi tiết
             self.result_detail_text.clear()
 
     def _on_header_page_changed(self, page_name):
@@ -746,7 +1778,7 @@ class PageManagementPage(QWidget):
             )
 
             status_item = QTableWidgetItem('Sẵn sàng')
-            status_item.setForeground(Qt.black)  # Đã đổi thành màu đen
+            status_item.setForeground(Qt.black)
             self.page_table.setItem(row, 4, status_item)
 
     def _refresh_element_table(self):
@@ -785,7 +1817,6 @@ class PageManagementPage(QWidget):
                 ['css', 'xpath', 'id', 'name', 'class', 'tag']
             )
             locator_combo.setCurrentText(el.get('locator_type', 'css'))
-            # Fix CSS dropdown item không bị đổi chữ thành màu trắng
             locator_combo.setStyleSheet("""
                 QComboBox { 
                     background: white; 
@@ -822,7 +1853,7 @@ class PageManagementPage(QWidget):
             elif 'FAILED' in status.upper() or 'FAIL' in status.upper() or 'ERROR' in status.upper():
                 res_item.setForeground(Qt.red)
             else:
-                res_item.setForeground(Qt.black)  # Đã đổi chữ "Sẵn sàng" thành màu đen
+                res_item.setForeground(Qt.black)
 
             self.elem_table.setItem(row, 6, res_item)
 
@@ -893,12 +1924,26 @@ class PageManagementPage(QWidget):
         module_name = elem_data.get('module', 'Label / Text')
         module_key = get_module_key(module_name)
 
-        self.navigate_to_module_signal.emit(
-            module_key, page_name, elem_data.get('key', elem_data.get('name'))
-        )
+        self.navigate_to_module_signal.emit(module_key, page_name, elem_data)
+
+    # ============ NHẬN KẾT QUẢ TỪ TEST BUILDER ============
+    def _on_test_result_received(self, payload: dict):
+        result_payload = {
+            'page_name': payload.get('page_name'),
+            'element_key': payload.get('element_name'),
+            'element_name': payload.get('element_name'),
+            'locator_type': payload.get('locator_type'),
+            'locator_value': payload.get('locator_value'),
+            'expected': payload.get('expected'),
+            'actual': payload.get('actual'),
+            'status': payload.get('status'),
+            'message': payload.get('message'),
+        }
+        element_registry.notify_test_result(result_payload)
+
+    # =========================================================
 
     def _format_plt_value(self, val_str):
-        """Format chuỗi hiển thị trong bảng chi tiết"""
         if not val_str or val_str == '-':
             return '-'
 
@@ -920,10 +1965,8 @@ class PageManagementPage(QWidget):
         return cleaned_lines[0] if cleaned_lines else '-'
 
     def _display_detailed_test_result(self, payload):
-        """Hiển thị bảng chi tiết kết quả kiểm thử (chỉ áp dụng cho PASSED / FAILED)"""
         raw_status = str(payload.get('status', '')).upper()
 
-        # Nếu không có kết quả PASS hoặc FAIL -> xóa trắng chi tiết
         if 'PASS' not in raw_status and 'FAIL' not in raw_status:
             self.result_detail_text.clear()
             return

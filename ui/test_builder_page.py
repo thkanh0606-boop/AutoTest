@@ -23,9 +23,8 @@ from runners.text_dropdown_runner import run_label_text_test
 
 
 class TestBuilderPage(QWidget):
-    # Phát ra mỗi khi trang PCM đang test bên trong màn này đổi (name, url) -
-    # để MainWindow đồng bộ lại thanh header "TRANG ĐANG KIỂM THỬ" cho khớp.
     page_selected = Signal(str, str)
+    test_result_ready = Signal(dict)
 
     def __init__(self, module_key: str, title: str):
         super().__init__()
@@ -35,6 +34,12 @@ class TestBuilderPage(QWidget):
         self.page_by_index = []
         self.element_by_index = []
         self.table_file_path = ""
+
+        self.current_page_name = ""
+        self.current_element_name = ""
+        self.current_locator_type = ""
+        self.current_locator_value = ""
+        self.current_expected = ""
 
         self.setObjectName("TestBuilderPage")
         self.setStyleSheet("""
@@ -308,17 +313,12 @@ class TestBuilderPage(QWidget):
         self._on_page_changed(0)
 
     def set_active_page_by_name(self, name: str) -> bool:
-        """Chuyển combo 'Trang PCM' sang đúng trang có tên khớp `name` (nếu có).
-        Dùng để đồng bộ theo thanh header 'TRANG ĐANG KIỂM THỬ' khi điều hướng
-        vào màn Test Builder này. Trả về True nếu tìm thấy và đã chuyển."""
         idx = self.page_combo.findText(name)
         if idx < 0:
             return False
         if self.page_combo.currentIndex() != idx:
             self.page_combo.setCurrentIndex(idx)
         else:
-            # Cùng index rồi thì vẫn phát tín hiệu để header luôn khớp,
-            # phòng trường hợp header đang hiển thị tên khác do nơi khác ghi đè.
             self._on_page_changed(idx)
         return True
 
@@ -391,6 +391,12 @@ class TestBuilderPage(QWidget):
         element = self.element_by_index[self.element_combo.currentIndex()]
         expected_text = self.expected_input.toPlainText()
 
+        self.current_page_name = page.name
+        self.current_element_name = element.name
+        self.current_locator_type = self.locator_type_combo.currentText()
+        self.current_locator_value = self.locator_input.text().strip()
+        self.current_expected = expected_text
+
         self.run_button.setEnabled(False)
         self.progress.setValue(0)
         self.actual_value.setText("Đang chạy Selenium...")
@@ -404,8 +410,8 @@ class TestBuilderPage(QWidget):
             page_name=page.name,
             element_key=element.key,
             element_name=element.name,
-            locator_type=self.locator_type_combo.currentText(),
-            locator_value=self.locator_input.text().strip(),
+            locator_type=self.current_locator_type,
+            locator_value=self.current_locator_value,
             expected=expected_text,
             case_id=element.case_id,
             steps=element.steps,
@@ -444,6 +450,18 @@ class TestBuilderPage(QWidget):
         color = "#16845b" if status == "PASSED" else "#b42318"
         self.compare_value.setStyleSheet(f"color: {color}; font-size: 12px; font-weight: 700;")
 
+        result_payload = {
+            "page_name": self.current_page_name,
+            "element_name": self.current_element_name,
+            "locator_type": self.current_locator_type,
+            "locator_value": self.current_locator_value,
+            "expected": self.current_expected,
+            "actual": payload.get("actual", ""),
+            "status": status,
+            "message": payload.get("message", ""),
+        }
+        self.test_result_ready.emit(result_payload)
+
     def _handle_finished(self, _finished):
         self.run_button.setEnabled(True)
 
@@ -453,3 +471,31 @@ class TestBuilderPage(QWidget):
         self.actual_value.setText("Chưa có Actual Result")
         self.compare_value.setText("Expected - Actual sẽ hiển thị sau khi Run.")
         self.compare_value.setStyleSheet("color: #64748b; font-size: 12px;")
+
+    def set_element_data(self, element_data: dict):
+        """Nhận dữ liệu từ PageManagement và điền vào form, đồng thời chọn đúng element trong combo."""
+        if not element_data:
+            return
+
+        # Cập nhật locator type
+        locator_type = element_data.get('locator_type', 'css')
+        idx = self.locator_type_combo.findText(locator_type)
+        if idx >= 0:
+            self.locator_type_combo.setCurrentIndex(idx)
+        else:
+            self.locator_type_combo.addItem(locator_type)
+            self.locator_type_combo.setCurrentText(locator_type)
+
+        # Cập nhật locator value
+        self.locator_input.setText(element_data.get('locator_value', ''))
+
+        # Cập nhật expected result
+        self.expected_input.setPlainText(element_data.get('expected_result', ''))
+
+        # Chọn đúng element trong combo element_combo dựa trên tên
+        element_name = element_data.get('name') or element_data.get('element_name')
+        if element_name:
+            for i, elem in enumerate(self.element_by_index):
+                if elem.name == element_name:
+                    self.element_combo.setCurrentIndex(i)
+                    break
